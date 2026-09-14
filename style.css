@@ -1,0 +1,164 @@
+/* Thiết lập cơ bản */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f8f9fa;
+    
+    /* CSS GRID: BỐ CỤC HAI CHIỀU (Macro Layout) */
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    grid-template-rows: auto 1fr auto;
+    gap: 0;
+    min-height: 100vh;
+}
+
+/* Thành phần Header */
+header {
+    grid-column: 1 / -1; 
+    background-color: #1a252f;
+    color: #ffffff;
+    padding: 30px;
+    
+    /* FLEXBOX: BỐ CỤC MỘT CHIỀU (Micro Layout) */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+
+h1 {
+    font-size: 2.5rem;
+    letter-spacing: 1px;
+}
+
+/* Điều hướng Navigation */
+nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+nav a {
+    color: #3498db;
+    text-decoration: none;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+}
+
+nav a:hover {
+    color: #e74c3c;
+}
+
+/* Sidebar chứa thông tin bổ sung */
+aside {
+    background-color: #ffffff;
+    padding: 30px;
+    border-right: 1px solid #e0e0e0;
+    
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Nội dung chính */
+main {
+    padding: 40px;
+    
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+section {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+section h2 {
+    color: #2c3e50;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+/* Lưới hiển thị Dự án */
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+}
+
+article {
+    border: 1px solid #eee;
+    border-radius: 6px;
+    padding: 20px;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 10px;
+    height: 100%;
+}
+
+article h3 {
+    color: #16a085;
+    margin-top: 10px;
+}
+
+figure {
+    background-color: #ecf0f1;
+    height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    color: #7f8c8d;
+}
+
+time {
+    font-size: 0.85rem;
+    color: #95a5a6;
+    font-style: italic;
+    margin-top: auto;
+}
+
+/* Footer */
+footer {
+    grid-column: 1 / -1; 
+    background-color: #2c3e50;
+    color: #ecf0f1;
+    padding: 20px;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Responsive */
+@media (max-width: 800px) {
+    body {
+        grid-template-columns: 1fr;
+    }
+    
+    aside {
+        grid-row: 3;
+    }
+    main {
+        grid-row: 2;
+        padding: 20px;
+    }
+}
