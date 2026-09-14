@@ -3,120 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Góc Học Tập - Thư Viện Cờ Và Đàm Đạo | Cờ Vây Cafe Đồng Nai</title>
-    <meta name="description" content="Góc học tập - Thư viện cờ và đàm đạo thuộc Cờ Vây Cafe khu vực Đồng Nai. Nơi chia sẻ kỳ phổ, tài liệu cờ vây và giao lưu kỳ đạo do Ban quản trị Phạm Văn Duy vận hành.">
-    <meta name="keywords" content="Góc học tập, Thư viện cờ và đàm đạo, Cờ vây, Cờ Vây Cafe, Đồng Nai, Phạm Văn Duy, Trần Thiện Trí, kỳ phổ, học cờ vây">
-    <meta name="author" content="Phạm Văn Duy - Cờ Vây Cafe Đồng Nai">
+    <title>Nguyễn Văn Tuyền | Software Developer & Entrepreneur</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <div class="page-layout">
+        <!-- HEADER TRẢI DÀI -->
+        <header>
+            <h1>NGUYỄN VĂN TUYỀN</h1>
+            <p class="subtitle">Software Engineering Student & Business Builder</p>
+        </header>
 
-    <!-- Khối đầu trang -->
-    <header>
-        <h1>Góc Học Tập - Thư Viện Cờ Và Đàm Đạo</h1>
-        <p>CLB Cờ Vây Cafe - Khu vực Đồng Nai</p>
-        <p>Trang web tham khảo: <a href="https://covaycafe.com/" target="_blank" rel="noopener">https://covaycafe.com/</a></p>
-        
-        <!-- Điều hướng chính -->
-        <nav>
-            <ul>
-                <li><a href="#gioi-thieu">Giới thiệu</a></li>
-                <li><a href="#ban-quan-tri">Ban quản trị &amp; Thành viên</a></li>
-                <li><a href="#thu-vien-tai-lieu">Thư viện tài liệu</a></li>
-                <li><a href="#goc-hinh-anh">Góc hình ảnh</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <!-- Nội dung chính -->
-    <main>
-
-        <!-- Giới thiệu -->
-        <section id="gioi-thieu">
-            <h2>Giới Thiệu Về Góc Học Tập</h2>
-            <article>
-                <h3>Nơi Ươm Mầm Kỳ Đạo Tại Đồng Nai</h3>
-                <p>Góc học tập là không gian lưu trữ các tài liệu cờ vây từ cơ bản đến nâng cao, kết hợp cùng các buổi đàm đạo kỳ nghệ dành cho cộng đồng yêu cờ tại khu vực Đồng Nai.</p>
-            </article>
-        </section>
-
-        <!-- Ban quản trị và nhân sự -->
-        <section id="ban-quan-tri">
-            <h2>Hệ Thống Nhân Sự &amp; Ban Quản Trị</h2>
-            
-            <article>
-                <h3>Ban Quản Trị &amp; Quản Chủ Nhiệm</h3>
-                <ul>
-                    <li><strong>Ban quản trị:</strong> Phạm Văn Duy</li>
-                    <li><strong>Quản chủ nhiệm cờ:</strong> Trần Thiện Trí</li>
+        <!-- SIDEBAR (1fr ~ 25%) -->
+        <aside>
+            <div class="profile-card">
+                <h2>Giới Thiệu</h2>
+                <p>Sinh viên Kỹ thuật Phần mềm đam mê sáng tạo giao diện web, tư duy thuật toán và rèn luyện phát triển bản thân toàn diện.</p>
+                <div class="divider"></div>
+                <h3>Định Hướng Sự Nghiệp</h3>
+                <ul class="goal-list">
+                    <li>🚀 Full-stack Web Development</li>
+                    <li>🔥 Xây dựng sự nghiệp Amway</li>
+                    <li>💡 Phát triển năng lực lãnh đạo</li>
                 </ul>
-            </article>
+            </div>
+        </aside>
 
-            <article>
-                <h3>Danh Sách Thành Viên Phụ Trách</h3>
-                <ul>
-                    <li>Lê Văn Khoa</li>
-                    <li>Lâm Yangho</li>
-                    <li>Trần Văn Toàn</li>
+        <!-- MAIN CONTENT (3fr ~ 75%) -->
+        <main>
+            <!-- SECTION KỸ NĂNG (FLEXBOX) -->
+            <section class="section-box">
+                <h2>Kỹ Năng Chuyên Môn & Mềm</h2>
+                <ul class="skills-list">
+                    <li class="skill-tag">HTML5 & CSS Grid/Flexbox</li>
+                    <li class="skill-tag">Python & Data Structures</li>
+                    <li class="skill-tag">Microsoft SQL Server</li>
+                    <li class="skill-tag">Git & GitHub</li>
+                    <li class="skill-tag">Tư Duy Hệ Thống</li>
+                    <li class="skill-tag">Thuyết Trình & Giao Tiếp</li>
+                    <li class="skill-tag">Quản Lý Thời Gian</li>
+                    <li class="skill-tag">Lãnh Đạo Đội Nhóm</li>
                 </ul>
-            </article>
-        </section>
+            </section>
 
-        <!-- Thư viện bài viết / đàm đạo -->
-        <section id="thu-vien-tai-lieu">
-            <h2>Bài Viết Đàm Đạo &amp; Kỳ Phổ</h2>
+            <!-- SECTION DỰ ÁN (CSS GRID AUTO-FIT) -->
+            <section class="section-box">
+                <h2>Khu Vực Dự Án & Thành Tựu</h2>
+                <div class="project-gallery">
+                    <article class="project-item">
+                        <span class="badge">Web Design</span>
+                        <h3>Góc Học Tập Cờ Vây</h3>
+                        <p>Trang web giao diện chuẩn ngữ nghĩa HTML dành cho câu lạc bộ đàm đạo cờ.</p>
+                    </article>
 
-            <article>
-                <h3>Phương Pháp Nhập Môn Cờ Vây Chuẩn Bản Xứ</h3>
-                <p>Đăng bởi: <strong>Trần Thiện Trí</strong> vào <time datetime="2026-09-01">01/09/2026</time></p>
-                <p>Tổng hợp các thế cờ sát cục và định thức cơ bản giúp các hội viên mới tại khu vực Đồng Nai dễ dàng tiếp cận bộ môn.</p>
-            </article>
+                    <article class="project-item">
+                        <span class="badge">UI/UX Flow</span>
+                        <h3>Shopee App Prototype</h3>
+                        <p>Thiết kế luồng trải nghiệm người dùng và tích hợp giao thức xác thực OAuth 2.0.</p>
+                    </article>
 
-            <article>
-                <h3>Nghệ Thuật Bình Tâm Trong Kỳ Đạo</h3>
-                <p>Đăng bởi: <strong>Phạm Văn Duy</strong> vào <time datetime="2026-09-05">05/09/2026</time></p>
-                <p>Phân tích mối quan hệ giữa tâm lý chiến và cục diện bàn cờ trong các buổi đàm đạo cuối tuần tại Cờ Vây Cafe.</p>
-            </article>
-        </section>
+                    <article class="project-item">
+                        <span class="badge">Data Structures</span>
+                        <h3>Doubly Linked List</h3>
+                        <p>Bộ thư viện cấu trúc dữ liệu liên kết đôi tự xây dựng và tối ưu bằng Python.</p>
+                    </article>
 
-        <!-- Góc hình ảnh -->
-        <section id="goc-hinh-anh">
-            <h2>Hình Ảnh Thư Viện Cờ</h2>
+                    <article class="project-item">
+                        <span class="badge">Database</span>
+                        <h3>T-SQL Management</h3>
+                        <p>Thiết kế, truy vấn và quản trị dữ liệu hệ thống trên MS SQL Server.</p>
+                    </article>
 
-            <figure>
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTt3SWMgaDIdj4F-r0z9cFYtOWJBF1R0JVJzfwK4LNwSdTCMxZmFc_Nbtk&amp;s=10" alt="Bàn cờ vây góc học tập">
-                <figcaption>Hình 1: Bàn cờ vây thực chiến tại Thư viện cờ và đàm đạo.</figcaption>
-            </figure>
+                    <article class="project-item">
+                        <span class="badge">Business</span>
+                        <h3>Hệ Thống Kinh Doanh</h3>
+                        <p>Phát triển đội nhóm, mở rộng thị trường và rèn luyện kỹ năng lãnh đạo Amway.</p>
+                    </article>
 
-            <figure>
-                <img src="https://conguyetquang.wordpress.com/wp-content/uploads/2021/04/cropped-thiet-ke-khong-ten.png" alt="Biểu trưng thiết kế Cổ Nguyệt Quang">
-                <figcaption>Hình 2: Biểu trưng nghệ thuật không gian đàm đạo cờ vây.</figcaption>
-            </figure>
-        </section>
+                    <article class="project-item">
+                        <span class="badge">Self-Dev</span>
+                        <h3>Lộ Trình Phát Triển</h3>
+                        <p>Bản đồ chiến lược 4 năm chinh phục tri thức phần mềm và năng lực cá nhân.</p>
+                    </article>
+                </div>
+            </section>
+        </main>
 
-    </main>
-
-    <!-- Thanh bên lề -->
-    <aside>
-        <h2>Thông Tin Bên Lề</h2>
-        
-        <section>
-            <h3>Lịch Sinh Hoạt Cờ Vây Cafe Đồng Nai</h3>
-            <p>Thứ Bảy hàng tuần (<time datetime="2026-09-12">12/09/2026</time>)</p>
-            <p>Địa điểm: Khu Đồng Nai - Cờ Vây Cafe</p>
-        </section>
-
-        <section>
-            <h3>Phụ Trách Hướng Dẫn</h3>
-            <p>Liên hệ Quản chủ nhiệm <strong>Trần Thiện Trí</strong> hoặc Trưởng BQT <strong>Phạm Văn Duy</strong> để đăng ký giao lưu.</p>
-        </section>
-    </aside>
-
-    <!-- Chân trang -->
-    <footer>
-        <p>&copy; <time datetime="2026">2026</time> Góc Học Tập - Thư Viện Cờ Và Đàm Đạo (Cờ Vây Cafe Đồng Nai).</p>
-        <p>Ban quản trị: Phạm Văn Duy | Quản chủ nhiệm cờ: Trần Thiện Trí</p>
-        <p>Thành viên đồng hành: Lê Văn Khoa, Lâm Yangho, Trần Văn Toàn</p>
-    </footer>
-
+        <!-- FOOTER TRẢI DÀI -->
+        <footer>
+            <p>&copy; 2026 Nguyễn Văn Tuyền. Designed with CSS Grid & Flexbox.</p>
+        </footer>
+    </div>
 </body>
 </html>
