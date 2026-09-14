@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Tối ưu Metadata chuẩn SEO -->
+    <title>Hoàng Minh Tiến | Portfolio Chuyên Gia Trí Tuệ Nhân Tạo & Python</title>
+    <meta name="description" content="Trang web cá nhân của Hoàng Minh Tiến. Chuyên viên lập trình Python, thiết kế giao diện UI/UX và nghiên cứu phát triển các mô hình Trí tuệ nhân tạo (AI).">
+    
+    <style>
+        /* Thiết lập cơ bản */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+            
+            /* CSS GRID: BỐ CỤC HAI CHIỀU (Macro Layout) */
+            /* Quản lý tổng thể trang web gồm Header, Sidebar, Main, Footer */
+            display: grid;
+            grid-template-columns: 280px 1fr; /* 1fr: Đơn vị phân chia tỉ lệ linh hoạt cho nội dung chính */
+            grid-template-rows: auto 1fr auto; /* Chiều cao tự động cho header/footer, phần còn lại (1fr) cho nội dung */
+            gap: 0; /* Khoảng cách giữa các ô lưới cấp cao nhất */
+            min-height: 100vh;
+        }
+
+        /* Thành phần Header */
+        header {
+            /* GRID-COLUMN: Cho phần tử trải rộng nhiều cột (Từ cột 1 đến hết) */
+            grid-column: 1 / -1; 
+            background-color: #1a252f;
+            color: #ffffff;
+            padding: 30px;
+            
+            /* FLEXBOX: BỐ CỤC MỘT CHIỀU (Micro Layout) */
+            /* Căn giữa toàn bộ nội dung trong header theo chiều dọc */
+            display: flex;
+            flex-direction: column; /* Hướng sắp xếp: cột dọc */
+            justify-content: center; /* Căn chỉnh theo trục chính (dọc) */
+            align-items: center; /* Căn chỉnh theo trục phụ (ngang) */
+            gap: 15px; /* Khoảng cách đồng đều giữa các item */
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            letter-spacing: 1px;
+        }
+
+        /* Điều hướng Navigation */
+        nav {
+            /* FLEXBOX: Phù hợp nhất cho Navigation bar */
+            display: flex;
+            flex-direction: row; /* Hướng sắp xếp: hàng ngang */
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap; /* Cho phép xuống dòng khi màn hình nhỏ (hết không gian) */
+            gap: 30px;
+        }
+
+        nav a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        nav a:hover {
+            color: #e74c3c;
+        }
+
+        /* Sidebar chứa thông tin bổ sung */
+        aside {
+            /* Grid tự động gán vào không gian lưới bên trái (cột 1) do thứ tự HTML */
+            background-color: #ffffff;
+            padding: 30px;
+            border-right: 1px solid #e0e0e0;
+            
+            /* FLEXBOX: Quản lý các block thông tin dạng cột dọc */
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Nội dung chính */
+        main {
+            /* Nằm ở cột 2 do thứ tự HTML tự động chảy vào Grid */
+            padding: 40px;
+            
+            /* FLEXBOX: Xếp các phần (section) theo chiều dọc */
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        section {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        section h2 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        /* Lưới hiển thị Dự án */
+        .project-grid {
+            /* CSS GRID: Hoàn hảo cho bố cục Card 2 chiều, chia đều không gian */
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Tự động xuống dòng và co giãn mượt mà */
+            gap: 25px; /* Khoảng cách giữa các ô lưới dự án */
+        }
+
+        article {
+            border: 1px solid #eee;
+            border-radius: 6px;
+            padding: 20px;
+            
+            /* FLEXBOX: Bố cục nội bộ Card */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* Đẩy nội dung ra hai phía để thời gian luôn nằm dưới cùng */
+            gap: 10px;
+            height: 100%;
+        }
+
+        article h3 {
+            color: #16a085;
+            margin-top: 10px;
+        }
+
+        figure {
+            /* FLEXBOX: Căn giữa nội dung trong khung ảnh placeholder */
+            background-color: #ecf0f1;
+            height: 160px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            color: #7f8c8d;
+        }
+
+        time {
+            font-size: 0.85rem;
+            color: #95a5a6;
+            font-style: italic;
+            margin-top: auto; /* Tự động đẩy xuống đáy Card nhờ Flexbox */
+        }
+
+        /* Footer */
+        footer {
+            /* GRID-COLUMN: Trải rộng từ đầu đến cuối lưới */
+            grid-column: 1 / -1; 
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            padding: 20px;
+            
+            /* FLEXBOX: Căn giữa nội dung footer */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Responsive */
+        @media (max-width: 800px) {
+            body {
+                /* Cấu trúc Grid 1 cột trên Mobile */
+                grid-template-columns: 1fr;
+                /* Header, Main, Aside, Footer xếp dọc theo thứ tự */
+            }
+            
+            /* Thiết lập lại grid-column để Sidebar và Main chiếm full 1 cột */
+            aside {
+                grid-row: 3; /* Đẩy Aside xuống dưới Main */
+            }
+            main {
+                grid-row: 2;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. HEADER & 2. NAV -->
+    <header>
+        <h1>Hoàng Minh Tiến</h1>
+        <p>Sinh viên Trí tuệ nhân tạo | Đam mê Thuật toán & Phát triển Web</p>
+        <nav>
+            <a href="#about">Giới thiệu</a>
+            <a href="#skills">Kỹ năng</a>
+            <a href="#projects">Dự án</a>
+            <a href="#contact">Liên hệ</a>
+        </nav>
+    </header>
+
+    <!-- 3. ASIDE (Sidebar hiển thị bên trái trên Desktop) -->
+    <aside>
+        <div>
+            <h3>Thông tin cá nhân</h3>
+            <p><strong>Nơi sống:</strong> Việt Nam</p>
+            <p><strong>Chuyên ngành:</strong> Artificial Intelligence</p>
+        </div>
+        <div>
+            <h3>Sở thích</h3>
+            <p>- Nghiên cứu Robot & IoT</p>
+            <p>- Lập trình cấu trúc dữ liệu</p>
+            <p>- Thiết kế giao diện UI/UX</p>
+        </div>
+    </aside>
+
+    <!-- 4. MAIN -->
+    <main>
+        <!-- 5. SECTION: Giới thiệu -->
+        <section id="about">
+            <h2>Về Bản Thân</h2>
+            <p>Xin chào, tôi là <strong>Hoàng Minh Tiến</strong>. Tôi là một sinh viên đam mê công nghệ, yêu thích việc giải quyết các bài toán logic bằng Python, tối ưu hóa cơ sở dữ liệu và xây dựng trải nghiệm người dùng hoàn chỉnh qua Figma. Mục tiêu của tôi là kết hợp AI vào các ứng dụng thực tiễn để mang lại giá trị thực.</p>
+        </section>
+
+        <!-- SECTION: Dự án nổi bật -->
+        <section id="projects">
+            <h2>Dự Án Nổi Bật</h2>
+            <div class="project-grid">
+                
+                <!-- 6. ARTICLE & 7. FIGURE & 8. TIME -->
+                <article>
+                    <figure>
+                        <figcaption>Giao diện UI/UX App Y tế</figcaption>
+                    </figure>
+                    <h3>Ứng Dụng Theo Dõi Sức Khỏe</h3>
+                    <p>Thiết kế luồng người dùng (User Flow) và Wireframe chi tiết. Tối ưu hóa trải nghiệm người dùng từ quá trình onboarding đến dashboard báo cáo.</p>
+                    <time datetime="2026-05-15">Tháng 5, 2026</time>
+                </article>
+
+                <article>
+                    <figure>
+                        <figcaption>Hệ thống IoT bằng ESP32</figcaption>
+                    </figure>
+                    <h3>Hệ Thống Đèn Đường Thông Minh</h3>
+                    <p>Mô hình đèn chiếu sáng tự động điều chỉnh theo môi trường sử dụng vi điều khiển và các cảm biến LDR, PIR.</p>
+                    <time datetime="2026-05-20">Tháng 5, 2026</time>
+                </article>
+
+                <article>
+                    <figure>
+                        <figcaption>Mã nguồn Python Robotics</figcaption>
+                    </figure>
+                    <h3>Lập Trình Robot Yanshee</h3>
+                    <p>Viết kịch bản tự động hóa kết hợp nhận diện giọng nói, điều khiển chuyển động trực tiếp thông qua SDK Python và HTTP API.</p>
+                    <time datetime="2026-06-10">Tháng 6, 2026</time>
+                </article>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- 9. FOOTER -->
+    <footer>
+        <p>&copy; 2026 Hoàng Minh Tiến. Xây dựng bằng HTML5, CSS Grid & Flexbox.</p>
+    </footer>
+
+</body>
+</html>
