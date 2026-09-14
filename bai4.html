@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Trang web giới thiệu bản thân chuyên nghiệp của Phạm Đức Dương, sinh viên ngành Trí tuệ Nhân tạo tại trường Đại học Lạc Hồng.">
+    <title>Phạm Đức Dương - Hồ sơ cá nhân ngành Trí tuệ Nhân tạo</title>
+    <style>
+        :root {
+            --primary-color: #1b263b;
+            --accent-color: #00b4d8;
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+            --text-light: #666666;
+            --border-radius: 12px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            border-radius: var(--border-radius);
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        nav {
+            background-color: var(--card-bg);
+            padding: 15px;
+            border-radius: var(--border-radius);
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--primary-color);
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--accent-color);
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        section {
+            background-color: var(--card-bg);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        section h2 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 8px;
+            display: inline-block;
+        }
+
+        section p {
+            margin-bottom: 15px;
+            color: var(--text-light);
+        }
+
+        section ul {
+            margin-left: 20px;
+            color: var(--text-light);
+        }
+
+        section li {
+            margin-bottom: 8px;
+        }
+
+        figure {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        figure img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--accent-color);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        figcaption {
+            margin-top: 10px;
+            font-style: italic;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        article {
+            background-color: #f1f8ff;
+            border-left: 4px solid var(--accent-color);
+            padding: 20px;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+            margin-top: 15px;
+        }
+
+        article h3 {
+            color: var(--primary-color);
+            margin-bottom: 8px;
+        }
+
+        time {
+            font-size: 0.85rem;
+            color: var(--accent-color);
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        aside {
+            background-color: #fff8e1;
+            border-left: 4px solid #ffc107;
+            padding: 25px;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        aside h3 {
+            color: #b78103;
+            margin-bottom: 10px;
+        }
+
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 25px;
+            border-radius: var(--border-radius);
+            margin-top: 30px;
+            font-size: 0.95rem;
+        }
+
+        footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. Thẻ header: Phần đầu trang -->
+    <header>
+        <h1>Phạm Đức Dương</h1>
+        <p>Sinh viên ngành Trí tuệ Nhân tạo (AI) - Trường Đại học Lạc Hồng</p>
+    </header>
+
+    <!-- 2. Thẻ nav: Thanh điều hướng -->
+    <nav>
+        <ul>
+            <li><a href="#gioi-thieu">Giới thiệu</a></li>
+            <li><a href="#ky-nang">Kỹ năng</a></li>
+            <li><a href="#du-an">Dự án</a></li>
+            <li><a href="#lien-he">Liên hệ</a></li>
+        </ul>
+    </nav>
+
+    <!-- 3. Thẻ main: Nội dung chính của trang -->
+    <main>
+        
+        <!-- 4. Thẻ section: Các phần nội dung -->
+        <section id="gioi-thieu">
+            <h2>Về tôi</h2>
+            <p>Xin chào, tôi là Phạm Đức Dương, hiện đang theo học ngành Trí tuệ Nhân tạo tại trường Đại học Lạc Hồng. Tôi có niềm đam mê lớn với mô hình học máy (Machine Learning), xử lý dữ liệu và việc ứng dụng AI để giải quyết các bài toán thực tế.</p>
+            
+            <!-- 5. Thẻ figure: Chứa hình ảnh hoặc nội dung đồ họa kèm chú thích -->
+            <figure>
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80" alt="Ảnh chân dung của Phạm Đức Dương">
+                <figcaption>Hình ảnh cá nhân tại góc học tập và nghiên cứu.</figcaption>
+            </figure>
+        </section>
+
+        <section id="ky-nang">
+            <h2>Kỹ năng chuyên môn</h2>
+            <p>Dưới đây là các công nghệ và kiến thức lập trình nền tảng tôi đang tích lũy:</p>
+            <ul>
+                <li>Ngôn ngữ lập trình: Python, C++</li>
+                <li>Nền tảng AI & Machine Learning: NumPy, Pandas, Scikit-Learn</li>
+                <li>Phát triển Web cơ bản: HTML5, CSS3, JavaScript</li>
+            </ul>
+        </section>
+
+        <!-- 6. Thẻ article: Bài viết hoặc nội dung độc lập -->
+        <section id="du-an">
+            <h2>Các bài viết và dự án tiêu biểu</h2>
+            <article>
+                <h3>Dự án: Xây dựng Website Portfolio cá nhân tích hợp AI</h3>
+                <!-- 7. Thẻ time: Biểu diễn thời gian, ngày tháng chuẩn SEO -->
+                <p><time datetime="2026-03-30">30 tháng 3, 2026</time></p>
+                <p>Dự án cá nhân giúp tôi kết hợp giữa kiến thức phát triển giao diện web hiện đại (Semantic HTML/CSS) và hành trình định hướng nghiên cứu chuyên sâu về Trí tuệ nhân tạo.</p>
+            </article>
+        </section>
+
+        <!-- 8. Thẻ aside: Nội dung phụ, bổ trợ, quảng cáo hoặc thông tin bên lề -->
+        <aside>
+            <h3>Góc chia sẻ</h3>
+            <p><em>"Trí tuệ nhân tạo không thay thế con người, nhưng người biết dùng AI sẽ thay thế người không biết."</em> — Động lực học tập và nghiên cứu của tôi tại Đại học Lạc Hồng.</p>
+        </aside>
+
+    </main>
+
+    <!-- 9. Thẻ footer: Phần chân trang -->
+    <footer>
+        <p>&copy; 2026 Phạm Đức Dương - Đại học Lạc Hồng. Bảo lưu mọi quyền.</p>
+        <p id="lien-he">Email liên hệ: <a href="mailto:phamducduong@example.com">phamducduong@example.com</a></p>
+    </footer>
+
+</body>
+</html>
