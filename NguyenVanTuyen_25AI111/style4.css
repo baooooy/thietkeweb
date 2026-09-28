@@ -1,0 +1,33 @@
+/* Bố cục mặc định & Mobile-first (< 768px): 1 cột */
+.services-container {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  /* Định dạng thẻ dịch vụ */
+  .service-card {
+    background-color: #f4f4f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Tablet (768px - 1024px): 2 cột */
+  @media (min-width: 768px) and (max-width: 1024px) {
+    .services-container {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  /* Desktop (> 1024px): 4 cột */
+  @media (min-width: 1025px) {
+    .services-container {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
