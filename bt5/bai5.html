@@ -1,0 +1,2100 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Portfolio Web Developer hiện đại">
+    <title>My Portfolio | Web Developer</title>
+
+    <!-- AOS -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Inter", sans-serif;
+            background: var(--page-bg);
+            color: var(--page-text);
+            line-height: 1.6;
+            overflow-x: hidden;
+            transition: background-color 0.55s ease, color 0.55s ease;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button {
+            font-family: inherit;
+        }
+
+        :root {
+            --primary: #7c5cff;
+            --secondary: #00d4ff;
+            --pink: #ff4ecd;
+            --dark: #080b14;
+            --card: rgba(255,255,255,0.06);
+            --border: rgba(255,255,255,0.12);
+            --text-gray: #a8afc1;
+            --page-bg: #080b14;
+            --page-text: #ffffff;
+            --nav-bg: rgba(8,11,20,0.65);
+            --input-bg: rgba(255,255,255,0.05);
+            --skill-bg: rgba(255,255,255,0.08);
+        }
+
+        body *,
+        body::before,
+        body::after {
+            transition:
+                background-color 0.55s ease,
+                border-color 0.55s ease,
+                color 0.55s ease,
+                box-shadow 0.55s ease;
+        }
+
+        body::before,
+        body::after {
+            transition: background 0.55s ease, opacity 0.55s ease;
+        }
+
+        body.light {
+            --page-bg: #f4f7fb;
+            --page-text: #182033;
+            --card: rgba(255,255,255,0.72);
+            --border: rgba(20,30,55,0.10);
+            --text-gray: #5f687b;
+            --nav-bg: rgba(255,255,255,0.78);
+            --input-bg: rgba(255,255,255,0.75);
+            --skill-bg: rgba(20,30,55,0.09);
+        }
+
+        /* =========================
+           BACKGROUND EFFECT
+        ========================== */
+
+        body::before {
+            content: "";
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            background: rgba(124,92,255,0.15);
+            border-radius: 50%;
+            filter: blur(120px);
+            top: -200px;
+            left: -200px;
+            z-index: -2;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            width: 450px;
+            height: 450px;
+            background: rgba(0,212,255,0.10);
+            border-radius: 50%;
+            filter: blur(120px);
+            bottom: -200px;
+            right: -200px;
+            z-index: -2;
+        }
+
+        /* =========================
+           LOADING
+        ========================== */
+
+        .loader {
+            position: fixed;
+            inset: 0;
+            background: var(--page-bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            animation: hideLoader 1s ease 1.5s forwards;
+        }
+
+        .loader-spinner {
+            width: 65px;
+            height: 65px;
+            border: 7px solid rgba(255,255,255,0.1);
+            border-top-color: var(--secondary);
+            border-right-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes hideLoader {
+            to {
+                opacity: 0;
+                visibility: hidden;
+            }
+        }
+
+        /* =========================
+           NAVBAR
+        ========================== */
+
+        header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            padding: 18px 7%;
+        }
+
+        .navbar {
+            max-width: 1200px;
+            margin: auto;
+            padding: 15px 22px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--nav-bg);
+            border: 1px solid var(--border);
+            backdrop-filter: blur(18px);
+            border-radius: 18px;
+        }
+
+        .logo {
+            font-family: "Space Grotesk", sans-serif;
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .logo span {
+            color: var(--secondary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 28px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #c9cedc;
+            font-size: 14px;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary);
+        }
+
+        /* =========================
+           NAV ACTIONS
+        ========================== */
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        /* =========================
+           HAMBURGER
+        ========================== */
+
+        .hamburger {
+            width: 30px;
+            height: 24px;
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            width: 100%;
+            height: 3px;
+            background: white;
+            border-radius: 10px;
+            transition: 0.4s cubic-bezier(0.68,-0.55,0.265,1.55);
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: translateY(10px) rotate(45deg);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+            transform: translateX(20px);
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: translateY(-10px) rotate(-45deg);
+        }
+
+        /* =========================
+           SUN ↔ MOON SWITCH
+        ========================== */
+
+        .theme-switch {
+            border: none;
+            background: transparent;
+            padding: 0;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .switch-track {
+            position: relative;
+            width: 68px;
+            height: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 8px;
+            border-radius: 50px;
+            background: linear-gradient(135deg, #151a2d, #252c48);
+            border: 1px solid rgba(255,255,255,0.15);
+            box-shadow:
+                inset 0 2px 5px rgba(0,0,0,0.35),
+                0 5px 15px rgba(0,0,0,0.2);
+            transition:
+                transform 0.3s ease,
+                background 0.5s ease,
+                border-color 0.5s ease,
+                box-shadow 0.5s ease;
+        }
+
+        .switch-icon {
+            position: relative;
+            z-index: 2;
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            transition:
+                transform 0.5s cubic-bezier(0.68,-0.55,0.265,1.55),
+                opacity 0.3s ease;
+        }
+
+        .moon {
+            color: #dbe7ff;
+            opacity: 1;
+        }
+
+        .sun {
+            color: #ffd45c;
+            opacity: 0.4;
+        }
+
+        .switch-thumb {
+            position: absolute;
+            left: 3px;
+            top: 3px;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #7c5cff, #00d4ff);
+            box-shadow:
+                0 3px 10px rgba(0,212,255,0.35),
+                0 0 15px rgba(124,92,255,0.3);
+            transition:
+                transform 0.55s cubic-bezier(0.68,-0.55,0.265,1.55),
+                background 0.5s ease,
+                box-shadow 0.5s ease;
+        }
+
+        .theme-switch:hover .switch-track {
+            transform: scale(1.05);
+        }
+
+        .theme-switch:active .switch-track {
+            transform: scale(0.96);
+        }
+
+        body.light .switch-track {
+            background: linear-gradient(135deg, #dcecff, #fff3bd);
+            border-color: rgba(0,0,0,0.08);
+            box-shadow:
+                inset 0 2px 5px rgba(0,0,0,0.08),
+                0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        body.light .switch-thumb {
+            transform: translateX(34px);
+            background: linear-gradient(135deg, #ffb300, #ff7b00);
+            box-shadow:
+                0 3px 12px rgba(255,179,0,0.45),
+                0 0 18px rgba(255,193,7,0.35);
+        }
+
+        body.light .moon {
+            opacity: 0.35;
+            transform: rotate(-25deg) scale(0.8);
+        }
+
+        body.light .sun {
+            opacity: 1;
+            transform: rotate(360deg) scale(1.05);
+        }
+
+        body:not(.light) .moon {
+            opacity: 1;
+            transform: rotate(0deg) scale(1);
+        }
+
+        body:not(.light) .sun {
+            opacity: 0.4;
+            transform: rotate(-90deg) scale(0.8);
+        }
+
+        /* =========================
+           HERO
+        ========================== */
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            background:
+                linear-gradient(rgba(8,11,20,0.55), rgba(8,11,20,0.9)),
+                url("https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=2000&q=80")
+                center/cover fixed;
+        }
+
+        .hero-container {
+            width: 86%;
+            max-width: 1200px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 8px 15px;
+            border: 1px solid rgba(0,212,255,0.3);
+            border-radius: 50px;
+            color: var(--secondary);
+            background: rgba(0,212,255,0.08);
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            font-family: "Space Grotesk", sans-serif;
+            font-size: clamp(45px, 7vw, 82px);
+            line-height: 1;
+            margin-bottom: 20px;
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, var(--secondary), var(--primary), var(--pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            color: var(--text-gray);
+            font-size: 17px;
+            max-width: 600px;
+            margin-bottom: 30px;
+        }
+
+        /* Typing Effect */
+
+        .typing {
+            width: 0;
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 3px solid var(--secondary);
+            font-size: 20px;
+            color: var(--page-text);
+            animation:
+                typing 4s steps(35) infinite alternate,
+                blink 0.7s infinite;
+        }
+
+        @keyframes typing {
+            from {
+                width: 0;
+            }
+            to {
+                width: 100%;
+            }
+        }
+
+        @keyframes blink {
+            50% {
+                border-color: transparent;
+            }
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 13px 23px;
+            border-radius: 12px;
+            font-weight: 600;
+            display: inline-block;
+            transition: 0.3s cubic-bezier(0.175,0.885,0.32,1.275);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), #5c43dc);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 30px rgba(124,92,255,0.35);
+        }
+
+        .btn-outline {
+            border: 1px solid var(--border);
+            background: rgba(255,255,255,0.05);
+        }
+
+        .btn-outline:hover {
+            transform: translateY(-4px);
+            border-color: var(--secondary);
+        }
+
+        .hero-card {
+            position: relative;
+            width: 330px;
+            height: 330px;
+            margin: auto;
+            border-radius: 35px;
+            background: linear-gradient(135deg, rgba(124,92,255,0.25), rgba(0,212,255,0.1));
+            border: 1px solid var(--border);
+            backdrop-filter: blur(20px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: floating 4s ease-in-out infinite;
+        }
+
+        .hero-card::before {
+            content: "";
+            position: absolute;
+            inset: -20px;
+            border-radius: 45px;
+            border: 1px solid rgba(0,212,255,0.1);
+            z-index: -1;
+        }
+
+        .code-icon {
+            font-size: 120px;
+        }
+
+        @keyframes floating {
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+
+        /* =========================
+           GENERAL
+        ========================== */
+
+        section {
+            padding: 110px 7%;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title small {
+            color: var(--secondary);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .section-title h2 {
+            font-family: "Space Grotesk", sans-serif;
+            font-size: 42px;
+            margin-top: 8px;
+        }
+
+        .section-title p {
+            color: var(--text-gray);
+            margin-top: 10px;
+        }
+
+        /* =========================
+           ABOUT
+        ========================== */
+
+        .about-container {
+            max-width: 1100px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: 0.8fr 1.2fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .about-image {
+            min-height: 380px;
+            border-radius: 30px;
+            background:
+                linear-gradient(rgba(124,92,255,0.2), rgba(0,212,255,0.1)),
+                url("https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1000&q=80")
+                center/cover;
+            border: 1px solid var(--border);
+        }
+
+        .glass-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 25px;
+            padding: 30px;
+            backdrop-filter: blur(15px);
+        }
+
+        .glass-card p {
+            color: var(--text-gray);
+            margin-bottom: 15px;
+        }
+
+        /* =========================
+           SKILLS
+        ========================== */
+
+        .skills-container {
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .skill {
+            margin-bottom: 28px;
+        }
+
+        .skill-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .skill-info span:last-child {
+            color: var(--secondary);
+        }
+
+        .skill-bar {
+            height: 10px;
+            background: var(--skill-bg);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .skill-progress {
+            height: 100%;
+            width: 0;
+            border-radius: 20px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            animation: skillAnimation 2s ease forwards;
+            animation-delay: 0.5s;
+        }
+
+        .html {
+            --target: 90%;
+        }
+
+        .css {
+            --target: 85%;
+        }
+
+        .js {
+            --target: 75%;
+        }
+
+        .ui {
+            --target: 80%;
+        }
+
+        @keyframes skillAnimation {
+            to {
+                width: var(--target);
+            }
+        }
+
+        /* =========================
+           PROJECTS
+        ========================== */
+
+        .projects {
+            max-width: 1200px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .project-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 22px;
+            overflow: hidden;
+            transition: 0.4s;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(0,212,255,0.4);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+        }
+
+        .project-image {
+            height: 210px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .project-1 {
+            background-image: url("https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1000&q=80");
+        }
+
+        .project-2 {
+            background-image: url("https://images.unsplash.com/photo-1558655146-d09347e92766?auto=format&fit=crop&w=1000&q=80");
+        }
+
+        .project-3 {
+            background-image: url("https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1000&q=80");
+        }
+
+        .project-content {
+            padding: 25px;
+        }
+
+        .project-content h3 {
+            margin-bottom: 8px;
+        }
+
+        .project-content p {
+            color: var(--text-gray);
+            font-size: 14px;
+        }
+
+        /* =========================
+           CARD FLIP
+        ========================== */
+
+        .flip-container {
+            max-width: 1000px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: repeat(2,1fr);
+            gap: 30px;
+        }
+
+        .flip-card {
+            height: 320px;
+            perspective: 1000px;
+        }
+
+        .flip-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+
+        .flip-card:hover .flip-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-front,
+        .flip-back {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            border-radius: 25px;
+            border: 1px solid var(--border);
+            background: var(--card);
+            backdrop-filter: blur(15px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .flip-front img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-bottom: 15px;
+            border: 3px solid var(--secondary);
+        }
+
+        .flip-front p,
+        .flip-back p {
+            color: var(--text-gray);
+        }
+
+        .flip-back {
+            transform: rotateY(180deg);
+        }
+
+        .flip-back h3 {
+            margin-bottom: 15px;
+        }
+
+        /* =========================
+           MICRO INTERACTION
+        ========================== */
+
+        .interaction-box {
+            max-width: 700px;
+            margin: auto;
+            text-align: center;
+            padding: 50px;
+            border-radius: 30px;
+            background: var(--card);
+            border: 1px solid var(--border);
+        }
+
+        .send-btn {
+            margin-top: 25px;
+            padding: 15px 35px;
+            border: none;
+            border-radius: 14px;
+            cursor: pointer;
+            color: white;
+            font-size: 16px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--pink));
+            transition:
+                transform 0.3s cubic-bezier(0.175,0.885,0.32,1.275),
+                background 0.3s,
+                box-shadow 0.3s;
+        }
+
+        .send-btn:hover {
+            transform: translateY(-3px);
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            box-shadow: 0 12px 25px rgba(0,212,255,0.3);
+        }
+
+        .send-btn:active {
+            transform: scale(0.94);
+        }
+
+        /* =========================
+           LOADING MASTER
+        ========================== */
+
+        .loading-demo {
+            text-align: center;
+        }
+
+        .loading-demo .spinner {
+            width: 80px;
+            height: 80px;
+            border: 8px solid rgba(255,255,255,0.1);
+            border-top-color: var(--secondary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 30px auto;
+        }
+
+        /* =========================
+           PERFORMANCE
+        ========================== */
+
+        .performance-demo {
+            max-width: 800px;
+            margin: auto;
+            text-align: center;
+        }
+
+        .moving-box {
+            width: 100px;
+            height: 100px;
+            margin: 40px auto;
+            border-radius: 20px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            transition: transform 0.5s cubic-bezier(0.175,0.885,0.32,1.275);
+        }
+
+        .moving-box:hover {
+            transform: translate(80px, -20px);
+        }
+
+        /* =========================
+           CONTACT
+        ========================== */
+
+        .contact-container {
+            max-width: 800px;
+            margin: auto;
+        }
+
+        .contact-form {
+            display: grid;
+            gap: 18px;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 16px;
+            border: 1px solid var(--border);
+            background: var(--input-bg);
+            border-radius: 12px;
+            color: var(--page-text);
+            outline: none;
+            font-family: inherit;
+        }
+
+        .contact-form textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            border-color: var(--secondary);
+        }
+
+        /* =========================
+           FAB
+        ========================== */
+
+        .fab {
+            position: fixed;
+            right: 25px;
+            bottom: 25px;
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            font-size: 24px;
+            z-index: 999;
+            box-shadow: 0 10px 30px rgba(0,212,255,0.3);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(0,212,255,0.5);
+            }
+
+            70% {
+                box-shadow: 0 0 0 18px rgba(0,212,255,0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(0,212,255,0);
+            }
+        }
+
+        /* =========================
+           FOOTER
+        ========================== */
+
+        footer {
+            padding: 35px 7%;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-gray);
+        }
+
+        footer span {
+            color: var(--secondary);
+        }
+
+        /* =========================
+           LIGHT MODE
+        ========================== */
+
+        body.light .nav-links a {
+            color: #3f4758;
+        }
+
+        body.light .nav-links a:hover {
+            color: #006dff;
+        }
+
+        body.light .hero {
+            background:
+                linear-gradient(rgba(244,247,251,0.72), rgba(244,247,251,0.94)),
+                url("https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=2000&q=80")
+                center/cover fixed;
+        }
+
+        body.light .hero p,
+        body.light .section-title p,
+        body.light .glass-card p,
+        body.light .project-content p,
+        body.light .flip-front p,
+        body.light .flip-back p,
+        body.light footer {
+            color: var(--text-gray);
+        }
+
+        body.light .btn-outline {
+            color: #182033;
+            background: rgba(255,255,255,0.65);
+        }
+
+        body.light .typing {
+            color: #182033;
+        }
+
+        body.light .contact-form input,
+        body.light .contact-form textarea {
+            color: #182033;
+            background: var(--input-bg);
+        }
+
+        body.light .contact-form input::placeholder,
+        body.light .contact-form textarea::placeholder {
+            color: #7b8496;
+        }
+
+        body.light .nav-links {
+            background: rgba(255,255,255,0.96);
+        }
+
+        body.light .hamburger span {
+            background: #182033;
+        }
+
+        body.light .loader {
+            background: var(--page-bg);
+        }
+
+        body.light .loader-spinner {
+            border-color: rgba(20,30,55,0.10);
+            border-top-color: var(--secondary);
+            border-right-color: var(--primary);
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================== */
+
+        @media (max-width: 900px) {
+            .hero-container,
+            .about-container {
+                grid-template-columns: 1fr;
+            }
+
+            .hero {
+                padding-top: 120px;
+            }
+
+            .hero-card {
+                width: 260px;
+                height: 260px;
+            }
+
+            .projects {
+                grid-template-columns: repeat(2,1fr);
+            }
+        }
+
+        @media (max-width: 650px) {
+            header {
+                padding: 12px 4%;
+            }
+
+            .navbar {
+                padding: 14px 18px;
+            }
+
+            .nav-links {
+                position: absolute;
+                top: 75px;
+                left: 0;
+                width: 100%;
+                display: none;
+                flex-direction: column;
+                padding: 25px;
+                background: rgba(8,11,20,0.95);
+                border: 1px solid var(--border);
+                border-radius: 18px;
+                text-align: center;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-actions {
+                gap: 12px;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .switch-track {
+                width: 62px;
+                height: 32px;
+            }
+
+            .switch-thumb {
+                width: 24px;
+                height: 24px;
+            }
+
+            body.light .switch-thumb {
+                transform: translateX(30px);
+            }
+
+            section {
+                padding: 80px 5%;
+            }
+
+            .hero-container {
+                width: 90%;
+            }
+
+            .hero h1 {
+                font-size: 48px;
+            }
+
+            .hero-card {
+                display: none;
+            }
+
+            .projects,
+            .flip-container {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title h2 {
+                font-size: 32px;
+            }
+
+            .typing {
+                font-size: 16px;
+            }
+
+            .interaction-box {
+                padding: 35px 20px;
+            }
+
+            .moving-box:hover {
+                transform: translate(30px, -10px);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================
+         LOADING
+    ========================== -->
+
+    <div class="loader">
+        <div class="loader-spinner"></div>
+    </div>
+
+    <!-- =========================
+         NAVBAR
+    ========================== -->
+
+    <header>
+        <nav class="navbar">
+
+            <a href="#home" class="logo">
+                MY<span>.</span>PORTFOLIO
+            </a>
+
+            <ul class="nav-links">
+                <li><a href="#home">Trang chủ</a></li>
+                <li><a href="#about">Giới thiệu</a></li>
+                <li><a href="#skills">Kỹ năng</a></li>
+                <li><a href="#projects">Dự án</a></li>
+                <li><a href="#activities">Activities</a></li>
+                <li><a href="#contact">Liên hệ</a></li>
+            </ul>
+
+            <div class="nav-actions">
+
+                <!-- SUN ↔ MOON -->
+                <button
+                    class="theme-switch"
+                    id="themeToggle"
+                    aria-label="Đổi giao diện sáng tối"
+                    title="Đổi giao diện"
+                >
+                    <span class="switch-track">
+                        <span class="switch-icon moon">☾</span>
+                        <span class="switch-icon sun">☀</span>
+                        <span class="switch-thumb"></span>
+                    </span>
+                </button>
+
+                <!-- HAMBURGER -->
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+
+            </div>
+
+        </nav>
+    </header>
+
+    <!-- =========================
+         HERO
+    ========================== -->
+
+    <section class="hero" id="home">
+
+        <div class="hero-container">
+
+            <div data-aos="fade-right">
+
+                <span class="badge">
+                    ● AVAILABLE FOR PROJECTS
+                </span>
+
+                <h1>
+                    Xin chào,<br>
+                    Tôi là
+                    <span class="gradient-text">
+                        Web Developer
+                    </span>
+                </h1>
+
+                <!-- EXERCISE 3: TYPING EFFECT -->
+
+                <div class="typing">
+                    Tôi là một Web Developer hiện đại...
+                </div>
+
+                <p>
+                    Tôi xây dựng những website có thiết kế đẹp,
+                    trải nghiệm mượt mà và hiệu suất cao.
+                    Đây là portfolio tổng hợp các kỹ thuật Web Design
+                    tôi đã thực hành.
+                </p>
+
+                <div class="hero-buttons">
+
+                    <a
+                        href="#projects"
+                        class="btn btn-primary"
+                    >
+                        Xem dự án
+                    </a>
+
+                    <a
+                        href="#contact"
+                        class="btn btn-outline"
+                    >
+                        Liên hệ tôi
+                    </a>
+
+                </div>
+
+            </div>
+
+            <div
+                class="hero-card"
+                data-aos="zoom-in"
+            >
+                <div class="code-icon">
+                    &lt;/&gt;
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- =========================
+         ABOUT
+    ========================== -->
+
+    <section id="about">
+
+        <div
+            class="section-title"
+            data-aos="fade-up"
+        >
+
+            <small>
+                01 — About Me
+            </small>
+
+            <h2>
+                Giới thiệu
+            </h2>
+
+            <p>
+                Tôi là ai và tôi đang làm gì?
+            </p>
+
+        </div>
+
+        <div class="about-container">
+
+            <div
+                class="about-image"
+                data-aos="fade-right"
+            ></div>
+
+            <div
+                class="glass-card"
+                data-aos="fade-left"
+            >
+
+                <h2>
+                    Creative Developer
+                </h2>
+
+                <p>
+                    Tôi yêu thích việc biến những ý tưởng thành
+                    những sản phẩm kỹ thuật số trực quan và dễ sử dụng.
+                </p>
+
+                <p>
+                    Trong quá trình học Web Design, tôi tập trung vào
+                    HTML, CSS, JavaScript, UI Design và tối ưu trải nghiệm
+                    người dùng.
+                </p>
+
+                <p>
+                    Mục tiêu của tôi là tạo ra những website không chỉ
+                    đẹp mà còn nhanh, responsive và chuyên nghiệp.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- =========================
+         SKILLS
+    ========================== -->
+
+    <section id="skills">
+
+        <div
+            class="section-title"
+            data-aos="fade-up"
+        >
+
+            <small>
+                02 — My Skills
+            </small>
+
+            <h2>
+                Kỹ năng
+            </h2>
+
+            <p>
+                Những công nghệ tôi đang học tập và phát triển.
+            </p>
+
+        </div>
+
+        <div
+            class="skills-container glass-card"
+            data-aos="fade-up"
+        >
+
+            <div class="skill">
+
+                <div class="skill-info">
+                    <span>HTML</span>
+                    <span>90%</span>
+                </div>
+
+                <div class="skill-bar">
+                    <div class="skill-progress html"></div>
+                </div>
+
+            </div>
+
+            <div class="skill">
+
+                <div class="skill-info">
+                    <span>CSS</span>
+                    <span>85%</span>
+                </div>
+
+                <div class="skill-bar">
+                    <div class="skill-progress css"></div>
+                </div>
+
+            </div>
+
+            <div class="skill">
+
+                <div class="skill-info">
+                    <span>JavaScript</span>
+                    <span>75%</span>
+                </div>
+
+                <div class="skill-bar">
+                    <div class="skill-progress js"></div>
+                </div>
+
+            </div>
+
+            <div class="skill">
+
+                <div class="skill-info">
+                    <span>UI / UX Design</span>
+                    <span>80%</span>
+                </div>
+
+                <div class="skill-bar">
+                    <div class="skill-progress ui"></div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- =========================
+         PROJECTS
+    ========================== -->
+
+    <section id="projects">
+
+        <div
+            class="section-title"
+            data-aos="fade-up"
+        >
+
+            <small>
+                03 — Projects
+            </small>
+
+            <h2>
+                Dự án
+            </h2>
+
+            <p>
+                Một số sản phẩm tiêu biểu.
+            </p>
+
+        </div>
+
+        <div class="projects">
+
+            <div
+                class="project-card"
+                data-aos="fade-up"
+            >
+
+                <div class="project-image project-1"></div>
+
+                <div class="project-content">
+
+                    <h3>
+                        Dashboard UI
+                    </h3>
+
+                    <p>
+                        Thiết kế giao diện dashboard hiện đại và responsive.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div
+                class="project-card"
+                data-aos="fade-up"
+                data-aos-delay="100"
+            >
+
+                <div class="project-image project-2"></div>
+
+                <div class="project-content">
+
+                    <h3>
+                        Creative Landing Page
+                    </h3>
+
+                    <p>
+                        Landing page sử dụng gradient và glassmorphism.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div
+                class="project-card"
+                data-aos="fade-up"
+                data-aos-delay="200"
+            >
+
+                <div class="project-image project-3"></div>
+
+                <div class="project-content">
+
+                    <h3>
+                        Developer Website
+                    </h3>
+
+                    <p>
+                        Website portfolio dành cho Web Developer.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- =========================
+         CARD FLIP
+    ========================== -->
+
+    <section>
+
+        <div
+            class="section-title"
+            data-aos="fade-up"
+        >
+
+            <small>
+                04 — Card Flip
+            </small>
+
+            <h2>
+                Đội ngũ
+            </h2>
+
+            <p>
+                Di chuột vào card để xem thông tin liên hệ.
+            </p>
+
+        </div>
+
+        <div class="flip-container">
+
+            <div
+                class="flip-card"
+                data-aos="flip-left"
+            >
+
+                <div class="flip-inner">
+
+                    <div class="flip-front">
+
+                        <img
+                            src="https://i.pravatar.cc/200?img=12"
+                            alt="Avatar"
+                        >
+
+                        <h3>
+                            Nguyễn Văn A
+                        </h3>
+
+                        <p>
+                            Frontend Developer
+                        </p>
+
+                    </div>
+
+                    <div class="flip-back">
+
+                        <h3>
+                            Thông tin liên hệ
+                        </h3>
+
+                        <p>
+                            Email: developer@gmail.com
+                        </p>
+
+                        <p>
+                            Phone: 0123 456 789
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div
+                class="flip-card"
+                data-aos="flip-right"
+            >
+
+                <div class="flip-inner">
+
+                    <div class="flip-front">
+
+                        <img
+                            src="https://i.pravatar.cc/200?img=47"
+                            alt="Avatar"
+                        >
+
+                        <h3>
+                            Trần Thị B
+                        </h3>
+
+                        <p>
+                            UI/UX Designer
+                        </p>
+
+                    </div>
+
+                    <div class="flip-back">
+
+                        <h3>
+                            Thông tin liên hệ
+                        </h3>
+
+                        <p>
+                            Email: designer@gmail.com
+                        </p>
+
+                        <p>
+                            Phone: 0987 654 321
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- =========================
+         ACTIVITY 1
+         MICRO INTERACTIONS
+    ========================== -->
+
+    <section id="activities">
+
+        <div
+            class="section-title"
+            data-aos="fade-up"
+        >
+
+            <small>
+                05 — Activity 01
+            </small>
+
+            <h2>
+                Micro-interactions
+            </h2>
+
+            <p>
+                Hover và click vào nút để trải nghiệm.
+            </p>
+
+        </div>
+
+        <div
+            class="interaction-box"
+            data-aos="zoom-in"
+        >
+
+            <h3>
+                Gửi tin nhắn
+            </h3>
+
+            <p>
+                Button sử dụng transition + cubic-bezier.
+            </p>
+
+            <button class="send-btn">
+                Gửi tin nhắn
+            </button>
+
+        </div>
+
+    </section>
+
+    <!-- =========================
+         ACTIVITY 2
+         LOADING MASTER
+    ========================== -->
+
+    <section>
+
+        <div
+            class="section-title"
+            data-aos="fade-up"
+        >
+
+            <small>
+                06 — Activity 02
+            </small>
+
+            <h2>
+                Loading Master
+            </h2>
+
+            <p>
+                CSS Keyframes Animation.
+            </p>
+
+        </div>
+
+        <div
+            class="loading-demo glass-card"
+            data-aos="zoom-in"
+        >
+
+            <h3>
+                Loading...
+            </h3>
+
+            <div class="spinner"></div>
+
+            <p>
+                Đang tải dữ liệu...
+            </p>
+
+        </div>
+
+    </section>
+
+    <!-- =========================
+         ACTIVITY 3
+         AOS
+    ========================== -->
+
+    <section>
+
+        <div
+            class="section-title"
+            data-aos="fade-up"
+        >
+
+            <small>
+                07 — Activity 03
+            </small>
+
+            <h2>
+                AOS Scroll Reveal
+            </h2>
+
+            <p>
+                Cuộn trang để xem hiệu ứng xuất hiện.
+            </p>
+
+        </div>
+
+        <div
+            class="glass-card"
+            data-aos="fade-up"
+        >
+
+            <h2>
+                Animate On Scroll
+            </h2>
+
+            <p>
+                Nội dung này sử dụng thư viện AOS để tạo hiệu ứng
+                xuất hiện khi người dùng cuộn đến section.
+            </p>
+
+        </div>
+
+    </section>
+
+    <!-- =========================
+         ACTIVITY 4
+         PERFORMANCE
+    ========================== -->
+
+    <section>
+
+        <div
+            class="section-title"
+            data-aos="fade-up"
+        >
+
+            <small>
+                08 — Activity 04
+            </small>
+
+            <h2>
+                Performance
+            </h2>
+
+            <p>
+                Sử dụng transform thay vì top / left.
+            </p>
+
+        </div>
+
+        <div
+            class="performance-demo glass-card"
+            data-aos="fade-up"
+        >
+
+            <h3>
+                Hover vào hình vuông
+            </h3>
+
+            <div class="moving-box"></div>
+
+            <p>
+                Animation sử dụng
+                <strong>transform: translate()</strong>
+                giúp chuyển động mượt và tối ưu hơn.
+            </p>
+
+        </div>
+
+    </section>
+
+    <!-- =========================
+         6 BÀI TỰ LUYỆN
+    ========================== -->
+
+    <section>
+
+        <div
+            class="section-title"
+            data-aos="fade-up"
+        >
+
+            <small>
+                09 — Extra Practice
+            </small>
+
+            <h2>
+                6 bài tự luyện
+            </h2>
+
+            <p>
+                Các kỹ thuật Web Design được tích hợp trong portfolio.
+            </p>
+
+        </div>
+
+        <div class="projects">
+
+            <div
+                class="glass-card"
+                data-aos="fade-up"
+            >
+                <h3>
+                    01. Floating Action Button
+                </h3>
+
+                <p>
+                    Nút liên hệ cố định với hiệu ứng Pulse.
+                </p>
+            </div>
+
+            <div
+                class="glass-card"
+                data-aos="fade-up"
+            >
+                <h3>
+                    02. Card Flip
+                </h3>
+
+                <p>
+                    Card xoay 180 độ bằng CSS 3D.
+                </p>
+            </div>
+
+            <div
+                class="glass-card"
+                data-aos="fade-up"
+            >
+                <h3>
+                    03. Typing Effect
+                </h3>
+
+                <p>
+                    Hiệu ứng đánh chữ chỉ sử dụng CSS.
+                </p>
+            </div>
+
+            <div
+                class="glass-card"
+                data-aos="fade-up"
+            >
+                <h3>
+                    04. Parallax Image
+                </h3>
+
+                <p>
+                    Background di chuyển chậm hơn nội dung.
+                </p>
+            </div>
+
+            <div
+                class="glass-card"
+                data-aos="fade-up"
+            >
+                <h3>
+                    05. Hamburger Menu
+                </h3>
+
+                <p>
+                    Ba đường thẳng biến thành dấu X.
+                </p>
+            </div>
+
+            <div
+                class="glass-card"
+                data-aos="fade-up"
+            >
+                <h3>
+                    06. Skill Bar
+                </h3>
+
+                <p>
+                    Thanh kỹ năng chạy từ 0 đến phần trăm mục tiêu.
+                </p>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- =========================
+         CONTACT
+    ========================== -->
+
+    <section id="contact">
+
+        <div
+            class="section-title"
+            data-aos="fade-up"
+        >
+
+            <small>
+                10 — Contact
+            </small>
+
+            <h2>
+                Liên hệ
+            </h2>
+
+            <p>
+                Hãy gửi cho tôi một tin nhắn.
+            </p>
+
+        </div>
+
+        <div
+            class="contact-container glass-card"
+            data-aos="fade-up"
+        >
+
+            <form class="contact-form">
+
+                <input
+                    type="text"
+                    placeholder="Họ và tên"
+                    required
+                >
+
+                <input
+                    type="email"
+                    placeholder="Email"
+                    required
+                >
+
+                <textarea
+                    placeholder="Nội dung tin nhắn..."
+                    required
+                ></textarea>
+
+                <button
+                    class="send-btn"
+                    type="submit"
+                >
+                    Gửi tin nhắn →
+                </button>
+
+            </form>
+
+        </div>
+
+    </section>
+
+    <!-- =========================
+         FLOATING ACTION BUTTON
+    ========================== -->
+
+    <a
+        href="#contact"
+        class="fab"
+        title="Liên hệ"
+    >
+        ✉
+    </a>
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
+    <footer>
+
+        <p>
+            © 2026
+            <span>My Portfolio</span>.
+            Designed & Developed with ❤️
+        </p>
+
+    </footer>
+
+    <!-- =========================
+         AOS JS
+    ========================== -->
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <script>
+
+        /* =========================
+           AOS
+        ========================== */
+
+        AOS.init({
+            duration: 900,
+            once: true,
+            offset: 80
+        });
+
+        /* =========================
+           HAMBURGER MENU
+        ========================== */
+
+        const hamburger =
+            document.querySelector(".hamburger");
+
+        const navLinks =
+            document.querySelector(".nav-links");
+
+        hamburger.addEventListener("click", function() {
+
+            hamburger.classList.toggle("active");
+
+            navLinks.classList.toggle("active");
+
+        });
+
+        document
+            .querySelectorAll(".nav-links a")
+            .forEach(function(link) {
+
+                link.addEventListener("click", function() {
+
+                    hamburger.classList.remove("active");
+
+                    navLinks.classList.remove("active");
+
+                });
+
+            });
+
+        /* =========================
+           SUN ↔ MOON THEME
+        ========================== */
+
+        const themeToggle =
+            document.getElementById("themeToggle");
+
+        const savedTheme =
+            localStorage.getItem("theme");
+
+        if (savedTheme === "light") {
+
+            document.body.classList.add("light");
+
+            themeToggle.setAttribute(
+                "aria-label",
+                "Chuyển sang giao diện tối"
+            );
+
+        }
+
+        themeToggle.addEventListener("click", function() {
+
+            document.body.classList.toggle("light");
+
+            const isLight =
+                document.body.classList.contains("light");
+
+            localStorage.setItem(
+                "theme",
+                isLight ? "light" : "dark"
+            );
+
+            themeToggle.setAttribute(
+                "aria-label",
+                isLight
+                    ? "Chuyển sang giao diện tối"
+                    : "Chuyển sang giao diện sáng"
+            );
+
+        });
+
+        /* =========================
+           CONTACT FORM
+        ========================== */
+
+        document
+            .querySelector(".contact-form")
+            .addEventListener("submit", function(event) {
+
+                event.preventDefault();
+
+                alert(
+                    "Cảm ơn bạn! Tin nhắn đã được gửi."
+                );
+
+            });
+
+    </script>
+
+</body>
+</html>
