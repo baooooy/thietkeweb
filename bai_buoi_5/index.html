@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Khưu Đông Nhựt Long - 6 Bài Tập CSS Animations (100% Pure CSS - Không Dùng JS)</title>
+    <meta name="description"
+        content="Hồ sơ cá nhân và trọn bộ 6 bài tập CSS Animation sử dụng 100% thuần HTML & CSS, hoàn toàn không sử dụng JavaScript.">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap"
+        rel="stylesheet">
+
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ========================================================
+         BÀI 5: MODERN HAMBURGER MENU (100% PURE CSS - CHECKBOX HACK)
+         Biến đổi 3 gạch thành dấu X và mở menu mà KHÔNG CẦN JS
+         ======================================================== -->
+    <header class="site-header">
+        <div class="header-container">
+            <a href="#about" class="logo">
+                <span class="logo-badge">AI</span>
+                <span class="logo-text">Nhựt Long<strong>.css</strong></span>
+            </a>
+
+            <!-- Checkbox ẩn điều khiển trạng thái mở/đóng menu (Pure CSS) -->
+            <input type="checkbox" id="menuToggle" class="menu-checkbox" aria-label="Toggle menu">
+
+            <!-- Label đóng vai trò nút bấm Hamburger -->
+            <label for="menuToggle" class="hamburger-btn" title="Bấm mở/đóng menu (Pure CSS)">
+                <span class="bar bar-1"></span>
+                <span class="bar bar-2"></span>
+                <span class="bar bar-3"></span>
+            </label>
+
+            <!-- Menu điều hướng (CSS Selector ~ hoặc + theo checkbox) -->
+            <nav class="nav-menu">
+                <ul class="nav-list">
+                    <li><a href="#about" class="nav-link"><i class="fa-solid fa-user"></i> Giới thiệu</a></li>
+                    <li><a href="#card-flip-demo" class="nav-link"><i class="fa-solid fa-id-card"></i> Thẻ 3D Flip</a>
+                    </li>
+                    <li><a href="#skills" class="nav-link"><i class="fa-solid fa-code"></i> Kỹ năng</a></li>
+                    <li><a href="#projects" class="nav-link"><i class="fa-solid fa-microchip"></i> Dự án</a></li>
+                    <li><a href="#parallax-demo" class="nav-link"><i class="fa-solid fa-image"></i> Parallax Banner</a>
+                    </li>
+                    <li><a href="#contact" class="nav-link nav-link-btn"><i class="fa-solid fa-paper-plane"></i> Liên
+                            hệ</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- HERO SECTION với BÀI 3: TYPING EFFECT (Pure CSS) -->
+        <section class="hero-section" id="about">
+            <div class="container hero-container">
+                <div class="hero-content">
+                    <div class="tag-pill">
+                        <span class="tag-dot"></span> 100% Pure CSS Animations | Không dùng JS
+                    </div>
+
+                    <h1 class="hero-title">
+                        Xin chào! <br>
+                        <!-- ========================================================
+                             BÀI 3: TYPING EFFECT (Thuần CSS - Không JS)
+                             ======================================================== -->
+                        <span class="typing-wrapper">
+                            <span class="typing-text">Tôi là một Web Developer...</span>
+                        </span>
+                    </h1>
+
+                    <p class="hero-desc">
+                        Hồ sơ cá nhân của <strong>Khưu Đông Nhựt Long</strong> - Sinh viên Chuyên ngành Robot Thông Minh
+                        &amp; Trí Tuệ Nhân Tạo tại Đại học Lạc Hồng.
+                        Toàn bộ 6 bài tập hiệu ứng tương tác trên trang này được xây dựng bằng <strong>100% thuần
+                            CSS</strong>.
+                    </p>
+
+                    <div class="hero-actions">
+                        <a href="#contact" class="btn btn-primary">
+                            <i class="fa-solid fa-envelope"></i> Kết nối ngay
+                        </a>
+                        <a href="#skills" class="btn btn-outline">
+                            <i class="fa-solid fa-bolt"></i> Xem Kỹ Năng
+                        </a>
+                    </div>
+
+                    <div class="hero-stats">
+                        <div class="stat-card">
+                            <span class="stat-num">2022 - 2026</span>
+                            <span class="stat-label">Đại học Lạc Hồng</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-num">30/01/2000</span>
+                            <span class="stat-label">Ngày sinh</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-num">Đồng Nai</span>
+                            <span class="stat-label">Việt Nam</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ========================================================
+                     BÀI 2: CARD FLIP EFFECT (3D Transform lật 180 độ khi hover)
+                     ======================================================== -->
+                <div class="hero-card-side" id="card-flip-demo">
+                    <div class="section-badge-hint">
+                        <i class="fa-solid fa-arrows-rotate"></i> Bài 2: Rê chuột để lật thẻ 180°
+                    </div>
+
+                    <div class="flip-card">
+                        <div class="flip-card-inner">
+                            <!-- Mặt trước của thẻ -->
+                            <div class="flip-card-front">
+                                <div class="card-avatar-wrap">
+                                    <div class="card-avatar">
+                                        <i class="fa-solid fa-robot"></i>
+                                    </div>
+                                    <span class="online-status" title="Sẵn sàng hợp tác"></span>
+                                </div>
+                                <h3 class="card-name">Khưu Đông Nhựt Long</h3>
+                                <p class="card-role">AI Robotics &amp; Web Developer</p>
+                                <div class="card-tags">
+                                    <span class="mini-tag">Python</span>
+                                    <span class="mini-tag">C++</span>
+                                    <span class="mini-tag">Pure CSS</span>
+                                </div>
+                                <div class="card-flip-hint">
+                                    <i class="fa-solid fa-repeat"></i> Rê chuột (hover) để xem liên hệ
+                                </div>
+                            </div>
+
+                            <!-- Mặt sau của thẻ (Hiện khi lật 180 độ) -->
+                            <div class="flip-card-back">
+                                <h3 class="back-title">Thông Tin Liên Hệ</h3>
+                                <div class="contact-item">
+                                    <i class="fa-solid fa-globe"></i>
+                                    <div>
+                                        <small>Tên miền cá nhân</small>
+                                        <strong>khuudongnhutlong.id.vn</strong>
+                                    </div>
+                                </div>
+                                <div class="contact-item">
+                                    <i class="fa-solid fa-location-dot"></i>
+                                    <div>
+                                        <small>Địa điểm</small>
+                                        <strong>Đồng Nai, Việt Nam</strong>
+                                    </div>
+                                </div>
+                                <div class="contact-item">
+                                    <i class="fa-solid fa-graduation-cap"></i>
+                                    <div>
+                                        <small>Trường đào tạo</small>
+                                        <strong>Đại học Lạc Hồng</strong>
+                                    </div>
+                                </div>
+                                <a href="#contact" class="card-back-btn">Gửi tin nhắn</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================================
+             BÀI 4: PARALLAX IMAGE BANNER (background-attachment: fixed)
+             ======================================================== -->
+        <section class="parallax-section" id="parallax-demo">
+            <div class="parallax-overlay"></div>
+            <div class="container parallax-content">
+                <span class="parallax-badge"><i class="fa-solid fa-mountain"></i> Bài 4: Pure CSS Parallax Banner</span>
+                <h2 class="parallax-title">Kiến Tạo Tương Lai Với AI &amp; Robotics</h2>
+                <p class="parallax-desc">
+                    Hiệu ứng Parallax Scrolling thuần CSS (sử dụng <code>background-attachment: fixed</code>) giúp ảnh
+                    nền di chuyển chậm hơn nội dung khi cuộn trang, tạo chiều sâu thị giác ấn tượng mà không cần bất kỳ
+                    dòng JS nào.
+                </p>
+                <div class="parallax-quote">
+                    <em>"Tự động hóa không chỉ là công nghệ, đó là nghệ thuật tối ưu hóa thế giới."</em>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================================
+             BÀI 6: SKILL BAR ANIMATION (Tự động chạy từ 0% đến đích khi load)
+             ======================================================== -->
+        <section class="skills-section" id="skills">
+            <div class="container">
+                <div class="section-header">
+                    <span class="sub-badge"><i class="fa-solid fa-chart-line"></i> Bài 6: CSS Skill Bar Animation</span>
+                    <h2 class="section-title">Kỹ Năng Chuyên Môn &amp; Năng Lực</h2>
+                    <p class="section-subtitle">Khi tải trang xong, các thanh tỷ lệ tự động chạy hoạt họa mượt mà từ 0%
+                        đến giá trị đích thông qua CSS Keyframes.</p>
+                </div>
+
+                <div class="skills-grid">
+                    <!-- Nhóm 1: Lập trình & Web -->
+                    <div class="skill-category-card">
+                        <div class="category-header">
+                            <i class="fa-solid fa-laptop-code"></i>
+                            <h3>Lập Trình &amp; Phát Triển Web</h3>
+                        </div>
+
+                        <div class="skill-list">
+                            <div class="skill-item">
+                                <div class="skill-info">
+                                    <span class="skill-name"><i class="fa-brands fa-html5"></i> HTML5 (Semantic
+                                        Structure)</span>
+                                    <span class="skill-percent">90%</span>
+                                </div>
+                                <div class="skill-bar-bg">
+                                    <div class="skill-bar-fill" style="--target-width: 90%;"></div>
+                                </div>
+                            </div>
+
+                            <div class="skill-item">
+                                <div class="skill-info">
+                                    <span class="skill-name"><i class="fa-brands fa-css3-alt"></i> CSS3 &amp; Keyframe
+                                        Animation</span>
+                                    <span class="skill-percent">85%</span>
+                                </div>
+                                <div class="skill-bar-bg">
+                                    <div class="skill-bar-fill" style="--target-width: 85%;"></div>
+                                </div>
+                            </div>
+
+                            <div class="skill-item">
+                                <div class="skill-info">
+                                    <span class="skill-name"><i class="fa-brands fa-python"></i> Python (AI &amp; Data
+                                        Analysis)</span>
+                                    <span class="skill-percent">92%</span>
+                                </div>
+                                <div class="skill-bar-bg">
+                                    <div class="skill-bar-fill" style="--target-width: 92%;"></div>
+                                </div>
+                            </div>
+
+                            <div class="skill-item">
+                                <div class="skill-info">
+                                    <span class="skill-name"><i class="fa-solid fa-code"></i> C++ &amp; Embedded
+                                        Logic</span>
+                                    <span class="skill-percent">80%</span>
+                                </div>
+                                <div class="skill-bar-bg">
+                                    <div class="skill-bar-fill" style="--target-width: 80%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Nhóm 2: Phần cứng & Cảm biến -->
+                    <div class="skill-category-card">
+                        <div class="category-header">
+                            <i class="fa-solid fa-microchip"></i>
+                            <h3>Phần Cứng &amp; Cảm Biến Vật Lý</h3>
+                        </div>
+
+                        <div class="skill-list">
+                            <div class="skill-item">
+                                <div class="skill-info">
+                                    <span class="skill-name"><i class="fa-solid fa-wave-square"></i> Cảm biến Siêu âm,
+                                        Nhiệt độ, Áp suất</span>
+                                    <span class="skill-percent">88%</span>
+                                </div>
+                                <div class="skill-bar-bg">
+                                    <div class="skill-bar-fill" style="--target-width: 88%;"></div>
+                                </div>
+                            </div>
+
+                            <div class="skill-item">
+                                <div class="skill-info">
+                                    <span class="skill-name"><i class="fa-solid fa-eye"></i> Cảm biến Màu sắc &amp; Hồng
+                                        ngoại</span>
+                                    <span class="skill-percent">84%</span>
+                                </div>
+                                <div class="skill-bar-bg">
+                                    <div class="skill-bar-fill" style="--target-width: 84%;"></div>
+                                </div>
+                            </div>
+
+                            <div class="skill-item">
+                                <div class="skill-info">
+                                    <span class="skill-name"><i class="fa-solid fa-database"></i> SQL &amp; Đại số quan
+                                        hệ</span>
+                                    <span class="skill-percent">82%</span>
+                                </div>
+                                <div class="skill-bar-bg">
+                                    <div class="skill-bar-fill" style="--target-width: 82%;"></div>
+                                </div>
+                            </div>
+
+                            <div class="skill-item">
+                                <div class="skill-info">
+                                    <span class="skill-name"><i class="fa-solid fa-diagram-project"></i> Sơ đồ khối
+                                        (Flowchart) &amp; Cấu trúc dữ liệu</span>
+                                    <span class="skill-percent">89%</span>
+                                </div>
+                                <div class="skill-bar-bg">
+                                    <div class="skill-bar-fill" style="--target-width: 89%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- DỰ ÁN & KINH NGHIỆM -->
+        <section class="projects-section" id="projects">
+            <div class="container">
+                <div class="section-header">
+                    <span class="sub-badge"><i class="fa-solid fa-folder-open"></i> Hồ Sơ Dự Án</span>
+                    <h2 class="section-title">Dự Án Nghiên Cứu &amp; Thực Hành</h2>
+                    <p class="section-subtitle">Tổng hợp các nghiên cứu phân tích dữ liệu, thuật toán và kiểm thử thực
+                        hành phần cứng.</p>
+                </div>
+
+                <div class="projects-grid">
+                    <article class="project-card">
+                        <div class="project-icon"><i class="fa-solid fa-chart-pie"></i></div>
+                        <div class="project-time"><time datetime="2026-04">Tháng 04/2026</time></div>
+                        <h3 class="project-title">Nghiên Cứu Lĩnh Vực Phân Tích Dữ Liệu</h3>
+                        <p class="project-text">
+                            Phân tích tổng quan về vai trò và công cụ của Data Analyst trong hệ thống công nghiệp hiện
+                            đại tại Đại học Lạc Hồng.
+                        </p>
+                        <div class="project-tags">
+                            <span>Data Analysis</span>
+                            <span>Industrial Systems</span>
+                        </div>
+                    </article>
+
+                    <article class="project-card">
+                        <div class="project-icon"><i class="fa-solid fa-square-root-variable"></i></div>
+                        <div class="project-time"><time datetime="2025-12">Tháng 12/2025</time></div>
+                        <h3 class="project-title">Xây Dựng Thuật Toán Giải Phương Trình Bậc Hai</h3>
+                        <p class="project-text">
+                            Trực quan hóa luồng dữ liệu bằng sơ đồ thuật toán (flowchart) và chuyển đổi thành mã nguồn
+                            tối ưu với độ phức tạp thấp.
+                        </p>
+                        <div class="project-tags">
+                            <span>Algorithm</span>
+                            <span>Flowchart</span>
+                            <span>Optimization</span>
+                        </div>
+                    </article>
+
+                    <article class="project-card">
+                        <div class="project-icon"><i class="fa-solid fa-plug-circle-bolt"></i></div>
+                        <div class="project-time"><time datetime="2026-05">Tháng 05/2026</time></div>
+                        <h3 class="project-title">Thực Hành Đánh Giá Cảm Biến Vật Lý</h3>
+                        <p class="project-text">
+                            Hoàn thành bài kiểm tra nhận diện, xử lý tín hiệu và vận hành các module cảm biến ứng dụng
+                            trong mô hình robot thông minh.
+                        </p>
+                        <div class="project-tags">
+                            <span>Hardware Testing</span>
+                            <span>Sensor Modules</span>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- LIÊN HỆ -->
+        <section class="contact-section" id="contact">
+            <div class="container">
+                <div class="contact-box">
+                    <div class="contact-info-panel">
+                        <span class="sub-badge"><i class="fa-solid fa-address-book"></i> Kết Nối</span>
+                        <h2 class="contact-title">Thông Tin Liên Hệ</h2>
+                        <p class="contact-desc">Hãy liên hệ với tôi để cùng trao đổi về các dự án AI Robotics, Lập trình
+                            Web hoặc phân tích dữ liệu.</p>
+
+                        <div class="contact-details">
+                            <div class="detail-row">
+                                <i class="fa-solid fa-user-astronaut"></i>
+                                <div>
+                                    <strong>Khưu Đông Nhựt Long</strong>
+                                    <span>Kỹ Sư AI &amp; Robot Thông Minh</span>
+                                </div>
+                            </div>
+                            <div class="detail-row">
+                                <i class="fa-solid fa-link"></i>
+                                <div>
+                                    <strong>khuudongnhutlong.id.vn</strong>
+                                    <span>Trang cá nhân chính thức</span>
+                                </div>
+                            </div>
+                            <div class="detail-row">
+                                <i class="fa-solid fa-map-pin"></i>
+                                <div>
+                                    <strong>Đồng Nai, Việt Nam</strong>
+                                    <span>Khu vực sinh sống và học tập</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <form class="contact-form" action="#contact">
+                        <h3>Gửi Tin Nhắn Nhanh</h3>
+                        <div class="form-group">
+                            <label for="name">Họ và tên</label>
+                            <input type="text" id="name" placeholder="Ví dụ: Nguyễn Văn A" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email liên hệ</label>
+                            <input type="email" id="email" placeholder="name@example.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Nội dung tin nhắn</label>
+                            <textarea id="message" rows="4" placeholder="Nội dung cần trao đổi..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-full">
+                            <i class="fa-solid fa-paper-plane"></i> Gửi Tin Nhắn
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+        <div class="container footer-content">
+            <p>&copy; <time datetime="2026">2026</time> <strong>Khưu Đông Nhựt Long</strong>. Tất cả quyền được bảo lưu.
+            </p>
+            <p class="last-update">Cập nhật lần cuối: <time datetime="2026-09-07">07/09/2026</time></p>
+        </div>
+    </footer>
+
+    <!-- ========================================================
+         BÀI 1: FLOATING ACTION BUTTON (FAB) VỚI HIỆU ỨNG PULSE (100% PURE CSS)
+         ======================================================== -->
+    <div class="fab-container" id="fabContainer">
+        <!-- Vòng hào quang phập phồng (pulse effect thuần CSS) -->
+        <div class="fab-pulse-wave"></div>
+        <div class="fab-pulse-wave delay"></div>
+
+        <a href="#contact" class="fab-button" aria-label="Liên hệ nhanh" title="Liên hệ ngay với tôi">
+            <i class="fa-solid fa-comment-dots fab-icon"></i>
+            <span class="fab-tooltip">Liên hệ ngay!</span>
+        </a>
+    </div>
+
+</body>
+
+</html>
