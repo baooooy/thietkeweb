@@ -1,0 +1,1481 @@
+/* ==========================================================================
+   RESET & CÀI ĐẶT CHUNG (TỐI ƯU HÓA HIỆU NĂNG RENDER)
+   ========================================================================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* Ngăn chặn giật lag khi cuộn trang trên mobile */
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #0b0f19;
+  color: #f1f5f9;
+  line-height: 1.6;
+  overflow-x: hidden;
+  /* Chống răng cưa font và mờ chữ khi GPU render 3D transform */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ==========================================================================
+   1. MÀN HÌNH LOADING SPINNER (@KEYFRAMES SPIN 360 ĐỘ)
+   - Tối ưu GPU: Sử dụng transform 3D và will-change
+   - Tránh kích hoạt Reflow/Repaint trên CPU của điện thoại
+   ========================================================================== */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-overlay {
+  position: fixed;
+  inset: 0;
+  background: #0b0f19;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  /* Tối ưu hóa chuyển cảnh chỉ qua opacity và visibility (Compositor-only) */
+  transition: opacity 0.5s cubic-bezier(0.25, 0.8, 0.25, 1), visibility 0.5s ease;
+  will-change: opacity, visibility;
+  backface-visibility: hidden;
+}
+
+.loading-overlay.fade-out {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.loader-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  /* Tăng tốc phần cứng cho container loading */
+  transform: translateZ(0);
+}
+
+.spinner {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 4px solid rgba(255, 255, 255, 0.1);
+  border-top-color: #6366f1;
+  border-right-color: #a855f7;
+
+  /* GPU Acceleration: Xoay mượt mà 60-120fps trên mobile */
+  animation: spin 0.85s linear infinite;
+  will-change: transform;
+  transform: translateZ(0);
+  box-shadow: 0 0 20px rgba(99, 102, 241, 0.35);
+}
+
+.loading-text {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #94a3b8;
+}
+
+/* ==========================================================================
+   NAVBAR (THANH ĐIỀU HƯỚNG)
+   ========================================================================== */
+/* ==========================================================================
+   NAVBAR & NÚT 3 GẠCH (HAMBURGER MENU) BIẾN ĐỔI THÀNH DẤU "X"
+   ========================================================================== */
+.navbar {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  background: rgba(11, 15, 25, 0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  z-index: 1000;
+  transform: translateZ(0);
+}
+
+.nav-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+
+/* Khối Logo và nút Hamburger hiển thị cùng nhau */
+.nav-brand-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.nav-logo {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #ffffff;
+  text-decoration: none;
+  letter-spacing: -0.5px;
+}
+
+.nav-logo span {
+  color: #6366f1;
+}
+
+/* ==========================================================================
+   NÚT 3 GẠCH (HAMBURGER BUTTON)
+   - Tối ưu 60fps với CSS Transitions
+   ========================================================================== */
+/* ==========================================================================
+   NÚT 3 GẠCH (HAMBURGER BUTTON)
+   - Tối ưu 60fps với CSS Transitions & Xếp chồng thẳng hàng hoàn hảo
+   ========================================================================== */
+.hamburger-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 14px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  cursor: pointer;
+  outline: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.25s ease, border-color 0.25s ease, transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  will-change: transform;
+}
+
+.hamburger-btn:hover {
+  background: rgba(99, 102, 241, 0.15);
+  border-color: rgba(99, 102, 241, 0.4);
+  transform: translateY(-1px);
+}
+
+.hamburger-btn:active {
+  transform: scale(0.95);
+}
+
+.hamburger-label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #cbd5e1;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  line-height: 1;
+}
+
+/* Khung chứa biểu tượng 3 thanh gạch xếp chồng thẳng hàng */
+.hamburger-icon {
+  position: relative;
+  width: 20px;
+  height: 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* 3 thanh gạch ngang thẳng hàng */
+.hamburger-icon .bar {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: #ffffff;
+  border-radius: 2px;
+
+  /* CSS TRANSITIONS MƯỢT MÀ KHI BIẾN ĐỔI */
+  transition:
+    transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+    opacity 0.25s ease,
+    background-color 0.3s ease;
+  transform-origin: center;
+  will-change: transform, opacity;
+}
+
+/* ==========================================================================
+   BIẾN ĐỔI 3 GẠCH THÀNH DẤU "X" KHI MỞ MENU (.hamburger-btn.active):
+   1. Thanh trên (bar-1): Dịch xuống 6px và xoay 45 độ
+   2. Thanh giữa (bar-2): Mờ dần và thu nhỏ chiều ngang về 0 (scaleX(0))
+   3. Thanh dưới (bar-3): Dịch lên 6px và xoay -45 độ
+   ========================================================================== */
+.hamburger-btn.active .bar-1 {
+  transform: translateY(6px) rotate(45deg);
+  background-color: #818cf8;
+}
+
+.hamburger-btn.active .bar-2 {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.hamburger-btn.active .bar-3 {
+  transform: translateY(-6px) rotate(-45deg);
+  background-color: #818cf8;
+}
+
+.hamburger-btn.active .hamburger-label {
+  color: #818cf8;
+}
+
+/* ==========================================================================
+   MENU ĐIỀU HƯỚNG (XỔ XUỐNG DƯỚI CHỮ DEVPROFILE)
+   ========================================================================== */
+.nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.nav-link {
+  color: #94a3b8;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: 8px;
+  transition: color 0.2s ease, background 0.2s ease, transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  will-change: transform;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: #ffffff;
+  background: rgba(99, 102, 241, 0.15);
+  transform: translateY(-1px);
+}
+
+/* Menu khi ở dạng Dropdown xổ xuống dưới thanh Navbar */
+@media (max-width: 860px) {
+  .nav-container {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 12px 20px;
+  }
+
+  .nav-brand-wrapper {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  /* Menu ẩn mặc định và mở trượt xuống mượt mà dưới chữ DevProfile */
+  .nav-menu {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transform: translate3d(0, -10px, 0);
+    pointer-events: none;
+    background: rgba(15, 23, 42, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    margin-top: 0;
+    padding: 0 12px;
+  }
+
+  /* Khi bấm nút 3 gạch: Menu xổ xuống với CSS Transition */
+  .nav-menu.open {
+    max-height: 340px;
+    opacity: 1;
+    transform: translate3d(0, 8px, 0);
+    pointer-events: auto;
+    padding: 12px;
+    box-shadow: 0 16px 35px rgba(0, 0, 0, 0.5);
+  }
+
+  .nav-link {
+    padding: 10px 14px;
+  }
+}
+
+/* ==========================================================================
+   WRAPPER CHÍNH & TIÊU ĐỀ CÁC PHẦN
+   ========================================================================== */
+.main-wrapper {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 40px 24px 80px;
+  transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  will-change: opacity, transform;
+}
+
+.content-hidden {
+  opacity: 0;
+  /* Dùng translate3d để đưa trục Z vào GPU */
+  transform: translate3d(0, 20px, 0);
+}
+
+.section {
+  padding: 60px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.section:last-of-type {
+  border-bottom: none;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 44px;
+}
+
+.section-badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #818cf8;
+  background: rgba(99, 102, 241, 0.12);
+  border: 1px solid rgba(99, 102, 241, 0.25);
+  padding: 4px 14px;
+  border-radius: 999px;
+  margin-bottom: 12px;
+}
+
+.section-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 8px;
+}
+
+.section-desc {
+  color: #94a3b8;
+  font-size: 0.95rem;
+}
+
+/* ==========================================================================
+   PHẦN 1: GIỚI THIỆU CHUNG (HERO SECTION)
+   ========================================================================== */
+.section-hero {
+  text-align: center;
+  padding-top: 30px;
+}
+
+.hero-content {
+  max-width: 620px;
+  margin: 0 auto;
+}
+
+.avatar-wrapper {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 20px;
+}
+
+.hero-avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #6366f1;
+  box-shadow: 0 0 25px rgba(99, 102, 241, 0.35);
+  /* Tránh răng cưa avatar khi scale */
+  transform: translateZ(0);
+}
+
+.online-status {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  width: 18px;
+  height: 18px;
+  background: #22c55e;
+  border: 3px solid #0b0f19;
+  border-radius: 50%;
+}
+
+.badge {
+  display: inline-block;
+  font-size: 0.85rem;
+  color: #a5b4fc;
+  margin-bottom: 6px;
+}
+
+.hero-name {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 6px;
+  letter-spacing: -0.5px;
+}
+
+/* ==========================================================================
+   HIỆU ỨNG CHỮ TỰ GÕ THUẦN CSS (CSS TYPEWRITER ANIMATION - NO JS)
+   ========================================================================== */
+.typing-container {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  margin: 4px auto 18px;
+  max-width: 100%;
+}
+
+.typing-text {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #818cf8;
+  font-family: 'Inter', monospace, system-ui, sans-serif;
+  letter-spacing: 0.4px;
+
+  /* Ẩn phần chữ chưa gõ tới & giữ trên 1 dòng */
+  overflow: hidden;
+  white-space: nowrap;
+
+  /* Con trỏ nhấp nháy ở cạnh phải */
+  border-right: 3px solid #6366f1;
+
+  /* Bắt đầu từ width 0 */
+  width: 0;
+  margin: 0 auto;
+
+  /*
+   * Animation:
+   * 1. typing: 3.2s gõ từng bước (steps 28 ký tự), lặp lại tự gõ tự xóa (alternate)
+   * 2. blinkCaret: 0.75s chớp tắt con trỏ liên tục vô hạn
+   */
+  animation:
+    typing 3.4s steps(28, end) 1s infinite alternate,
+    blinkCaret 0.75s step-end infinite;
+}
+
+/* Keyframes mở rộng chiều rộng của dòng text theo từng bước gõ */
+@keyframes typing {
+  0% {
+    width: 0;
+  }
+
+  60%,
+  100% {
+    width: 100%;
+  }
+}
+
+/* Keyframes nhấp nháy con trỏ | */
+@keyframes blinkCaret {
+
+  from,
+  to {
+    border-color: transparent;
+  }
+
+  50% {
+    border-color: #6366f1;
+  }
+}
+
+.hero-bio {
+  color: #94a3b8;
+  font-size: 1rem;
+  margin-bottom: 28px;
+}
+
+.hero-actions {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+
+.btn-primary,
+.btn-secondary {
+  text-decoration: none;
+  padding: 12px 26px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  /* Sử dụng transform thay vì margin-top để tối ưu GPU */
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.2s ease, box-shadow 0.2s ease;
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+.btn-primary {
+  background: #6366f1;
+  color: #ffffff;
+}
+
+.btn-primary:hover {
+  background: #4f46e5;
+  /* Dùng translate3d không gây reflow */
+  transform: translate3d(0, -2px, 0);
+  box-shadow: 0 8px 20px -4px rgba(99, 102, 241, 0.5);
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.08);
+  color: #e2e8f0;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translate3d(0, -2px, 0);
+}
+
+/* ==========================================================================
+   PHẦN 2: KỸ NĂNG (SKILLS)
+   - Tối ưu: GPU Render cho từng thẻ Card
+   ========================================================================== */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.skill-card {
+  background: rgba(30, 41, 59, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 28px;
+  /* Transition hoàn toàn bằng GPU Transform */
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+.skill-card:hover {
+  /* Nâng lên 4px bằng translate3d (không dùng margin-top / top) */
+  transform: translate3d(0, -4px, 0);
+  border-color: rgba(99, 102, 241, 0.4);
+  box-shadow: 0 12px 24px -4px rgba(0, 0, 0, 0.4);
+}
+
+/* Header của từng thẻ kỹ năng: icon & phần trăm */
+.skill-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.skill-icon {
+  font-size: 1.8rem;
+}
+
+.skill-percent {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #818cf8;
+  background: rgba(99, 102, 241, 0.15);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  padding: 3px 10px;
+  border-radius: 999px;
+  letter-spacing: 0.5px;
+}
+
+.skill-card h3 {
+  font-size: 1.15rem;
+  color: #ffffff;
+  margin-bottom: 8px;
+}
+
+.skill-card p {
+  font-size: 0.88rem;
+  color: #94a3b8;
+  margin-bottom: 16px;
+  min-height: 42px;
+}
+
+/* ==========================================================================
+   HIỆU ỨNG THANH KỸ NĂNG CHẠY TỪ 0% ĐẾN GIÁ TRỊ ĐÍCH KHI TRANG TẢI XONG
+   ========================================================================== */
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Thanh fill tiến trình */
+.progress-fill {
+  height: 100%;
+  width: 0%;
+  /* Mặc định bắt đầu từ 0% */
+  background: linear-gradient(90deg, #6366f1 0%, #a855f7 100%);
+  border-radius: 999px;
+  box-shadow: 0 0 12px rgba(99, 102, 241, 0.5);
+  transition: width 1.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+  will-change: width;
+}
+
+/* Keyframes chạy tiến trình từ 0% đến --target-width */
+@keyframes fillProgressBar {
+  0% {
+    width: 0%;
+  }
+
+  100% {
+    width: var(--target-width, 90%);
+  }
+}
+
+/* Kích hoạt tự động chạy khi trang tải xong (skills-ready) */
+.skills-ready .progress-fill,
+.skill-card[data-aos].aos-animate .progress-fill {
+  animation: fillProgressBar 1.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* ==========================================================================
+   PHẦN 3: DỰ ÁN (PROJECTS)
+   ========================================================================== */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+}
+
+.project-card {
+  background: rgba(30, 41, 59, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+.project-card:hover {
+  transform: translate3d(0, -4px, 0);
+  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.4);
+}
+
+.project-img-box img {
+  width: 100%;
+  height: 190px;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+  will-change: transform;
+}
+
+.project-card:hover .project-img-box img {
+  transform: scale(1.04);
+}
+
+.project-info {
+  padding: 20px;
+}
+
+.project-tag {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #818cf8;
+  background: rgba(99, 102, 241, 0.15);
+  padding: 3px 8px;
+  border-radius: 6px;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+.project-info h3 {
+  font-size: 1.15rem;
+  color: #ffffff;
+  margin-bottom: 6px;
+}
+
+.project-info p {
+  font-size: 0.88rem;
+  color: #94a3b8;
+}
+
+/* ==========================================================================
+   BANNER PARALLAX (BACKGROUND-ATTACHMENT: FIXED)
+   - Ảnh nền đứng yên/di chuyển chậm hơn nội dung khi cuộn trang
+   ========================================================================== */
+.parallax-banner {
+  position: relative;
+  /* Kỹ thuật Parallax: Cố định ảnh nền khi cuộn trang */
+  background-image:
+    linear-gradient(rgba(11, 15, 25, 0.8), rgba(11, 15, 25, 0.88)),
+    url('https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=1600&q=80');
+  background-attachment: fixed;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  border-radius: 24px;
+  padding: 60px 32px;
+  margin: 50px 0;
+  text-align: center;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+}
+
+.parallax-content {
+  max-width: 650px;
+  margin: 0 auto;
+}
+
+.parallax-tag {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #a855f7;
+  background: rgba(168, 85, 247, 0.15);
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  padding: 4px 14px;
+  border-radius: 999px;
+  margin-bottom: 16px;
+}
+
+.parallax-title {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.35;
+  margin-bottom: 14px;
+}
+
+.parallax-desc {
+  font-size: 0.95rem;
+  color: #cbd5e1;
+  line-height: 1.6;
+  margin-bottom: 30px;
+}
+
+.parallax-stats {
+  display: flex;
+  justify-content: center;
+  gap: 36px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 24px;
+}
+
+.stat-item h3 {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #6366f1;
+  margin-bottom: 2px;
+}
+
+.stat-item p {
+  font-size: 0.85rem;
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+/* ==========================================================================
+   PHẦN 4: THẺ NHÂN SỰ & BẠN BÈ (3D CARD FLIP 180 ĐỘ)
+   - Sử dụng perspective 1200px và transform-style: preserve-3d
+   - Khi hover: thẻ lật 180 độ hiện mặt sau chứa thông tin liên hệ
+   ========================================================================== */
+.friends-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 24px;
+}
+
+/* 1. Khung chứa 3D perspective */
+.flip-card {
+  background-color: transparent;
+  height: 290px;
+  perspective: 1200px;
+  /* Tạo độ sâu 3D chân thực */
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* 2. Khung lật bên trong (xoay 180 độ khi hover hoặc khi có class .flipped) */
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.75s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transform-style: preserve-3d;
+  /* Giữ không gian 3D cho các mặt con */
+  will-change: transform;
+}
+
+/* Khi HOVER trên máy tính hoặc khi được chạm (.flipped) trên điện thoại */
+.flip-card:hover .flip-card-inner,
+.flip-card.flipped .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+/* 3. Cài đặt chung cho cả 2 mặt của thẻ */
+.flip-card-front,
+.flip-card-back {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  padding: 24px 20px;
+  backface-visibility: hidden;
+  /* Ẩn mặt úp phía sau khi xoay */
+  -webkit-backface-visibility: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.5);
+}
+
+/* 4. MẶT TRƯỚC (FRONT) */
+.flip-card-front {
+  background: rgba(30, 41, 59, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transform: rotateY(0deg);
+}
+
+.flip-badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #818cf8;
+  background: rgba(99, 102, 241, 0.15);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  padding: 3px 10px;
+  border-radius: 999px;
+  margin-bottom: 12px;
+}
+
+.friend-avatar-wrap {
+  position: relative;
+  width: 74px;
+  height: 74px;
+  margin-bottom: 12px;
+}
+
+.friend-avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.status-dot {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid #1e293b;
+}
+
+.dot-online {
+  background: #22c55e;
+}
+
+.dot-idle {
+  background: #eab308;
+}
+
+.dot-offline {
+  background: #94a3b8;
+}
+
+.friend-name {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 4px;
+}
+
+.friend-role {
+  font-size: 0.85rem;
+  color: #94a3b8;
+  margin-bottom: 14px;
+}
+
+.flip-hint {
+  font-size: 0.75rem;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: color 0.2s ease;
+}
+
+.flip-card:hover .flip-hint {
+  color: #818cf8;
+}
+
+/* 5. MẶT SAU (BACK) - THÔNG TIN LIÊN HỆ */
+.flip-card-back {
+  background: linear-gradient(145deg, #1e1b4b 0%, #1e293b 100%);
+  border-color: rgba(99, 102, 241, 0.4);
+  transform: rotateY(180deg);
+  /* Mặc định úp 180 độ */
+  justify-content: space-between;
+}
+
+.back-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #ffffff;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 8px;
+  width: 100%;
+}
+
+.contact-info-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: left;
+  margin: 10px 0;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.82rem;
+  background: rgba(15, 23, 42, 0.5);
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.info-label {
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+.info-val {
+  color: #e2e8f0;
+  font-weight: 600;
+  font-size: 0.8rem;
+}
+
+.btn-chat-trigger {
+  width: 100%;
+  padding: 10px 14px;
+  background: #6366f1;
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.4);
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.2s ease, box-shadow 0.2s ease;
+  will-change: transform;
+}
+
+.btn-chat-trigger:hover {
+  background: #4f46e5;
+  transform: translate3d(0, -2px, 0);
+  box-shadow: 0 8px 20px rgba(99, 102, 241, 0.6);
+}
+
+.btn-chat-trigger:active {
+  transform: translate3d(0, 0, 0) scale(0.96);
+}
+
+/* ==========================================================================
+   PHẦN 5: LIÊN HỆ (CONTACT FOOTER)
+   ========================================================================== */
+.contact-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.contact-item {
+  background: rgba(30, 41, 59, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 14px;
+  padding: 24px;
+  text-align: center;
+  transition: transform 0.25s ease;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+.contact-item:hover {
+  transform: translate3d(0, -3px, 0);
+}
+
+.contact-icon {
+  font-size: 1.8rem;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.contact-item h4 {
+  font-size: 1rem;
+  color: #ffffff;
+  margin-bottom: 4px;
+}
+
+.contact-item p {
+  font-size: 0.88rem;
+  color: #94a3b8;
+}
+
+/* ==========================================================================
+   MODAL GỬI TIN NHẮN (HIỆN RA KHI BẤM VÀO BẠN BÈ)
+   - Tối ưu GPU: Transform scale và translate3d
+   ========================================================================== */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 10001;
+  opacity: 0;
+  visibility: hidden;
+  /* Chỉ thay đổi opacity & visibility, không kích hoạt layout reflow */
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  will-change: opacity, visibility;
+  backface-visibility: hidden;
+}
+
+.modal-backdrop.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-card {
+  position: relative;
+  background: #1e293b;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  padding: 32px 28px;
+  width: 100%;
+  max-width: 440px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+  /* GPU Compositing với scale và translate3d */
+  transform: translate3d(0, 20px, 0) scale(0.92);
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+.modal-backdrop.show .modal-card {
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
+.btn-close-modal {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  border: none;
+  color: #94a3b8;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+  will-change: transform;
+}
+
+.btn-close-modal:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  transform: scale(1.08);
+}
+
+.recipient-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.recipient-avatar-wrap {
+  position: relative;
+  width: 48px;
+  height: 48px;
+}
+
+.recipient-avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #6366f1;
+}
+
+.recipient-status {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 12px;
+  height: 12px;
+  background: #22c55e;
+  border: 2px solid #1e293b;
+  border-radius: 50%;
+}
+
+.recipient-name {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.recipient-role {
+  font-size: 0.82rem;
+  color: #94a3b8;
+}
+
+.chat-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.08);
+  margin: 20px 0;
+}
+
+.message-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #cbd5e1;
+}
+
+.form-control {
+  width: 100%;
+  padding: 11px 14px;
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  color: #ffffff;
+  font-size: 0.92rem;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-control:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25);
+}
+
+/* ==========================================================================
+   NÚT "GỬI TIN NHẮN" (TỐI ƯU HIỆU NĂNG GPU TRANSITION & CUBIC-BEZIER)
+   - Sử dụng transform: translate3d(0, -3px, 0) thay vì top/left/margin
+   - Không gây Layout Reflow hay Repaint (chạy hoàn toàn trên GPU Thread)
+   - will-change và backface-visibility loại bỏ giật lag trên smartphone
+   ========================================================================== */
+.btn-send {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 13px 28px;
+  font-size: 0.98rem;
+  font-weight: 600;
+  color: #ffffff;
+  width: 100%;
+  margin-top: 6px;
+
+  background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  cursor: pointer;
+  outline: none;
+  user-select: none;
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+
+  /* BẬT TĂNG TỐC PHẦN CỨNG GPU */
+  transform: translate3d(0, 0, 0);
+  will-change: transform, box-shadow;
+  backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+
+  /* TRANSITION VỚI CUBIC-BEZIER (Thời gian 0.3s) */
+  transition:
+    transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+    background 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.icon-send {
+  width: 18px;
+  height: 18px;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* 1. KHI HOVER: NÂNG LÊN 3PX BẰNG TRANSLATE3D (GPU ACCELERATED) */
+.btn-send:hover {
+  /* Nâng lên đúng 3px mà KHÔNG kích hoạt Reflow */
+  transform: translate3d(0, -3px, 0);
+  background: linear-gradient(135deg, #4338ca 0%, #4f46e5 100%);
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow:
+    0 12px 24px -2px rgba(79, 70, 229, 0.45),
+    0 6px 12px -2px rgba(99, 102, 241, 0.35);
+}
+
+.btn-send:hover .icon-send {
+  transform: translate3d(2px, -1px, 0);
+}
+
+/* 2. KHI CLICK (ACTIVE): THU NHỎ & LÚN XUỐNG CỰC KỲ MƯỢT TRÊN MÀN HÌNH CẢM ỨNG */
+.btn-send:active {
+  transform: translate3d(0, -1px, 0) scale(0.97);
+  box-shadow:
+    0 4px 8px rgba(79, 70, 229, 0.3),
+    0 2px 4px rgba(0, 0, 0, 0.2);
+  transition-duration: 0.1s;
+}
+
+.btn-send:active .icon-send {
+  transform: scale(0.92);
+}
+
+/* Thông báo gửi thành công */
+.success-alert {
+  margin-top: 14px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: rgba(34, 197, 94, 0.15);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  color: #4ade80;
+  font-size: 0.88rem;
+  text-align: center;
+  animation: fadeInAlert 0.3s ease;
+}
+
+@keyframes fadeInAlert {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 6px, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* ==========================================================================
+   NÚT TRÒN "LIÊN HỆ" CỐ ĐỊNH Ở GÓC MÀN HÌNH (PULSE ANIMATION)
+   ========================================================================== */
+
+/* Animation phập phồng co giãn nhẹ nhàng của nút chính */
+@keyframes pulseHeartbeat {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+    box-shadow: 0 4px 20px rgba(99, 102, 241, 0.45);
+  }
+
+  50% {
+    transform: translate3d(0, -3px, 0) scale(1.06);
+    box-shadow: 0 8px 30px rgba(99, 102, 241, 0.7);
+  }
+
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    box-shadow: 0 4px 20px rgba(99, 102, 241, 0.45);
+  }
+}
+
+/* Animation sóng tỏa lan rộng (Radar / Ripple Wave) */
+@keyframes pulseWave {
+  0% {
+    transform: translate3d(-50%, -50%, 0) scale(0.9);
+    opacity: 0.8;
+  }
+
+  70% {
+    opacity: 0.25;
+  }
+
+  100% {
+    transform: translate3d(-50%, -50%, 0) scale(1.75);
+    opacity: 0;
+  }
+}
+
+/* Container nút tròn cố định góc màn hình */
+.floating-contact-btn {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  z-index: 9990;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  transform: translateZ(0);
+}
+
+/* Vòng sóng tỏa phập phồng (Pulse Rings) */
+.pulse-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 2px solid #6366f1;
+  pointer-events: none;
+  transform: translate3d(-50%, -50%, 0);
+  animation: pulseWave 2.2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+  will-change: transform, opacity;
+}
+
+.pulse-ring.ring-2 {
+  animation-delay: 0.8s;
+}
+
+/* Phần tử nút tròn chính */
+.floating-btn-inner {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  cursor: pointer;
+
+  /* Chạy hiệu ứng phập phồng liên tục */
+  animation: pulseHeartbeat 2.4s ease-in-out infinite;
+  will-change: transform, box-shadow;
+  backface-visibility: hidden;
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+.floating-btn-icon {
+  width: 22px;
+  height: 22px;
+  stroke: #ffffff;
+}
+
+.floating-btn-text {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  margin-top: 1px;
+}
+
+/* Khi hover: Dừng pulse nhẹ để người dùng bấm chính xác, tỏa sáng hơn */
+.floating-contact-btn:hover .floating-btn-inner {
+  animation-play-state: paused;
+  transform: translate3d(0, -4px, 0) scale(1.1);
+  background: linear-gradient(135deg, #4f46e5 0%, #9333ea 100%);
+  box-shadow: 0 12px 35px rgba(168, 85, 247, 0.7);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Khi click (active) trên điện thoại / chuột: Thu nhỏ tạo cảm giác lún */
+.floating-contact-btn:active .floating-btn-inner {
+  transform: translate3d(0, 0, 0) scale(0.92);
+  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+  transition-duration: 0.1s;
+}
+
+/* ==========================================================================
+   RESPONSIVE & TỐI ƯU HÓA THIẾT BỊ DI ĐỘNG (MOBILE PERFORMANCE)
+   ========================================================================== */
+@media (max-width: 640px) {
+  .hero-name {
+    font-size: 2rem;
+  }
+
+  .section-title {
+    font-size: 1.6rem;
+  }
+
+  .modal-card {
+    padding: 24px 20px;
+  }
+
+  .parallax-banner {
+    padding: 40px 20px;
+    margin: 36px 0;
+  }
+
+  .parallax-title {
+    font-size: 1.4rem;
+  }
+
+  .parallax-stats {
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  /* Nút liên hệ nổi trên màn hình di động nhỏ gọn hơn */
+  .floating-contact-btn {
+    bottom: 20px;
+    right: 20px;
+    width: 58px;
+    height: 58px;
+  }
+
+  .floating-btn-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .floating-btn-text {
+    font-size: 0.6rem;
+  }
+
+  /* Tối ưu hóa touch feedback trên điện thoại */
+  .friend-card,
+  .btn-send,
+  .btn-primary,
+  .btn-secondary,
+  .floating-contact-btn {
+    touch-action: manipulation;
+  }
+}

@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio - Hoàng Minh Tiến</title>
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
+  <!-- =================================================================
+       TÍCH HỢP THƯ VIỆN AOS (ANIMATE ON SCROLL) - CSS
+       ================================================================= -->
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+  <!-- Liên kết file CSS riêng biệt -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- =================================================================
+       1. MÀN HÌNH LOADING INDICATOR (ANIMATION @KEYFRAMES XOAY 360 ĐỘ)
+       ================================================================= -->
+  <div id="loadingScreen" class="loading-overlay">
+    <div class="loader-content">
+      <div class="spinner"></div>
+      <p class="loading-text">Đang tải Portfolio & Profile...</p>
+    </div>
+  </div>
+
+  <!-- =================================================================
+       HEADER & THANH ĐIỀU HƯỚNG (HAMBURGER MENU & BIẾN ĐỔI DẤU "X")
+       ================================================================= -->
+  <header class="navbar" data-aos="fade-down" data-aos-duration="700">
+    <div class="nav-container">
+
+      <!-- KHỐI LOGO & NÚT 3 GẠCH HAMBURGER -->
+      <div class="nav-brand-wrapper">
+        <a href="#about" class="nav-logo">Dev<span>Profile</span>.</a>
+
+        <!-- NÚT 3 GẠCH (HAMBURGER MENU) HIỂN THỊ DƯỚI / CẠNH DEVPROFILE -->
+        <button type="button" class="hamburger-btn" id="hamburgerBtn" onclick="toggleNavMenu()"
+          title="Mở danh mục điều hướng">
+          <div class="hamburger-icon">
+            <span class="bar bar-1"></span>
+            <span class="bar bar-2"></span>
+            <span class="bar bar-3"></span>
+          </div>
+          <span class="hamburger-label">Menu</span>
+        </button>
+      </div>
+
+      <!-- MENU ĐIỀU HƯỚNG HIỂN THỊ BÊN DƯỚI DEVPROFILE KHI BẤM NÚT 3 GẠCH -->
+      <nav class="nav-menu" id="navMenu">
+        <a href="#about" class="nav-link active" onclick="closeNavMenu()">🏠 Giới thiệu</a>
+        <a href="#skills" class="nav-link" onclick="closeNavMenu()">⚡ Kỹ năng</a>
+        <a href="#projects" class="nav-link" onclick="closeNavMenu()">💼 Dự án</a>
+        <a href="#friends" class="nav-link" onclick="closeNavMenu()">👥 Nhân sự</a>
+        <a href="#contact" class="nav-link" onclick="closeNavMenu()">📞 Liên hệ</a>
+      </nav>
+
+    </div>
+  </header>
+
+  <!-- =================================================================
+       NỘI DUNG CHÍNH (GỒM 5 PHẦN)
+       ================================================================= -->
+  <main id="mainContent" class="main-wrapper content-hidden">
+
+    <!-- PHẦN 1: GIỚI THIỆU CHUNG (HERO SECTION) -->
+    <section id="about" class="section section-hero">
+      <div class="hero-content" data-aos="fade-up" data-aos-duration="800">
+        <div class="avatar-wrapper" data-aos="zoom-in" data-aos-delay="150">
+          <!-- AVATAR NAM LẬP TRÌNH VIÊN -->
+          <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=400&q=80"
+            alt="Avatar Hoàng Minh Tiến" class="hero-avatar">
+          <div class="online-status" title="Đang online"></div>
+        </div>
+        <div class="badge" data-aos="fade-up" data-aos-delay="250">Xin chào, mình là</div>
+        <h1 class="hero-name" data-aos="fade-up" data-aos-delay="350">Hoàng Minh Tiến</h1>
+
+        <!-- HIỆU ỨNG CHỮ TỰ GÕ THUẦN CSS (KHÔNG DÙNG JS) -->
+        <div class="typing-container" data-aos="fade-up" data-aos-delay="450">
+          <p class="typing-text">Tôi là một Web Developer...</p>
+        </div>
+
+        <p class="hero-bio" data-aos="fade-up" data-aos-delay="550">
+          Đam mê xây dựng các giao diện web mượt mà, thân thiện với người dùng và giàu tính tương tác với CSS Transition
+          & Animation hiện đại.
+        </p>
+        <div class="hero-actions" data-aos="fade-up" data-aos-delay="650">
+          <a href="#friends" class="btn-primary">Kết nối bạn bè</a>
+          <a href="#projects" class="btn-secondary">Xem dự án</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- PHẦN 2: KỸ NĂNG (SKILLS - HIỆU ỨNG CHẠY TỪ 0% ĐẾN ĐÍCH KHI TẢI XONG) -->
+    <section id="skills" class="section">
+      <div class="section-header" data-aos="fade-up">
+        <span class="section-badge">Năng lực</span>
+        <h2 class="section-title">Kỹ Năng Chuyên Môn</h2>
+        <p class="section-desc">Các thanh tiến trình tự động chạy từ 0% đến giá trị đích khi trang web tải xong</p>
+      </div>
+
+      <div class="skills-grid">
+        <!-- KỸ NĂNG 1: HTML5 (90%) -->
+        <div class="skill-card" data-aos="fade-up" data-aos-delay="100">
+          <div class="skill-top">
+            <div class="skill-icon">🌐</div>
+            <span class="skill-percent">90%</span>
+          </div>
+          <h3>HTML5 Semantic</h3>
+          <p>Cấu trúc chuẩn SEO, Accessibility, Web Standards và Clean Semantic Markup.</p>
+          <div class="progress-bar">
+            <div class="progress-fill" style="--target-width: 90%;"></div>
+          </div>
+        </div>
+
+        <!-- KỸ NĂNG 2: CSS3 (85%) -->
+        <div class="skill-card" data-aos="fade-up" data-aos-delay="200">
+          <div class="skill-top">
+            <div class="skill-icon">🎨</div>
+            <span class="skill-percent">85%</span>
+          </div>
+          <h3>CSS3 & Animation</h3>
+          <p>Transitions, Keyframes, Cubic-bezier, Flexbox, Grid, 3D Transform & GPU Optimize.</p>
+          <div class="progress-bar">
+            <div class="progress-fill" style="--target-width: 85%;"></div>
+          </div>
+        </div>
+
+        <!-- KỸ NĂNG 3: JAVASCRIPT (80%) -->
+        <div class="skill-card" data-aos="fade-up" data-aos-delay="300">
+          <div class="skill-top">
+            <div class="skill-icon">⚡</div>
+            <span class="skill-percent">80%</span>
+          </div>
+          <h3>JavaScript (ES6+)</h3>
+          <p>DOM Manipulation, Asynchronous Programming, APIs Integration và Micro-interactions.</p>
+          <div class="progress-bar">
+            <div class="progress-fill" style="--target-width: 80%;"></div>
+          </div>
+        </div>
+
+        <!-- KỸ NĂNG 4: UI/UX & RESPONSIVE (90%) -->
+        <div class="skill-card" data-aos="fade-up" data-aos-delay="400">
+          <div class="skill-top">
+            <div class="skill-icon">💻</div>
+            <span class="skill-percent">90%</span>
+          </div>
+          <h3>UI/UX & Responsive</h3>
+          <p>Giao diện tương thích mọi màn hình di động, Dark Mode, Micro-animations và Usability.</p>
+          <div class="progress-bar">
+            <div class="progress-fill" style="--target-width: 90%;"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PHẦN 3: DỰ ÁN (PROJECTS) -->
+    <section id="projects" class="section">
+      <div class="section-header" data-aos="fade-up">
+        <span class="section-badge">Portfolio</span>
+        <h2 class="section-title">Dự Án Nổi Bật</h2>
+        <p class="section-desc">Một số sản phẩm tiêu biểu được hoàn thiện gần đây</p>
+      </div>
+
+      <div class="projects-grid">
+        <div class="project-card" data-aos="fade-up" data-aos-delay="150">
+          <div class="project-img-box">
+            <img src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=600&q=80"
+              alt="Website Du Lịch">
+          </div>
+          <div class="project-info">
+            <span class="project-tag">Web Design</span>
+            <h3>Website Trải Nghiệm Du Lịch</h3>
+            <p>Trang web đặt tour với hiệu ứng cuộn trang mượt mà và giao diện tương tác động.</p>
+          </div>
+        </div>
+
+        <div class="project-card" data-aos="fade-up" data-aos-delay="300">
+          <div class="project-img-box">
+            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80"
+              alt="Dashboard Quản Lý">
+          </div>
+          <div class="project-info">
+            <span class="project-tag">Dashboard</span>
+            <h3>Analytics & Chat Dashboard</h3>
+            <p>Bảng điều khiển trực quan hóa dữ liệu người dùng và hệ thống tin nhắn tức thì.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================
+         BANNER PARALLAX (BACKGROUND-ATTACHMENT: FIXED)
+         - Ảnh nền đứng yên/di chuyển chậm hơn nội dung khi cuộn trang
+         ================================================================= -->
+    <section class="parallax-banner" data-aos="fade-up">
+      <div class="parallax-content">
+        <span class="parallax-tag">✨ Sáng Tạo & Bứt Phá</span>
+        <h2 class="parallax-title">Biến Ý Tưởng Thành Sản Phẩm Số Hoàn Hảo</h2>
+        <p class="parallax-desc">
+          Tập trung vào trải nghiệm mượt mà, giao diện tối ưu hóa hiệu năng cao và thiết kế hiện đại trên mọi thiết bị.
+        </p>
+        <div class="parallax-stats">
+          <div class="stat-item">
+            <h3>5+</h3>
+            <p>Năm kinh nghiệm</p>
+          </div>
+          <div class="stat-item">
+            <h3>35+</h3>
+            <p>Dự án hoàn thành</p>
+          </div>
+          <div class="stat-item">
+            <h3>100%</h3>
+            <p>Khách hàng hài lòng</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PHẦN 4: NHÂN SỰ & BẠN BÈ (3D FLIP CARD 180 ĐỘ) -->
+    <section id="friends" class="section">
+      <div class="section-header" data-aos="fade-up">
+        <span class="section-badge">Đội Ngũ & Mạng Lưới</span>
+        <h2 class="section-title">Thẻ Nhân Sự & Bạn Bè</h2>
+        <p class="section-desc">Rê chuột (Hover) hoặc chạm vào thẻ để <strong>lật 180° xem thông tin liên hệ</strong> ở
+          mặt sau</p>
+      </div>
+
+      <div class="friends-grid">
+
+        <!-- THẺ NHÂN SỰ 1: TRẦN THỊ MAI -->
+        <div class="flip-card" data-aos="zoom-in-up" data-aos-delay="100" onclick="toggleCardFlip(this)">
+          <div class="flip-card-inner">
+
+            <!-- Mặt trước: Thông tin giới thiệu nhân sự -->
+            <div class="flip-card-front">
+              <span class="flip-badge">Design Lead</span>
+              <div class="friend-avatar-wrap">
+                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80"
+                  alt="Trần Thị Mai" class="friend-avatar">
+                <span class="status-dot dot-online"></span>
+              </div>
+              <h4 class="friend-name">Trần Thị Mai</h4>
+              <p class="friend-role">UI/UX Designer</p>
+              <div class="flip-hint">
+                <span class="hint-icon">🔄</span> Hover để xem liên hệ
+              </div>
+            </div>
+
+            <!-- Mặt sau: Thông tin liên hệ chi tiết -->
+            <div class="flip-card-back">
+              <h4 class="back-title">Thông Tin Liên Hệ</h4>
+              <div class="contact-info-list">
+                <div class="info-row">
+                  <span class="info-label">📞 SĐT:</span>
+                  <span class="info-val">0912.345.678</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">✉️ Email:</span>
+                  <span class="info-val">mai.tran@design.io</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">📍 Vị trí:</span>
+                  <span class="info-val">Hà Nội (Tầng 4)</span>
+                </div>
+              </div>
+              <button type="button" class="btn-chat-trigger"
+                onclick="event.stopPropagation(); openChatModal('Trần Thị Mai', 'UI/UX Designer', 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80')">
+                💬 Gửi tin nhắn
+              </button>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- THẺ NHÂN SỰ 2: LÊ QUỐC BẢO -->
+        <div class="flip-card" data-aos="zoom-in-up" data-aos-delay="200" onclick="toggleCardFlip(this)">
+          <div class="flip-card-inner">
+
+            <!-- Mặt trước -->
+            <div class="flip-card-front">
+              <span class="flip-badge">Tech Lead</span>
+              <div class="friend-avatar-wrap">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80"
+                  alt="Lê Quốc Bảo" class="friend-avatar">
+                <span class="status-dot dot-online"></span>
+              </div>
+              <h4 class="friend-name">Lê Quốc Bảo</h4>
+              <p class="friend-role">Fullstack Engineer</p>
+              <div class="flip-hint">
+                <span class="hint-icon">🔄</span> Hover để xem liên hệ
+              </div>
+            </div>
+
+            <!-- Mặt sau -->
+            <div class="flip-card-back">
+              <h4 class="back-title">Thông Tin Liên Hệ</h4>
+              <div class="contact-info-list">
+                <div class="info-row">
+                  <span class="info-label">📞 SĐT:</span>
+                  <span class="info-val">0988.765.432</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">✉️ Email:</span>
+                  <span class="info-val">bao.le@techcore.vn</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">📍 Vị trí:</span>
+                  <span class="info-val">Đà Nẵng (Tầng 6)</span>
+                </div>
+              </div>
+              <button type="button" class="btn-chat-trigger"
+                onclick="event.stopPropagation(); openChatModal('Lê Quốc Bảo', 'Fullstack Engineer', 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80')">
+                💬 Gửi tin nhắn
+              </button>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- THẺ NHÂN SỰ 3: PHẠM HƯƠNG GIANG -->
+        <div class="flip-card" data-aos="zoom-in-up" data-aos-delay="300" onclick="toggleCardFlip(this)">
+          <div class="flip-card-inner">
+
+            <!-- Mặt trước -->
+            <div class="flip-card-front">
+              <span class="flip-badge">Product</span>
+              <div class="friend-avatar-wrap">
+                <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=200&q=80"
+                  alt="Phạm Hương Giang" class="friend-avatar">
+                <span class="status-dot dot-idle"></span>
+              </div>
+              <h4 class="friend-name">Phạm Hương Giang</h4>
+              <p class="friend-role">Product Manager</p>
+              <div class="flip-hint">
+                <span class="hint-icon">🔄</span> Hover để xem liên hệ
+              </div>
+            </div>
+
+            <!-- Mặt sau -->
+            <div class="flip-card-back">
+              <h4 class="back-title">Thông Tin Liên Hệ</h4>
+              <div class="contact-info-list">
+                <div class="info-row">
+                  <span class="info-label">📞 SĐT:</span>
+                  <span class="info-val">0903.112.233</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">✉️ Email:</span>
+                  <span class="info-val">giang.pham@product.io</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">📍 Vị trí:</span>
+                  <span class="info-val">TP. HCM (Tầng 9)</span>
+                </div>
+              </div>
+              <button type="button" class="btn-chat-trigger"
+                onclick="event.stopPropagation(); openChatModal('Phạm Hương Giang', 'Product Manager', 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=200&q=80')">
+                💬 Gửi tin nhắn
+              </button>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- THẺ NHÂN SỰ 4: ĐẶNG TUẤN KIỆT -->
+        <div class="flip-card" data-aos="zoom-in-up" data-aos-delay="400" onclick="toggleCardFlip(this)">
+          <div class="flip-card-inner">
+
+            <!-- Mặt trước -->
+            <div class="flip-card-front">
+              <span class="flip-badge">Mobile App</span>
+              <div class="friend-avatar-wrap">
+                <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80"
+                  alt="Đặng Tuấn Kiệt" class="friend-avatar">
+                <span class="status-dot dot-offline"></span>
+              </div>
+              <h4 class="friend-name">Đặng Tuấn Kiệt</h4>
+              <p class="friend-role">Flutter Developer</p>
+              <div class="flip-hint">
+                <span class="hint-icon">🔄</span> Hover để xem liên hệ
+              </div>
+            </div>
+
+            <!-- Mặt sau -->
+            <div class="flip-card-back">
+              <h4 class="back-title">Thông Tin Liên Hệ</h4>
+              <div class="contact-info-list">
+                <div class="info-row">
+                  <span class="info-label">📞 SĐT:</span>
+                  <span class="info-val">0977.889.900</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">✉️ Email:</span>
+                  <span class="info-val">kiet.dang@mobile.dev</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">📍 Vị trí:</span>
+                  <span class="info-val">Hà Nội (Tầng 5)</span>
+                </div>
+              </div>
+              <button type="button" class="btn-chat-trigger"
+                onclick="event.stopPropagation(); openChatModal('Đặng Tuấn Kiệt', 'Flutter Developer', 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80')">
+                💬 Gửi tin nhắn
+              </button>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- PHẦN 5: LIÊN HỆ (CONTACT FOOTER) -->
+    <section id="contact" class="section section-contact">
+      <div class="section-header" data-aos="fade-up">
+        <span class="section-badge">Kết nối</span>
+        <h2 class="section-title">Thông Tin Liên Hệ</h2>
+        <p class="section-desc">Rất sẵn lòng lắng nghe cơ hội hợp tác và chia sẻ từ bạn!</p>
+      </div>
+
+      <div class="contact-cards">
+        <div class="contact-item" data-aos="fade-up" data-aos-delay="100">
+          <span class="contact-icon">📧</span>
+          <h4>Email</h4>
+          <p>hoangminhtien.dev@example.com</p>
+        </div>
+        <div class="contact-item" data-aos="fade-up" data-aos-delay="200">
+          <span class="contact-icon">📍</span>
+          <h4>Địa chỉ</h4>
+          <p>Hà Nội, Việt Nam</p>
+        </div>
+        <div class="contact-item" data-aos="fade-up" data-aos-delay="300">
+          <span class="contact-icon">🌐</span>
+          <h4>Mạng Xã Hội</h4>
+          <p>github.com/hoangminhtien</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =================================================================
+       NÚT TRÒN "LIÊN HỆ" CỐ ĐỊNH Ở GÓC MÀN HÌNH (PULSE ANIMATION)
+       ================================================================= -->
+  <a href="#contact" class="floating-contact-btn" id="floatingContactBtn" title="Liên hệ nhanh với tôi">
+    <!-- Vòng sóng tỏa phập phồng (Pulse wave rings) -->
+    <span class="pulse-ring ring-1"></span>
+    <span class="pulse-ring ring-2"></span>
+
+    <!-- Nút tròn chính -->
+    <div class="floating-btn-inner">
+      <svg class="floating-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+      </svg>
+      <span class="floating-btn-text">Liên hệ</span>
+    </div>
+  </a>
+
+  <!-- =================================================================
+       MODAL POPUP: FORM GỬI TIN NHẮN CHO BẠN BÈ
+       (Chỉ xuất hiện khi bấm vào một người bạn bất kỳ)
+       ================================================================= -->
+  <div id="chatModal" class="modal-backdrop" onclick="handleBackdropClick(event)">
+    <div class="modal-card">
+
+      <!-- Nút đóng modal -->
+      <button type="button" class="btn-close-modal" onclick="closeChatModal()" title="Đóng">✕</button>
+
+      <!-- Thông tin người nhận -->
+      <div class="recipient-header">
+        <div class="recipient-avatar-wrap">
+          <img id="modalRecipientAvatar" src="" alt="Avatar" class="recipient-avatar">
+          <span class="recipient-status"></span>
+        </div>
+        <div class="recipient-meta">
+          <h3 id="modalRecipientName" class="recipient-name">Tên bạn bè</h3>
+          <p id="modalRecipientRole" class="recipient-role">Chức vụ</p>
+        </div>
+      </div>
+
+      <div class="chat-divider"></div>
+
+      <!-- Form nhập tin nhắn -->
+      <form id="messageForm" class="message-form" onsubmit="handleSendMessage(event)">
+        <div class="form-field">
+          <label for="msgSender" class="form-label">Tên của bạn</label>
+          <input type="text" id="msgSender" class="form-control" placeholder="Nhập tên của bạn..." required
+            value="Hoàng Minh Tiến">
+        </div>
+
+        <div class="form-field">
+          <label for="msgContent" class="form-label">Nội dung tin nhắn</label>
+          <textarea id="msgContent" class="form-control" rows="4" placeholder="Nhập lời nhắn gửi đến bạn ấy..."
+            required></textarea>
+        </div>
+
+        <!-- NÚT GỬI TIN NHẮN VỚI HIỆU ỨNG TRANSITION & CUBIC-BEZIER -->
+        <button type="submit" class="btn-send" id="btnSendModal">
+          <svg class="icon-send" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <line x1="22" y1="2" x2="11" y2="13"></line>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+          </svg>
+          <span>Gửi tin nhắn</span>
+        </button>
+      </form>
+
+      <!-- Thông báo gửi thành công -->
+      <div id="sendSuccessMsg" class="success-alert" style="display: none;">
+        ✨ Tin nhắn của bạn đã được gửi thành công!
+      </div>
+    </div>
+  </div>
+
+  <!-- =================================================================
+       TÍCH HỢP THƯ VIỆN AOS (ANIMATE ON SCROLL) - JS
+       ================================================================= -->
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+  <!-- =================================================================
+       JAVASCRIPT XỬ LÝ SỰ KIỆN LOADING, AOS & MODAL CHAT
+       ================================================================= -->
+  <script>
+    // 1. Khởi tạo thư viện AOS (Animate On Scroll)
+    AOS.init({
+      duration: 800,         // Thời gian chuyển động (ms)
+      easing: 'ease-out-cubic', // Gia tốc mượt mà
+      once: false,           // Hiệu ứng chạy khi cuộn tới các khối
+      offset: 80,            // Bắt đầu chạy khi cách mép màn hình 80px
+      delay: 50              // Độ trễ mặc định
+    });
+
+    // 2. Xử lý màn hình Loading lúc đầu và kích hoạt chạy các thanh kỹ năng
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        const loadingScreen = document.getElementById('loadingScreen');
+        const mainContent = document.getElementById('mainContent');
+        if (loadingScreen && mainContent) {
+          loadingScreen.classList.add('fade-out');
+          mainContent.classList.remove('content-hidden');
+          mainContent.classList.add('skills-ready'); // Kích hoạt animation chạy thanh kỹ năng
+
+          // Làm mới vị trí tính toán của thư viện AOS
+          setTimeout(() => {
+            AOS.refresh();
+          }, 100);
+        }
+      }, 1200);
+    });
+
+    // 3. Xử lý mở/đóng Hamburger Menu & biến đổi nút 3 gạch thành dấu "X"
+    function toggleNavMenu() {
+      const btn = document.getElementById('hamburgerBtn');
+      const menu = document.getElementById('navMenu');
+      if (btn && menu) {
+        btn.classList.toggle('active');
+        menu.classList.toggle('open');
+      }
+    }
+
+    function closeNavMenu() {
+      const btn = document.getElementById('hamburgerBtn');
+      const menu = document.getElementById('navMenu');
+      if (btn && menu) {
+        btn.classList.remove('active');
+        menu.classList.remove('open');
+      }
+    }
+
+    // 4. Xử lý chạm/click lật thẻ 180 độ (dành cho Mobile/Touch)
+    function toggleCardFlip(cardElement) {
+      // Đảo ngược trạng thái lật thẻ khi click trên mobile
+      cardElement.classList.toggle('flipped');
+    }
+
+    // 5. Mở Modal gửi tin nhắn cho bạn bè
+    function openChatModal(name, role, avatarUrl) {
+      document.getElementById('modalRecipientName').textContent = name;
+      document.getElementById('modalRecipientRole').textContent = role;
+      document.getElementById('modalRecipientAvatar').src = avatarUrl;
+      document.getElementById('msgContent').value = '';
+      document.getElementById('sendSuccessMsg').style.display = 'none';
+
+      const modal = document.getElementById('chatModal');
+      modal.classList.add('show');
+      document.body.style.overflow = 'hidden'; // Khóa cuộn trang khi mở modal
+    }
+
+    // 4. Đóng Modal
+    function closeChatModal() {
+      const modal = document.getElementById('chatModal');
+      modal.classList.remove('show');
+      document.body.style.overflow = '';
+    }
+
+    // Đóng khi click ngoài backdrop
+    function handleBackdropClick(event) {
+      if (event.target.id === 'chatModal') {
+        closeChatModal();
+      }
+    }
+
+    // 5. Xử lý gửi tin nhắn
+    function handleSendMessage(event) {
+      event.preventDefault();
+      const btn = document.getElementById('btnSendModal');
+      const successMsg = document.getElementById('sendSuccessMsg');
+
+      btn.style.opacity = '0.7';
+      btn.querySelector('span').textContent = 'Đang gửi...';
+
+      setTimeout(() => {
+        btn.style.opacity = '1';
+        btn.querySelector('span').textContent = 'Gửi tin nhắn';
+        successMsg.style.display = 'block';
+        document.getElementById('msgContent').value = '';
+
+        setTimeout(() => {
+          closeChatModal();
+        }, 1500);
+      }, 800);
+    }
+  </script>
+
+</body>
+
+</html>
