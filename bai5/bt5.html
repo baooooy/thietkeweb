@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="vi" class="dark scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lumiere & Architex Enterprise | Kiến Trúc & Xây Dựng Thượng Lưu</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        gold: {
+                            DEFAULT: '#d4af37',
+                            light: '#f3e5ab',
+                            dark: '#aa8c2c',
+                            accent: '#e6ca65'
+                        },
+                        darkSurface: '#05070c',
+                        cardSurface: '#0b101d',
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Pro / Free Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #05070c;
+            color: #f3f4f6;
+            overflow-x: hidden;
+        }
+
+        /* High-end glassmorphism styling */
+        .glass-panel {
+            background: rgba(11, 16, 29, 0.78);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+        }
+
+        .glass-panel-hover {
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .glass-panel-hover:hover {
+            border-color: rgba(212, 175, 55, 0.4);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px -15px rgba(212, 175, 55, 0.15);
+        }
+
+        /* 1. Interactive Preloader & Spinner ("Loading Master") */
+        #loader-wrapper {
+            position: fixed;
+            inset: 0;
+            background: #05070c;
+            z-index: 99999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+        }
+        .spinner-ring {
+            width: 80px;
+            height: 80px;
+            border: 4px solid rgba(212, 175, 55, 0.1);
+            border-top-color: #d4af37;
+            border-right-color: #f3e5ab;
+            border-radius: 50%;
+            animation: spin 1s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* 2. Smooth AOS (Animate on Scroll) & Performance Optimization ("Refactoring Performance") */
+        .gpu-accelerated {
+            transform: translate3d(0, 0, 0);
+            backface-visibility: hidden;
+            perspective: 1000px;
+        }
+        .reveal-element {
+            opacity: 0;
+            transform: translate3d(0, 35px, 0);
+            transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
+        }
+        .reveal-element.active {
+            opacity: 1;
+            transform: translate3d(0, 0, 0);
+        }
+
+        /* 3. Floating Action Button (FAB) for Contact ("Bài 1") */
+        @keyframes fab-pulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.6); }
+            70% { transform: scale(1); box-shadow: 0 0 0 20px rgba(212, 175, 55, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
+        }
+        .fab-btn {
+            animation: fab-pulse 2.5s infinite;
+        }
+
+        /* 4. Interactive Card Flip Effect ("Bài 2") */
+        .flip-card {
+            background-color: transparent;
+            perspective: 1200px;
+            height: 420px;
+        }
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+        .flip-card-front {
+            background: #0b101d;
+        }
+        .flip-card-back {
+            background: #111827;
+            transform: rotateY(180deg);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2.5rem;
+            text-align: left;
+        }
+
+        /* 5. Pure CSS Typing Effect ("Bài 3") */
+        .typing-container {
+            display: inline-block;
+            overflow: hidden;
+            border-right: 3px solid #d4af37;
+            white-space: nowrap;
+            animation: typing 4s steps(44, end) infinite, blink-caret 0.75s step-end infinite;
+            max-width: 100%;
+        }
+        @keyframes typing {
+            0% { width: 0; }
+            50% { width: 100%; }
+            80% { width: 100%; }
+            100% { width: 0; }
+        }
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: #d4af37; }
+        }
+
+        /* 6. Parallax Image Scrolling ("Bài 4") */
+        .parallax-bg-1 {
+            background-image: linear-gradient(to bottom, rgba(5,7,12,0.8), rgba(5,7,12,0.9)), url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1920&q=80');
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        .parallax-bg-2 {
+            background-image: linear-gradient(to bottom, rgba(5,7,12,0.85), rgba(5,7,12,0.95)), url('https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=1920&q=80');
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        /* 7. Modern Hamburger Menu ("Bài 5") */
+        .hamburger-line {
+            transition: transform 0.35s ease, opacity 0.35s ease;
+            transform-origin: center;
+        }
+        .menu-open .line-1 {
+            transform: translateY(8px) rotate(45deg);
+            background-color: #d4af37;
+        }
+        .menu-open .line-2 {
+            opacity: 0;
+        }
+        .menu-open .line-3 {
+            transform: translateY(-8px) rotate(-45deg);
+            background-color: #d4af37;
+        }
+
+        /* 8. Animated Skill/Progress Bars ("Bài 6") */
+        .skill-bar-fill {
+            width: 0%;
+            transition: width 1.8s cubic-bezier(0.1, 0.9, 0.2, 1);
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #05070c;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #d4af37;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="gpu-accelerated">
+
+    <!-- 1. Interactive Preloader & Spinner ("Loading Master") -->
+    <div id="loader-wrapper">
+        <div class="spinner-ring mb-6"></div>
+        <h2 class="text-2xl font-bold tracking-widest text-gold uppercase">LUMIERE & ARCHITEX</h2>
+        <p class="text-sm text-gray-400 mt-2 font-mono tracking-wider">Đang khởi tạo không gian thượng lưu...</p>
+    </div>
+
+    <!-- Header & Navigation -->
+    <header class="fixed top-0 left-0 right-0 z-50 glass-panel border-b border-gold/10 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
+            <a href="#" class="flex items-center gap-3.5 group">
+                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-gold to-gold-dark flex items-center justify-center text-gray-950 font-black text-2xl shadow-xl shadow-gold/20 group-hover:scale-105 transition">
+                    L
+                </div>
+                <div>
+                    <span class="text-lg font-extrabold tracking-widest text-white block">LUMIERE</span>
+                    <span class="text-xs font-semibold tracking-widest text-gold uppercase block -mt-1">& ARCHITEX</span>
+                </div>
+            </a>
+
+            <!-- Desktop Nav -->
+            <nav class="hidden md:flex items-center gap-8 text-sm font-semibold text-gray-300">
+                <a href="#hero" class="hover:text-gold transition">Trang Chủ</a>
+                <a href="#projects" class="hover:text-gold transition">Tuyệt Tác Dự Án</a>
+                <a href="#calculator" class="hover:text-gold transition">Dự Toán Chi Phí</a>
+                <a href="#expertise" class="hover:text-gold transition">Năng Lực Công Nghệ</a>
+                <a href="#team" class="hover:text-gold transition">Chuyên Gia</a>
+                <a href="#testimonials" class="hover:text-gold transition">Đánh Giá</a>
+            </nav>
+
+            <div class="hidden md:block">
+                <button onclick="openModal('consultModal')" class="bg-gradient-to-r from-gold to-gold-dark text-gray-950 font-bold px-7 py-3 rounded-xl shadow-lg shadow-gold/20 hover:shadow-gold/40 transition hover:-translate-y-0.5">
+                    <i class="fa-solid fa-calendar-days mr-2"></i> Đặt Lịch Tư Vấn
+                </button>
+            </div>
+
+            <!-- 7. Modern Hamburger Menu Trigger ("Bài 5") -->
+            <button id="hamburger-btn" class="md:hidden w-11 h-11 flex flex-col justify-center items-center gap-2 focus:outline-none glass-panel rounded-xl">
+                <span class="w-6 h-0.5 bg-white rounded-full hamburger-line line-1"></span>
+                <span class="w-6 h-0.5 bg-white rounded-full hamburger-line line-2"></span>
+                <span class="w-6 h-0.5 bg-white rounded-full hamburger-line line-3"></span>
+            </button>
+        </div>
+
+        <!-- Mobile Menu Immersive Overlay -->
+        <div id="mobile-menu" class="fixed inset-x-0 top-24 bg-gray-950/98 backdrop-blur-2xl border-b border-gold/20 p-8 flex flex-col gap-6 transform -translate-y-full opacity-0 pointer-events-none transition-all duration-400 md:hidden shadow-2xl">
+            <a href="#hero" class="mobile-link text-xl font-bold hover:text-gold transition">Trang Chủ</a>
+            <a href="#projects" class="mobile-link text-xl font-bold hover:text-gold transition">Tuyệt Tác Dự Án</a>
+            <a href="#calculator" class="mobile-link text-xl font-bold hover:text-gold transition">Dự Toán Chi Phí</a>
+            <a href="#expertise" class="mobile-link text-xl font-bold hover:text-gold transition">Năng Lực Công Nghệ</a>
+            <a href="#team" class="mobile-link text-xl font-bold hover:text-gold transition">Chuyên Gia</a>
+            <a href="#testimonials" class="mobile-link text-xl font-bold hover:text-gold transition">Đánh Giá</a>
+            <button onclick="openModal('consultModal'); toggleMobileMenu();" class="bg-gradient-to-r from-gold to-gold-dark text-gray-950 font-bold py-4 rounded-xl text-center w-full shadow-lg">
+                Đặt Lịch Tư Vấn Ngay
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section with Pure CSS Typing Effect ("Bài 3") -->
+    <section id="hero" class="relative min-h-screen flex items-center justify-center pt-24 px-6 overflow-hidden parallax-bg-1">
+        <div class="relative z-20 max-w-5xl mx-auto text-center py-20">
+            <div class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full glass-panel border border-gold/30 text-gold text-xs font-bold tracking-widest uppercase mb-6 reveal-element shadow-lg">
+                <i class="fa-solid fa-crown text-gold"></i> Đỉnh Cao Kiến Trúc & Xây Dựng Hạng Sang 2026
+            </div>
+            
+            <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight mb-8 leading-tight reveal-element">
+                Kiến tạo không gian sống tương lai <br>
+                <span class="bg-gradient-to-r from-gold via-gold-light to-yellow-600 bg-clip-text text-transparent typing-container">
+                    Đẳng Cấp & Bền Vững
+                </span>
+            </h1>
+
+            <p class="text-lg sm:text-xl text-gray-300 max-w-3xl mx-auto mb-12 reveal-element font-light leading-relaxed">
+                Chúng tôi kết hợp nghệ thuật kiến trúc đương đại với công nghệ BIM 360 tiên tiến và vật liệu siêu bền để định hình lại tiêu chuẩn sống xa hoa cho các gia chủ tinh hoa.
+            </p>
+
+            <div class="flex flex-wrap justify-center gap-5 reveal-element">
+                <a href="#projects" class="bg-gradient-to-r from-gold to-gold-dark text-gray-950 font-extrabold px-9 py-4 rounded-2xl text-lg shadow-xl shadow-gold/25 hover:shadow-gold/45 transition hover:-translate-y-1 inline-flex items-center gap-3">
+                    Khám Phá Tuyệt Tác <i class="fa-solid fa-arrow-right"></i>
+                </a>
+                <a href="#calculator" class="glass-panel text-white font-bold px-9 py-4 rounded-2xl text-lg hover:border-gold/60 transition hover:-translate-y-1 inline-flex items-center gap-3">
+                    <i class="fa-solid fa-calculator text-gold"></i> Tính Toán Chi Phí
+                </a>
+            </div>
+
+            <!-- Key metrics grid -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-20 reveal-element">
+                <div class="glass-panel p-6 rounded-3xl text-center">
+                    <h3 class="text-3xl sm:text-4xl font-black text-gold">18+</h3>
+                    <p class="text-xs sm:text-sm text-gray-400 mt-1 uppercase tracking-wider">Năm Kinh Nghiệm</p>
+                </div>
+                <div class="glass-panel p-6 rounded-3xl text-center">
+                    <h3 class="text-3xl sm:text-4xl font-black text-gold">320+</h3>
+                    <p class="text-xs sm:text-sm text-gray-400 mt-1 uppercase tracking-wider">Dự Án Biệt Thự & Tòa Nhà</p>
+                </div>
+                <div class="glass-panel p-6 rounded-3xl text-center">
+                    <h3 class="text-3xl sm:text-4xl font-black text-gold">99.9%</h3>
+                    <p class="text-xs sm:text-sm text-gray-400 mt-1 uppercase tracking-wider">Khách Hàng Hài Lòng</p>
+                </div>
+                <div class="glass-panel p-6 rounded-3xl text-center">
+                    <h3 class="text-3xl sm:text-4xl font-black text-gold">50+</h3>
+                    <p class="text-xs sm:text-sm text-gray-400 mt-1 uppercase tracking-wider">Giải Thưởng Quốc Tế</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section with Filter & High-end presentation -->
+    <section id="projects" class="py-28 px-6 max-w-7xl mx-auto">
+        <div class="text-center max-w-3xl mx-auto mb-16 reveal-element">
+            <span class="text-gold text-xs font-extrabold tracking-widest uppercase mb-3 block">Danh Mục Dự Án Đỉnh Cao</span>
+            <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white">Kiệt Tác Kiến Trúc & Xây Dựng</h2>
+            <p class="text-gray-400 mt-4 text-base">Khám phá các công trình biểu tượng được thực hiện bởi đội ngũ Lumiere & Architex.</p>
+            
+            <!-- Category Filter Buttons -->
+            <div class="flex flex-wrap justify-center gap-3 mt-8">
+                <button onclick="filterProjects('all')" class="filter-btn active bg-gold text-gray-950 font-bold px-6 py-2.5 rounded-xl text-sm transition shadow-md">Tất Cả</button>
+                <button onclick="filterProjects('villa')" class="filter-btn glass-panel text-white font-bold px-6 py-2.5 rounded-xl text-sm hover:border-gold transition">Biệt Thự Thông Minh</button>
+                <button onclick="filterProjects('hotel')" class="filter-btn glass-panel text-white font-bold px-6 py-2.5 rounded-xl text-sm hover:border-gold transition">Khách Sạn & Resort</button>
+                <button onclick="filterProjects('commercial')" class="filter-btn glass-panel text-white font-bold px-6 py-2.5 rounded-xl text-sm hover:border-gold transition">Tòa Nhà Thương Mại</button>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 reveal-element" id="projects-grid">
+            <!-- Project 1 -->
+            <div class="glass-panel rounded-3xl overflow-hidden glass-panel-hover project-item" data-category="villa">
+                <div class="h-64 relative overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80" alt="Villa" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                    <span class="absolute top-4 left-4 bg-gold/90 text-gray-950 font-bold text-xs px-3.5 py-1.5 rounded-full uppercase tracking-wider">Biệt Thự Thông Minh</span>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-2xl font-bold text-white mb-2">The Lumiere Imperial Sky Villa</h3>
+                    <p class="text-sm text-gray-400 mb-4"><i class="fa-solid fa-location-dot text-gold mr-2"></i> Thảo Điền, TP. Thủ Đức</p>
+                    <div class="grid grid-cols-2 gap-4 py-3 border-y border-gold/10 text-xs font-mono text-gray-300">
+                        <div><strong class="text-gold">Diện tích:</strong> 1,450 m²</div>
+                        <div><strong class="text-gold">Thi công:</strong> 11 Tháng</div>
+                    </div>
+                    <button onclick="openProjectDetail('The Lumiere Imperial Sky Villa', '1,450 m²', 'Thảo Điền, TP. Thủ Đức', 'Biệt thự thông minh tích hợp AI năng lượng mặt trời, hồ bơi vô cực tràn viền và hệ thống an ninh sinh trắc học toàn diện.')" class="mt-5 w-full bg-gold/10 hover:bg-gold text-gold hover:text-gray-950 font-bold py-3 rounded-xl text-sm transition border border-gold/30">
+                        Xem Chi Tiết Dự Án
+                    </button>
+                </div>
+            </div>
+
+            <!-- Project 2 -->
+            <div class="glass-panel rounded-3xl overflow-hidden glass-panel-hover project-item" data-category="hotel">
+                <div class="h-64 relative overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=800&q=80" alt="Hotel" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                    <span class="absolute top-4 left-4 bg-gold/90 text-gray-950 font-bold text-xs px-3.5 py-1.5 rounded-full uppercase tracking-wider">Resort 6 Sao</span>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-2xl font-bold text-white mb-2">Aurelia Bay Luxury Resort</h3>
+                    <p class="text-sm text-gray-400 mb-4"><i class="fa-solid fa-location-dot text-gold mr-2"></i> Bãi Dài, Cam Ranh</p>
+                    <div class="grid grid-cols-2 gap-4 py-3 border-y border-gold/10 text-xs font-mono text-gray-300">
+                        <div><strong class="text-gold">Quy mô:</strong> 18 Hecta</div>
+                        <div><strong class="text-gold">Tiêu chuẩn:</strong> 6 Sao Quốc Tế</div>
+                    </div>
+                    <button onclick="openProjectDetail('Aurelia Bay Luxury Resort', '18 Hecta', 'Bãi Dài, Cam Ranh', 'Kần resort nghỉ dưỡng sinh thái đỉnh cao với 80 villa hướng biển nguyên bản, vật liệu thân thiện thiên nhiên và vận hành bằng năng lượng tái tạo.')" class="mt-5 w-full bg-gold/10 hover:bg-gold text-gold hover:text-gray-950 font-bold py-3 rounded-xl text-sm transition border border-gold/30">
+                        Xem Chi Tiết Dự Án
+                    </button>
+                </div>
+            </div>
+
+            <!-- Project 3 -->
+            <div class="glass-panel rounded-3xl overflow-hidden glass-panel-hover project-item" data-category="commercial">
+                <div class="h-64 relative overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80" alt="Commercial" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                    <span class="absolute top-4 left-4 bg-gold/90 text-gray-950 font-bold text-xs px-3.5 py-1.5 rounded-full uppercase tracking-wider">Tòa Nhà Thương Mại</span>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-2xl font-bold text-white mb-2">Apex Tower Financial Center</h3>
+                    <p class="text-sm text-gray-400 mb-4"><i class="fa-solid fa-location-dot text-gold mr-2"></i> Quận 1, TP. Hồ Chí Minh</p>
+                    <div class="grid grid-cols-2 gap-4 py-3 border-y border-gold/10 text-xs font-mono text-gray-300">
+                        <div><strong class="text-gold">Kết cấu:</strong> 35 Tầng nổi</div>
+                        <div><strong class="text-gold">Chuẩn xanh:</strong> LEED Platinum</div>
+                    </div>
+                    <button onclick="openProjectDetail('Apex Tower Financial Center', '35 Tầng nổi', 'Quận 1, TP.HCM', 'Trung tâm tài chính hạng A với mặt dựng kính Low-E cách âm cách nhiệt hoàn hảo, hệ thống thang máy tốc độ cao điều khiển bằng AI.')" class="mt-5 w-full bg-gold/10 hover:bg-gold text-gold hover:text-gray-950 font-bold py-3 rounded-xl text-sm transition border border-gold/30">
+                        Xem Chi Tiết Dự Án
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Parallax Architectural Showcase ("Bài 4") -->
+    <section class="py-32 px-6 parallax-bg-2 relative my-12">
+        <div class="max-w-5xl mx-auto text-center relative z-10 reveal-element">
+            <span class="text-gold text-xs font-extrabold tracking-widest uppercase mb-3 block">Triết Lý Xây Dựng</span>
+            <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white mb-6">"Kiến Trúc Không Chỉ Là Không Gian, Đó Là Tác Phẩm Nghệ Thuật Sống Động"</h2>
+            <p class="text-gray-300 text-lg max-w-3xl mx-auto mb-10 leading-relaxed">
+                Mỗi công trình của chúng tôi là sự giao thoa hoàn mỹ giữa phong cách thiết kế đương đại, công năng vận hành thông minh và dấu ấn cá nhân độc bản của gia chủ.
+            </p>
+            <button onclick="openModal('consultModal')" class="bg-gradient-to-r from-gold to-gold-dark text-gray-950 font-extrabold px-10 py-4 rounded-2xl text-lg shadow-xl hover:shadow-gold/40 transition">
+                Tư Vấn Thiết Kế Riêng
+            </button>
+        </div>
+    </section>
+
+    <!-- Interactive Project Cost Calculator -->
+    <section id="calculator" class="py-28 px-6 max-w-5xl mx-auto">
+        <div class="glass-panel p-8 sm:p-12 rounded-3xl border border-gold/30 shadow-2xl reveal-element">
+            <div class="text-center max-w-2xl mx-auto mb-10">
+                <span class="text-gold text-xs font-extrabold tracking-widest uppercase mb-2 block">Công Cụ Thông Minh</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white">Dự Toán Chi Phí Xây Dựng</h2>
+                <p class="text-gray-400 text-sm mt-2">Tính toán ước tính chi phí đầu tư sơ bộ cho công trình của bạn dựa trên loại hình và diện tích.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div class="space-y-6">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-300 mb-2">Loại Hình Công Trình</label>
+                        <select id="calcType" onchange="calculateCost()" class="w-full bg-gray-900/90 border border-gold/30 px-4 py-3.5 rounded-xl text-white focus:outline-none focus:border-gold transition">
+                            <option value="12000000">Biệt Thự Cao Cấp (12 Triệu VNĐ / m²)</option>
+                            <option value="15000000">Biệt Thự Thông Minh Smart Villa (15 Triệu VNĐ / m²)</option>
+                            <option value="9000000">Nhà Phố Thương Mại (9 Triệu VNĐ / m²)</option>
+                            <option value="18000000">Khách Sạn / Resort (18 Triệu VNĐ / m²)</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-300 mb-2">Diện Tích Sàn Xây Dựng (m²)</label>
+                        <input type="number" id="calcArea" value="350" min="50" max="10000" oninput="calculateCost()" class="w-full bg-gray-900/90 border border-gold/30 px-4 py-3.5 rounded-xl text-white focus:outline-none focus:border-gold transition">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-300 mb-2">Gói Thi Công & Hoàn Thiện</label>
+                        <select id="calcPackage" onchange="calculateCost()" class="w-full bg-gray-900/90 border border-gold/30 px-4 py-3.5 rounded-xl text-white focus:outline-none focus:border-gold transition">
+                            <option value="1.0">Tiêu Chuẩn Cao Cấp (Standard Lux)</option>
+                            <option value="1.25">Hạng Sang Quốc Tế (Premium Elite)</option>
+                            <option value="1.5">Độc Bản Giới Hạn (Bespoke Ultra-Luxury)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="glass-panel p-8 rounded-2xl bg-gray-950/80 text-center border border-gold/20 flex flex-col justify-center h-full">
+                    <span class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Ước Tính Tổng Chi Phí Đầu Tư</span>
+                    <div class="text-3xl sm:text-4xl lg:text-5xl font-black text-gold my-4 font-mono" id="calcResult">5.04 Tỷ VNĐ</div>
+                    <p class="text-xs text-gray-400 mb-6">*Chi phí đã bao gồm thiết kế kiến trúc, kết cấu, MEP và hoàn thiện nội thất cơ bản. Liên hệ để nhận báo giá chi tiết chính xác 100%.</p>
+                    <button onclick="openModal('consultModal')" class="bg-gradient-to-r from-gold to-gold-dark text-gray-950 font-bold py-3.5 rounded-xl text-sm shadow-lg w-full">
+                        Nhận Báo Giá Chi Tiết
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. Animated Skill/Progress Bars ("Bài 6") & Technology Expertise -->
+    <section id="expertise" class="py-28 px-6 bg-gray-900/40 border-y border-gold/10">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div class="reveal-element">
+                <span class="text-gold text-xs font-extrabold tracking-widest uppercase mb-3 block">Năng Lực Kỹ Thuật & Công Nghệ</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white mb-6">Ứng Dụng Công Nghệ Xây Dựng Tiên Tiến Nhất</h2>
+                <p class="text-gray-300 mb-8 leading-relaxed">
+                    Chúng tôi tiên phong áp dụng mô hình thông tin công trình BIM 360, vật liệu xanh đạt chuẩn LEED và các hệ thống tự động hóa tòa nhà thông minh vào mọi dự án.
+                </p>
+                <div class="grid grid-cols-2 gap-6">
+                    <div class="glass-panel p-5 rounded-2xl">
+                        <i class="fa-solid fa-cube text-3xl text-gold mb-3"></i>
+                        <h4 class="font-bold text-white mb-1">Mô Hình BIM 360</h4>
+                        <p class="text-xs text-gray-400">Trực quan hóa 100% không gian trước thi công.</p>
+                    </div>
+                    <div class="glass-panel p-5 rounded-2xl">
+                        <i class="fa-solid fa-leaf text-3xl text-gold mb-3"></i>
+                        <h4 class="font-bold text-white mb-1">Vật Liệu Xanh</h4>
+                        <p class="text-xs text-gray-400">Tiết kiệm năng lượng và thân thiện môi trường.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Skill Progress Bars Container -->
+            <div class="glass-panel p-8 sm:p-10 rounded-3xl reveal-element" id="skill-section">
+                <h3 class="text-xl font-bold mb-6 text-white flex items-center gap-3">
+                    <i class="fa-solid fa-chart-line text-gold"></i> Chỉ Số Năng Lực & Chuyên Môn
+                </h3>
+                
+                <div class="space-y-6">
+                    <div>
+                        <div class="flex justify-between text-sm font-semibold mb-2 text-gray-200">
+                            <span>Thiết Kế Kiến Trúc & Nội Thất (Bespoke Architecture)</span>
+                            <span class="text-gold font-mono">98%</span>
+                        </div>
+                        <div class="w-full bg-gray-800 h-3 rounded-full overflow-hidden p-0.5 border border-gold/20">
+                            <div class="skill-bar-fill bg-gradient-to-r from-gold-dark to-gold h-full rounded-full" data-width="98"></div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="flex justify-between text-sm font-semibold mb-2 text-gray-200">
+                            <span>Thi Công Kết Cấu & Móng Cọc Phức Tạp</span>
+                            <span class="text-gold font-mono">95%</span>
+                        </div>
+                        <div class="w-full bg-gray-800 h-3 rounded-full overflow-hidden p-0.5 border border-gold/20">
+                            <div class="skill-bar-fill bg-gradient-to-r from-gold-dark to-gold h-full rounded-full" data-width="95"></div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="flex justify-between text-sm font-semibold mb-2 text-gray-200">
+                            <span>Tích Hợp Hệ Thống Smart Home & IoT</span>
+                            <span class="text-gold font-mono">92%</span>
+                        </div>
+                        <div class="w-full bg-gray-800 h-3 rounded-full overflow-hidden p-0.5 border border-gold/20">
+                            <div class="skill-bar-fill bg-gradient-to-r from-gold-dark to-gold h-full rounded-full" data-width="92"></div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="flex justify-between text-sm font-semibold mb-2 text-gray-200">
+                            <span>Quản Lý Tiến Độ & Ngân Sách Dự Án</span>
+                            <span class="text-gold font-mono">99%</span>
+                        </div>
+                        <div class="w-full bg-gray-800 h-3 rounded-full overflow-hidden p-0.5 border border-gold/20">
+                            <div class="skill-bar-fill bg-gradient-to-r from-gold-dark to-gold h-full rounded-full" data-width="99"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Interactive Card Flip Effect ("Bài 2") Team Section -->
+    <section id="team" class="py-28 px-6 max-w-7xl mx-auto">
+        <div class="text-center max-w-3xl mx-auto mb-16 reveal-element">
+            <span class="text-gold text-xs font-extrabold tracking-widest uppercase mb-3 block">Ban Chuyên Gia Cấp Cao</span>
+            <h2 class="text-3xl sm:text-5xl font-extrabold text-white">Đội Ngũ Kiến Trúc Sư Trưởng</h2>
+            <p class="text-gray-400 mt-4">Di chuột vào các thẻ bên dưới để lật xem thông tin chi tiết và tiểu sử của chuyên gia (Card Flip Effect).</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 reveal-element">
+            <!-- Expert Card 1 -->
+            <div class="flip-card">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front flex flex-col justify-end p-6 relative">
+                        <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80')"></div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-gray-950 via-gray-950/40 to-transparent"></div>
+                        <div class="relative z-10 text-left">
+                            <span class="text-xs font-bold text-gold bg-gold/10 px-3 py-1 rounded-full border border-gold/30">Chief Architect</span>
+                            <h3 class="text-2xl font-bold text-white mt-3">KTS. Elena Vance</h3>
+                            <p class="text-sm text-gray-300 mt-1"><i class="fa-solid fa-award text-gold"></i> Thành viên hội RIBA Anh Quốc</p>
+                        </div>
+                    </div>
+                    <div class="flip-card-back">
+                        <span class="text-xs font-bold text-gold mb-1 uppercase tracking-wider">Tiểu Sử Chuyên Gia</span>
+                        <h4 class="text-xl font-bold text-white mb-3">Elena Vance</h4>
+                        <p class="text-xs text-gray-300 mb-4 leading-relaxed">Hơn 20 năm kinh nghiệm thiết kế biệt thự nghỉ dưỡng siêu sang tại Châu Âu và Đông Nam Á. Từng giành 3 giải thưởng kiến trúc thế giới.</p>
+                        <div class="w-full space-y-2 font-mono text-xs text-gray-300">
+                            <div><i class="fa-solid fa-envelope text-gold mr-2"></i> elena.v@lumiere.vn</div>
+                            <div><i class="fa-solid fa-phone text-gold mr-2"></i> +84 901 234 567</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Expert Card 2 -->
+            <div class="flip-card">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front flex flex-col justify-end p-6 relative">
+                        <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80')"></div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-gray-950 via-gray-950/40 to-transparent"></div>
+                        <div class="relative z-10 text-left">
+                            <span class="text-xs font-bold text-gold bg-gold/10 px-3 py-1 rounded-full border border-gold/30">Director of Engineering</span>
+                            <h3 class="text-2xl font-bold text-white mt-3">ThS. Marcus Sterling</h3>
+                            <p class="text-sm text-gray-300 mt-1"><i class="fa-solid fa-award text-gold"></i> Chuyên gia kết cấu cao tầng</p>
+                        </div>
+                    </div>
+                    <div class="flip-card-back">
+                        <span class="text-xs font-bold text-gold mb-1 uppercase tracking-wider">Tiểu Sử Chuyên Gia</span>
+                        <h4 class="text-xl font-bold text-white mb-3">Marcus Sterling</h4>
+                        <p class="text-xs text-gray-300 mb-4 leading-relaxed">Chủ trì kỹ thuật cho hơn 40 tòa nhà thương mại hạng A và các tổ hợp đô thị sinh thái thông minh tại Singapore và Việt Nam.</p>
+                        <div class="w-full space-y-2 font-mono text-xs text-gray-300">
+                            <div><i class="fa-solid fa-envelope text-gold mr-2"></i> marcus.s@lumiere.vn</div>
+                            <div><i class="fa-solid fa-phone text-gold mr-2"></i> +84 902 345 678</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Expert Card 3 -->
+            <div class="flip-card">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front flex flex-col justify-end p-6 relative">
+                        <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&q=80')"></div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-gray-950 via-gray-950/40 to-transparent"></div>
+                        <div class="relative z-10 text-left">
+                            <span class="text-xs font-bold text-gold bg-gold/10 px-3 py-1 rounded-full border border-gold/30">Sustainable Design Lead</span>
+                            <h3 class="text-2xl font-bold text-white mt-3">KTS. Sophia Nguyễn</h3>
+                            <p class="text-sm text-gray-300 mt-1"><i class="fa-solid fa-award text-gold"></i> Chứng nhận LEED AP</p>
+                        </div>
+                    </div>
+                    <div class="flip-card-back">
+                        <span class="text-xs font-bold text-gold mb-1 uppercase tracking-wider">Tiểu Sử Chuyên Gia</span>
+                        <h4 class="text-xl font-bold text-white mb-3">Sophia Nguyễn</h4>
+                        <p class="text-xs text-gray-300 mb-4 leading-relaxed">Tiên phong trong giải pháp kiến trúc xanh, tối ưu năng lượng tự nhiên và vật liệu tái chế cho các biệt thự sinh thái.</p>
+                        <div class="w-full space-y-2 font-mono text-xs text-gray-300">
+                            <div><i class="fa-solid fa-envelope text-gold mr-2"></i> sophia.n@lumiere.vn</div>
+                            <div><i class="fa-solid fa-phone text-gold mr-2"></i> +84 903 456 789</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-28 px-6 bg-gray-900/30 border-t border-gold/10">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center max-w-3xl mx-auto mb-16 reveal-element">
+                <span class="text-gold text-xs font-extrabold tracking-widest uppercase mb-3 block">Ý Kiến Khách Hàng</span>
+                <h2 class="text-3xl sm:text-5xl font-extrabold text-white">Chủ Nhân Nói Gì Về Chúng Tôi</h2>
+                <p class="text-gray-400 mt-4">Sự hài lòng của các gia chủ tinh hoa là minh chứng rõ ràng nhất cho chất lượng dịch vụ.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 reveal-element">
+                <div class="glass-panel p-8 rounded-3xl relative">
+                    <div class="text-gold text-2xl mb-4"><i class="fa-solid fa-quote-left"></i></div>
+                    <p class="text-gray-300 text-sm mb-6 leading-relaxed">"Lumiere & Architex đã hiện thực hóa căn biệt thự thông minh tại Thảo Điền vượt trên cả mong đợi của tôi. Tiến độ chính xác và chất lượng hoàn thiện tuyệt hảo."</p>
+                    <div class="flex items-center gap-4 pt-4 border-t border-gold/10">
+                        <div class="w-12 h-12 rounded-full bg-gold/20 flex items-center justify-center font-bold text-gold">HN</div>
+                        <div>
+                            <h4 class="font-bold text-white text-sm">Ông Hoàng Nam</h4>
+                            <p class="text-xs text-gray-400">Chủ tịch HĐQT TechCorp</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-panel p-8 rounded-3xl relative">
+                    <div class="text-gold text-2xl mb-4"><i class="fa-solid fa-quote-left"></i></div>
+                    <p class="text-gray-300 text-sm mb-6 leading-relaxed">"Đội ngũ kiến trúc sư rất chuyên nghiệp và tinh tế trong từng đường nét thiết kế. Dự án resort hoàn thành đúng thời hạn cam kết với tiêu chuẩn 6 sao."</p>
+                    <div class="flex items-center gap-4 pt-4 border-t border-gold/10">
+                        <div class="w-12 h-12 rounded-full bg-gold/20 flex items-center justify-center font-bold text-gold">ML</div>
+                        <div>
+                            <h4 class="font-bold text-white text-sm">Bà Mai Linh</h4>
+                            <p class="text-xs text-gray-400">CEO Aurelia Bay Group</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-panel p-8 rounded-3xl relative">
+                    <div class="text-gold text-2xl mb-4"><i class="fa-solid fa-quote-left"></i></div>
+                    <p class="text-gray-300 text-sm mb-6 leading-relaxed">"Dịch vụ tư vấn và quản lý ngân sách cực kỳ minh bạch. Không phát sinh chi phí ngoài hợp đồng và đội ngũ hỗ trợ vận hành 24/7 rất tận tâm."</p>
+                    <div class="flex items-center gap-4 pt-4 border-t border-gold/10">
+                        <div class="w-12 h-12 rounded-full bg-gold/20 flex items-center justify-center font-bold text-gold">TD</div>
+                        <div>
+                            <h4 class="font-bold text-white text-sm">Ông Trần Đức</h4>
+                            <p class="text-xs text-gray-400">Nhà đầu tư BĐS Cấp Cao</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Floating Action Button (FAB) for Contact ("Bài 1") -->
+    <button onclick="openModal('consultModal')" class="fixed bottom-8 right-8 z-40 bg-gradient-to-r from-gold to-gold-dark text-gray-950 w-16 h-16 rounded-full flex items-center justify-center text-2xl shadow-2xl fab-btn hover:scale-110 transition" title="Đặt Lịch Tư Vấn Ngay">
+        <i class="fa-solid fa-headset"></i>
+    </button>
+
+    <!-- Footer -->
+    <footer class="py-16 px-6 border-t border-gold/10 bg-gray-950 text-sm text-gray-400">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+            <div>
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-10 h-10 rounded-xl bg-gold flex items-center justify-center text-gray-950 font-black text-xl">L</div>
+                    <span class="text-lg font-bold text-white tracking-widest">LUMIERE & ARCHITEX</span>
+                </div>
+                <p class="text-xs text-gray-400 leading-relaxed mb-4">Đỉnh cao thiết kế kiến trúc và tổng thầu xây dựng các công trình xa hoa, biệt thự thông minh và tòa nhà thương mại hạng A.</p>
+                <div class="flex gap-3 text-gold">
+                    <a href="#" class="w-9 h-9 rounded-lg glass-panel flex items-center justify-center hover:bg-gold hover:text-gray-950 transition"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#" class="w-9 h-9 rounded-lg glass-panel flex items-center justify-center hover:bg-gold hover:text-gray-950 transition"><i class="fa-brands fa-linkedin-in"></i></a>
+                    <a href="#" class="w-9 h-9 rounded-lg glass-panel flex items-center justify-center hover:bg-gold hover:text-gray-950 transition"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" class="w-9 h-9 rounded-lg glass-panel flex items-center justify-center hover:bg-gold hover:text-gray-950 transition"><i class="fa-brands fa-youtube"></i></a>
+                </div>
+            </div>
+
+            <div>
+                <h4 class="font-bold text-white mb-4 uppercase text-xs tracking-widest text-gold">Liên Kết Nhanh</h4>
+                <ul class="space-y-2.5 text-xs">
+                    <li><a href="#hero" class="hover:text-gold transition">Trang Chủ</a></li>
+                    <li><a href="#projects" class="hover:text-gold transition">Tuyệt Tác Dự Án</a></li>
+                    <li><a href="#calculator" class="hover:text-gold transition">Dự Toán Chi Phí</a></li>
+                    <li><a href="#expertise" class="hover:text-gold transition">Năng Lực Công Nghệ</a></li>
+                    <li><a href="#team" class="hover:text-gold transition">Ban Chuyên Gia</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="font-bold text-white mb-4 uppercase text-xs tracking-widest text-gold">Dịch Vụ Cốt Lõi</h4>
+                <ul class="space-y-2.5 text-xs">
+                    <li><a href="#" class="hover:text-gold transition">Thiết Kế Kiến Trúc Bespoke</a></li>
+                    <li><a href="#" class="hover:text-gold transition">Tổng Thầu Xây Dựng Hạng Sáng</a></li>
+                    <li><a href="#" class="hover:text-gold transition">Tích Hợp Smart Home & AI</a></li>
+                    <li><a href="#" class="hover:text-gold transition">Quản Lý Dự Án & Giám Sát BIM</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="font-bold text-white mb-4 uppercase text-xs tracking-widest text-gold">Trụ Sở Chính</h4>
+                <p class="text-xs text-gray-400 mb-2"><i class="fa-solid fa-location-dot text-gold mr-2"></i> Lumiere Tower, Số 88 Đại Lộ Đổi Mới, Quận 1, TP. Hồ Chí Minh</p>
+                <p class="text-xs text-gray-400 mb-2"><i class="fa-solid fa-phone text-gold mr-2"></i> +84 (0) 988 999 888</p>
+                <p class="text-xs text-gray-400"><i class="fa-solid fa-envelope text-gold mr-2"></i> contact@lumiere-architex.vn</p>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto pt-8 border-t border-gold/10 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-500 gap-4">
+            <p>&copy; 2026 LUMIERE & ARCHITEX ENTERPRISE. All rights reserved.</p>
+            <div class="flex gap-6">
+                <a href="#" class="hover:text-gold transition">Chính Sách Bảo Mật</a>
+                <a href="#" class="hover:text-gold transition">Điều Khoản Dịch Vụ</a>
+                <a href="#" class="hover:text-gold transition">Hồ Sơ Năng Lực (PDF)</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Comprehensive Consultation Modal with Form Validation & Success State -->
+    <div id="consultModal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
+        <div class="glass-panel p-8 sm:p-10 rounded-3xl max-w-lg w-full relative border border-gold/40 shadow-2xl">
+            <button onclick="closeModal('consultModal')" class="absolute top-6 right-6 text-gray-400 hover:text-white text-xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            
+            <div id="formContent">
+                <span class="text-gold text-xs font-bold tracking-widest uppercase mb-1 block">Tư Vấn Miễn Phí 1:1</span>
+                <h3 class="text-2xl font-bold text-white mb-2">Đăng Ký Khảo Sát & Tư Vấn</h3>
+                <p class="text-gray-300 text-xs mb-6">Chuyên gia trưởng sẽ liên hệ với quý khách trong vòng 15 phút.</p>
+                
+                <form onsubmit="handleConsultSubmit(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-300 mb-1.5">Họ và Tên Quý Khách</label>
+                        <input type="text" id="custName" required placeholder="Nhập họ và tên..." class="w-full bg-gray-900/90 border border-gold/30 px-4 py-3 rounded-xl text-white text-sm focus:outline-none focus:border-gold transition">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-300 mb-1.5">Số Điện Thoại Liên Hệ</label>
+                        <input type="tel" id="custPhone" required placeholder="Nhập số điện thoại..." class="w-full bg-gray-900/90 border border-gold/30 px-4 py-3 rounded-xl text-white text-sm focus:outline-none focus:border-gold transition">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-300 mb-1.5">Loại Hình Công Trình</label>
+                        <select id="custType" class="w-full bg-gray-900/90 border border-gold/30 px-4 py-3 rounded-xl text-white text-sm focus:outline-none focus:border-gold transition">
+                            <option>Biệt Thự Thông Minh / Smart Villa</option>
+                            <option>Resort / Khách Sạn Cao Cấp</option>
+                            <option>Tòa Nhà Văn Phòng Thương Mại</option>
+                            <option>Nội Thất Căn Hộ Penthouse</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-300 mb-1.5">Yêu Cầu Chi Tiết</label>
+                        <textarea id="custNote" rows="3" placeholder="Mô tả sơ lược diện tích hoặc ý tưởng..." class="w-full bg-gray-900/90 border border-gold/30 px-4 py-3 rounded-xl text-white text-sm focus:outline-none focus:border-gold transition"></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-gradient-to-r from-gold to-gold-dark text-gray-950 font-extrabold py-3.5 rounded-xl text-sm shadow-lg hover:shadow-gold/40 transition">
+                        Gửi Yêu Cầu Tư Vấn Ngay
+                    </button>
+                </form>
+            </div>
+
+            <div id="successState" class="text-center py-8 hidden">
+                <div class="w-16 h-16 bg-gold/20 text-gold rounded-full flex items-center justify-center text-3xl mx-auto mb-4 border border-gold/40">
+                    <i class="fa-solid fa-circle-check"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-white mb-2">Đăng Ký Thành Công!</h3>
+                <p class="text-gray-300 text-sm mb-6">Cảm ơn quý khách đã tin tưởng Lumiere & Architex. Chuyên gia của chúng tôi sẽ liên hệ trong vòng 15 phút tới.</p>
+                <button onclick="closeModal('consultModal')" class="bg-gold text-gray-950 font-bold px-6 py-3 rounded-xl w-full text-sm">
+                    Hoàn Tất
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Project Detail Modal -->
+    <div id="projectModal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
+        <div class="glass-panel p-8 sm:p-10 rounded-3xl max-w-xl w-full relative border border-gold/40 shadow-2xl">
+            <button onclick="closeModal('projectModal')" class="absolute top-6 right-6 text-gray-400 hover:text-white text-xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <span class="text-gold text-xs font-bold tracking-widest uppercase mb-1 block">Hồ Sơ Dự Án Chi Tiết</span>
+            <h3 class="text-2xl font-bold text-white mb-2" id="modalProjTitle">Tên Dự Án</h3>
+            <p class="text-gold text-sm font-mono mb-4" id="modalProjLoc"><i class="fa-solid fa-location-dot mr-2"></i> Địa điểm</p>
+            <div class="glass-panel p-4 rounded-2xl mb-6 text-xs font-mono text-gray-300">
+                <strong>Quy mô / Diện tích:</strong> <span id="modalProjSize">1,000 m²</span>
+            </div>
+            <p class="text-gray-300 text-sm mb-6 leading-relaxed" id="modalProjDesc">Mô tả chi tiết dự án...</p>
+            <button onclick="closeModal('projectModal'); openModal('consultModal');" class="bg-gradient-to-r from-gold to-gold-dark text-gray-950 font-bold py-3.5 rounded-xl text-sm shadow-lg w-full">
+                Yêu Cầu Thiết Kế Tương Tự
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // 1. Loading Master Handler
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('loader-wrapper');
+            loader.style.opacity = '0';
+            setTimeout(() => {
+                loader.style.visibility = 'hidden';
+            }, 600);
+            
+            // Trigger skill bars on load if in view
+            triggerSkillBars();
+        });
+
+        // 7. Modern Hamburger Menu Toggle ("Bài 5")
+        const hamburgerBtn = document.getElementById('hamburger-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        function toggleMobileMenu() {
+            hamburgerBtn.classList.toggle('menu-open');
+            if(mobileMenu.classList.contains('translate-y-full')) {
+                mobileMenu.classList.remove('translate-y-full', 'opacity-0', 'pointer-events-none');
+            } else {
+                mobileMenu.classList.add('translate-y-full', 'opacity-0', 'pointer-events-none');
+            }
+        }
+
+        hamburgerBtn.addEventListener('click', toggleMobileMenu);
+
+        document.querySelectorAll('.mobile-link').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburgerBtn.classList.remove('menu-open');
+                mobileMenu.classList.add('translate-y-full', 'opacity-0', 'pointer-events-none');
+            });
+        });
+
+        // 2. Smooth AOS Intersection Observer ("Refactoring Performance")
+        const observerOptions = {
+            threshold: 0.12
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    if(entry.target.id === 'skill-section') {
+                        triggerSkillBars();
+                    }
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal-element').forEach(el => {
+            observer.observe(el);
+        });
+
+        const skillSection = document.getElementById('skill-section');
+        if(skillSection) observer.observe(skillSection);
+
+        // 8. Skill Progress Bars Animation ("Bài 6")
+        function triggerSkillBars() {
+            document.querySelectorAll('.skill-bar-fill').forEach(bar => {
+                const targetWidth = bar.getAttribute('data-width');
+                bar.style.width = targetWidth + '%';
+            });
+        }
+
+        // Project Filter Function
+        function filterProjects(category) {
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('bg-gold', 'text-gray-950');
+                btn.classList.add('glass-panel', 'text-white');
+            });
+            event.target.classList.remove('glass-panel', 'text-white');
+            event.target.classList.add('bg-gold', 'text-gray-950');
+
+            document.querySelectorAll('.project-item').forEach(item => {
+                if(category === 'all' || item.getAttribute('data-category') === category) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        // Cost Calculator Logic
+        function calculateCost() {
+            const pricePerSqm = parseFloat(document.getElementById('calcType').value);
+            const area = parseFloat(document.getElementById('calcArea').value) || 0;
+            const packageMultiplier = parseFloat(document.getElementById('calcPackage').value);
+            
+            const total = (pricePerSqm * area * packageMultiplier);
+            const totalInBillion = (total / 1000000000).toFixed(2);
+            
+            document.getElementById('calcResult').innerText = totalInBillion + ' Tỷ VNĐ';
+        }
+
+        // Modal Handlers
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.remove('hidden');
+            if(modalId === 'consultModal') {
+                document.getElementById('formContent').classList.remove('hidden');
+                document.getElementById('successState').classList.add('hidden');
+            }
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.add('hidden');
+        }
+
+        function openProjectDetail(title, size, loc, desc) {
+            document.getElementById('modalProjTitle').innerText = title;
+            document.getElementById('modalProjSize').innerText = size;
+            document.getElementById('modalProjLoc').innerHTML = `<i class="fa-solid fa-location-dot mr-2"></i> ${loc}`;
+            document.getElementById('modalProjDesc').innerText = desc;
+            openModal('projectModal');
+        }
+
+        function handleConsultSubmit(event) {
+            event.preventDefault();
+            document.getElementById('formContent').classList.add('hidden');
+            document.getElementById('successState').classList.remove('hidden');
+        }
+
+        // Initialize calculator on load
+        calculateCost();
+    </script>
+</body>
+</html>
+```
+eof
+
+---
+
+### 🌟 Tóm tắt các tính năng đã tích hợp:
+1. **Interactive Preloader ("Loading Master"):** Vòng tròn xoay vô hạn với hiệu ứng mờ dần mượt mà khi trang tải xong.
+2. **Smooth AOS & Performance ("Refactoring Performance"):** Sử dụng `transform: translate3d` tối ưu phần cứng kết hợp `IntersectionObserver` cho hiệu ứng reveal tinh tế.
+3. **Floating Action Button (FAB - Bài 1):** Nút liên hệ cố định góc dưới bên phải kèm hiệu ứng sóng phập phồng và modal tư vấn chuyên nghiệp.
+4. **Card Flip Effect (Bài 2):** Khu vực Ban Chuyên Gia lật 180 độ khi hover để xem tiểu sử, email và điện thoại liên hệ trực tiếp.
+5. **Pure CSS Typing Effect (Bài 3):** Tiêu đề chính chạy chữ tự động "Đẳng Cấp & Bền Vững" với con trỏ nhấp nháy tinh tế.
+6. **Parallax Image Scrolling (Bài 4):** Các khối banner kiến trúc với hiệu ứng cuộn cố định nền (`background-attachment: fixed`).
+7. **Modern Hamburger Menu (Bài 5):** Biểu tượng 3 gạch biến đổi mượt mà thành dấu "X" mở màn hình điều hướng di động tràn viền.
+8. **Animated Skill/Progress Bars (Bài 6):** Các thanh năng lực kỹ thuật chạy mượt mà từ 0% đến mục tiêu khi cuộn đến vùng hiển thị.
+9. **Dự Toán Chi Phí & Lọc Dự Án:** Tích hợp bộ lọc danh mục tuyệt tác kiến trúc và công cụ tính toán chi phí đầu tư công trình tự động theo thời gian thực.
