@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nguyễn Văn Tuyền | Software Developer & Entrepreneur</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@500&display=swap" rel="stylesheet">
+    
+    <!-- HOẠT ĐỘNG 3: AOS (ANIMATE ON SCROLL) CDN CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Main Style CSS -->
+    <link rel="stylesheet" href="buoi5.css">
+</head>
+<body>
+    <!-- ========================================================
+         HOẠT ĐỘNG 2: "LOADING MASTER" — TẠO SPINNER PRELOADER
+         Vòng tròn loading xoay 360 độ vô hạn khi tải trang
+         ======================================================== -->
+    <div id="preloader" class="preloader">
+        <div class="spinner"></div>
+        <p class="preloader-text">Đang tải Portfolio...</p>
+    </div>
+
+    <!-- ========================================================
+         BÀI 5: MODERN HAMBURGER MENU — THANH ĐIỀU HƯỚNG
+         Biến đổi biểu tượng 3 gạch thành dấu "X" mượt mà
+         ======================================================== -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#home" class="nav-brand">
+                <span class="brand-badge">⚡</span>
+                <span class="brand-text">NV.TUYỀN</span>
+            </a>
+
+            <!-- Nút Hamburger 3 gạch chuyển thành dấu X -->
+            <button class="hamburger-btn" id="hamburgerBtn" aria-label="Toggle Navigation Menu" aria-expanded="false">
+                <span class="bar bar-top"></span>
+                <span class="bar bar-mid"></span>
+                <span class="bar bar-bot"></span>
+            </button>
+
+            <!-- Danh sách menu liên kết -->
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home" class="nav-item">Trang Chủ</a></li>
+                <li><a href="#about" class="nav-item">Giới Thiệu</a></li>
+                <li><a href="#skills" class="nav-item">Kỹ Năng</a></li>
+                <li><a href="#projects" class="nav-item">Dự Án</a></li>
+                <li><a href="#contact" class="nav-item nav-item-cta">Liên Hệ</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- ========================================================
+         BÀI 1: FLOATING ACTION BUTTON (FAB) VỚI PULSE ANIMATION
+         Nút tròn liên hệ luôn cố định góc màn hình, phập phồng thu hút chú ý
+         ======================================================== -->
+    <a href="#contact" class="fab-contact" title="Liên hệ ngay với tôi" aria-label="Nút liên hệ nhanh">
+        <span class="fab-icon">💬</span>
+        <span class="fab-text">Liên Hệ</span>
+    </a>
+
+    <!-- KHUNG TỔNG THỂ GRID -->
+    <div class="page-layout" id="home">
+
+        <!-- ========================================================
+             HEADER TRẢI DÀI + BÀI 3: TYPING EFFECT (CSS THUẦN)
+             + HOẠT ĐỘNG 3: AOS data-aos="fade-down"
+             ======================================================== -->
+        <header data-aos="fade-down" data-aos-duration="900">
+            <div class="header-inner">
+                <span class="header-tag">🚀 SOFTWARE ENGINEERING · LẠC HỒNG UNIVERSITY</span>
+                <h1>NGUYỄN VĂN TUYỀN</h1>
+                
+                <!-- BÀI 3: TYPING EFFECT (CSS THUẦN KHÔNG DÙNG JS) -->
+                <div class="typing-box">
+                    <span class="typing-text">Tôi là một Web Developer...</span>
+                </div>
+
+                <p class="subtitle">Software Engineering Student & Business Builder</p>
+                
+                <div class="header-actions">
+                    <a href="#projects" class="btn-secondary">Xem Dự Án</a>
+                    <a href="#contact" class="btn-primary-glow">Hợp Tác Ngay</a>
+                </div>
+            </div>
+        </header>
+
+        <!-- ========================================================
+             BÀI 4: PARALLAX IMAGE BANNER
+             Ảnh nền di chuyển chậm hơn nội dung khi cuộn (background-attachment: fixed)
+             + HOẠT ĐỘNG 3: AOS data-aos="zoom-in"
+             ======================================================== -->
+        <section class="parallax-banner" data-aos="zoom-in" data-aos-duration="1000">
+            <div class="parallax-overlay"></div>
+            <div class="parallax-content" data-aos="fade-up" data-aos-delay="200">
+                <span class="parallax-badge">💡 TRIẾT LÝ PHÁT TRIỂN</span>
+                <h2>Biến Ý Tưởng Thành Sản Phẩm Với Trải Nghiệm Hoàn Mỹ</h2>
+                <p>Kết hợp giữa tư duy cấu trúc dữ liệu chặt chẽ, thiết kế giao diện hiện đại và tối ưu hiệu năng mượt mà chuẩn 60fps.</p>
+            </div>
+        </section>
+
+        <!-- ========================================================
+             SIDEBAR (1fr ~ 25%) + BÀI 2: CARD FLIP EFFECT
+             Thẻ nhân sự lật 180 độ khi hover hiển thị thông tin mặt sau
+             + HOẠT ĐỘNG 3: AOS data-aos="fade-right"
+             ======================================================== -->
+        <aside data-aos="fade-right" data-aos-duration="800" id="about">
+            <div class="sidebar-wrapper">
+                <!-- BÀI 2: 3D CARD FLIP CONTAINER -->
+                <div class="flip-card-container">
+                    <div class="flip-card" id="profileFlipCard" tabindex="0">
+                        <div class="flip-card-inner">
+                            
+                            <!-- MẶT TRƯỚC THẺ NHÂN SỰ -->
+                            <div class="flip-card-front profile-card">
+                                <div class="avatar-box">
+                                    <div class="avatar-ring">
+                                        <span class="avatar-initials">NVT</span>
+                                    </div>
+                                    <span class="status-indicator" title="Sẵn sàng nhận dự án mới"></span>
+                                </div>
+
+                                <h2>Nguyễn Văn Tuyền</h2>
+                                <span class="role-badge">Software Engineer</span>
+                                
+                                <p class="intro-desc">Sinh viên Kỹ thuật Phần mềm đam mê sáng tạo giao diện web, tư duy thuật toán và rèn luyện phát triển bản thân toàn diện.</p>
+                                
+                                <div class="divider"></div>
+                                
+                                <h3>Định Hướng Sự Nghiệp</h3>
+                                <ul class="goal-list">
+                                    <li>🚀 Full-stack Web Development</li>
+                                    <li>🔥 Xây dựng sự nghiệp vững chắc</li>
+                                    <li>💡 Phát triển năng lực lãnh đạo</li>
+                                </ul>
+
+                                <div class="flip-card-hint">
+                                    <span>↻ Rê chuột để lật xem thông tin liên hệ</span>
+                                </div>
+                            </div>
+
+                            <!-- MẶT SAU THẺ NHÂN SỰ (LẬT 180 ĐỘ) -->
+                            <div class="flip-card-back">
+                                <h3>Thông Tin Liên Hệ</h3>
+                                <p class="flip-back-sub">Kết nối và trao đổi cơ hội nghề nghiệp</p>
+                                
+                                <div class="contact-details">
+                                    <div class="contact-row">
+                                        <span class="contact-icon">📧</span>
+                                        <div>
+                                            <span class="contact-label">Email:</span>
+                                            <span class="contact-value">tuyen.dev@lhu.edu.vn</span>
+                                        </div>
+                                    </div>
+                                    <div class="contact-row">
+                                        <span class="contact-icon">📱</span>
+                                        <div>
+                                            <span class="contact-label">Hotline:</span>
+                                            <span class="contact-value">0912 345 678</span>
+                                        </div>
+                                    </div>
+                                    <div class="contact-row">
+                                        <span class="contact-icon">📍</span>
+                                        <div>
+                                            <span class="contact-label">Vị trí:</span>
+                                            <span class="contact-value">Biên Hòa, Đồng Nai</span>
+                                        </div>
+                                    </div>
+                                    <div class="contact-row">
+                                        <span class="contact-icon">💻</span>
+                                        <div>
+                                            <span class="contact-label">GitHub:</span>
+                                            <span class="contact-value">github.com/tuyen-dev</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <a href="#contact" class="btn-flip-cta">Gửi tin nhắn ngay ➔</a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Thống kê nhanh dưới profile -->
+                <div class="quick-stats-box" data-aos="fade-up" data-aos-delay="200">
+                    <div class="stat-item">
+                        <span class="stat-number">4+</span>
+                        <span class="stat-title">Năm Học Tập</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">6+</span>
+                        <span class="stat-title">Dự Án Lớn</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">100%</span>
+                        <span class="stat-title">Tận Tâm</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- ========================================================
+             MAIN CONTENT (3fr ~ 75%)
+             ======================================================== -->
+        <main>
+            <!-- ====================================================
+                 SECTION KỸ NĂNG + BÀI 6: SKILL BAR ANIMATION
+                 + HOẠT ĐỘNG 3: AOS data-aos="fade-up"
+                 ==================================================== -->
+            <section class="section-box" id="skills" data-aos="fade-up" data-aos-duration="800">
+                <h2>Kỹ Năng Chuyên Môn & Mềm</h2>
+
+                <!-- BÀI 6: SKILL BAR ANIMATION (CHẠY TỪ 0% ĐẾN GIÁ TRỊ ĐÍCH) -->
+                <div class="skill-bars-block">
+                    <h3 class="block-subtitle">Tiến Độ Kỹ Năng Kỹ Thuật (Skill Bars)</h3>
+                    
+                    <div class="skill-bar-unit">
+                        <div class="skill-info">
+                            <span class="skill-name">HTML5 Semantic & Cấu Trúc Trang Web</span>
+                            <span class="skill-val">90%</span>
+                        </div>
+                        <div class="skill-track">
+                            <div class="skill-fill fill-html" style="--skill-target: 90%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-bar-unit">
+                        <div class="skill-info">
+                            <span class="skill-name">CSS3, Flexbox, Grid & Micro-interactions</span>
+                            <span class="skill-val">85%</span>
+                        </div>
+                        <div class="skill-track">
+                            <div class="skill-fill fill-css" style="--skill-target: 85%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-bar-unit">
+                        <div class="skill-info">
+                            <span class="skill-name">Python & Cấu Trúc Dữ Liệu Thuật Toán</span>
+                            <span class="skill-val">80%</span>
+                        </div>
+                        <div class="skill-track">
+                            <div class="skill-fill fill-python" style="--skill-target: 80%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-bar-unit">
+                        <div class="skill-info">
+                            <span class="skill-name">Microsoft SQL Server & Thiết Kế CSDL</span>
+                            <span class="skill-val">75%</span>
+                        </div>
+                        <div class="skill-track">
+                            <div class="skill-fill fill-sql" style="--skill-target: 75%;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="divider"></div>
+
+                <!-- DANH SÁCH TAG KỸ NĂNG (FLEXBOX) -->
+                <h3 class="block-subtitle">Bộ Thẻ Kỹ Năng Đa Dạng</h3>
+                <ul class="skills-list">
+                    <li class="skill-tag">HTML5 & CSS Grid/Flexbox</li>
+                    <li class="skill-tag">Python & Data Structures</li>
+                    <li class="skill-tag">Microsoft SQL Server</li>
+                    <li class="skill-tag">Git & GitHub</li>
+                    <li class="skill-tag">Tư Duy Hệ Thống</li>
+                    <li class="skill-tag">Thuyết Trình & Giao Tiếp</li>
+                    <li class="skill-tag">Quản Lý Thời Gian</li>
+                    <li class="skill-tag">Lãnh Đạo Đội Nhóm</li>
+                </ul>
+            </section>
+
+            <!-- ====================================================
+                 SECTION DỰ ÁN (CSS GRID AUTO-FIT)
+                 + HOẠT ĐỘNG 3: AOS data-aos="zoom-in"
+                 + HOẠT ĐỘNG 4: REFACTORING PERFORMANCE (transform: translate)
+                 ==================================================== -->
+            <section class="section-box" id="projects" data-aos="fade-up" data-aos-duration="800">
+                <h2>Khu Vực Dự Án & Thành Tựu</h2>
+                <div class="project-gallery">
+                    
+                    <article class="project-item" data-aos="zoom-in" data-aos-delay="50">
+                        <div class="project-top">
+                            <span class="badge badge-green">Web Design</span>
+                            <span class="project-year">2026</span>
+                        </div>
+                        <h3>Góc Học Tập Cờ Vây</h3>
+                        <p>Trang web giao diện chuẩn ngữ nghĩa HTML dành cho câu lạc bộ đàm đạo cờ.</p>
+                        <div class="project-link">Chi tiết dự án ➔</div>
+                    </article>
+
+                    <article class="project-item" data-aos="zoom-in" data-aos-delay="100">
+                        <div class="project-top">
+                            <span class="badge badge-blue">UI/UX Flow</span>
+                            <span class="project-year">2025</span>
+                        </div>
+                        <h3>Shopee App Prototype</h3>
+                        <p>Thiết kế luồng trải nghiệm người dùng và tích hợp giao thức xác thực OAuth 2.0.</p>
+                        <div class="project-link">Chi tiết dự án ➔</div>
+                    </article>
+
+                    <article class="project-item" data-aos="zoom-in" data-aos-delay="150">
+                        <div class="project-top">
+                            <span class="badge badge-purple">Data Structures</span>
+                            <span class="project-year">2025</span>
+                        </div>
+                        <h3>Doubly Linked List</h3>
+                        <p>Bộ thư viện cấu trúc dữ liệu liên kết đôi tự xây dựng và tối ưu bằng Python.</p>
+                        <div class="project-link">Chi tiết dự án ➔</div>
+                    </article>
+
+                    <article class="project-item" data-aos="zoom-in" data-aos-delay="200">
+                        <div class="project-top">
+                            <span class="badge badge-orange">Database</span>
+                            <span class="project-year">2025</span>
+                        </div>
+                        <h3>T-SQL Management</h3>
+                        <p>Thiết kế, truy vấn và quản trị dữ liệu hệ thống trên MS SQL Server.</p>
+                        <div class="project-link">Chi tiết dự án ➔</div>
+                    </article>
+
+                    <article class="project-item" data-aos="zoom-in" data-aos-delay="250">
+                        <div class="project-top">
+                            <span class="badge badge-teal">Business</span>
+                            <span class="project-year">2024</span>
+                        </div>
+                        <h3>Hệ Thống Kinh Doanh</h3>
+                        <p>Phát triển đội nhóm, mở rộng thị trường và rèn luyện kỹ năng lãnh đạo.</p>
+                        <div class="project-link">Chi tiết dự án ➔</div>
+                    </article>
+
+                    <article class="project-item" data-aos="zoom-in" data-aos-delay="300">
+                        <div class="project-top">
+                            <span class="badge badge-indigo">Self-Dev</span>
+                            <span class="project-year">2024</span>
+                        </div>
+                        <h3>Lộ Trình Phát Triển</h3>
+                        <p>Bản đồ chiến lược 4 năm chinh phục tri thức phần mềm và năng lực cá nhân.</p>
+                        <div class="project-link">Chi tiết dự án ➔</div>
+                    </article>
+
+                </div>
+            </section>
+
+            <!-- ====================================================
+                 SECTION LIÊN HỆ
+                 + HOẠT ĐỘNG 1: "MICRO-INTERACTIONS" NÚT BẤM CẢM XÚC
+                 + HOẠT ĐỘNG 2: SPINNER LOADING KHI SUBMIT
+                 ==================================================== -->
+            <section class="section-box" id="contact" data-aos="fade-up" data-aos-duration="800">
+                <h2>Liên Hệ & Gửi Tin Nhắn</h2>
+                <p class="section-desc">Bạn có ý tưởng dự án hoặc muốn kết nối hợp tác? Đừng ngần ngại gửi tin nhắn cho tôi!</p>
+
+                <form class="contact-form" id="contactForm" onsubmit="handleContactSubmit(event)">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="senderName">Họ và Tên của bạn</label>
+                            <input type="text" id="senderName" class="form-input" placeholder="Ví dụ: Nguyễn Văn A" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="senderEmail">Địa chỉ Email</label>
+                            <input type="email" id="senderEmail" class="form-input" placeholder="tenban@email.com" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="senderMsg">Nội dung tin nhắn</label>
+                        <textarea id="senderMsg" class="form-textarea" rows="4" placeholder="Nhập lời nhắn của bạn tại đây..." required></textarea>
+                    </div>
+
+                    <!-- HOẠT ĐỘNG 1: NÚT BẤM CẢM XÚC (MICRO-INTERACTIONS)
+                         - Hover: nâng lên 3px, box-shadow đậm hơn, cubic-bezier timing
+                         - Active/Click: thu nhỏ lại tạo cảm giác đã bấm
+                         - Kèm HOẠT ĐỘNG 2: Spinner loading tròn xoay 360 độ
+                    -->
+                    <div class="form-footer">
+                        <button type="submit" class="btn-emotion" id="submitButton">
+                            <span class="btn-content">
+                                <span class="btn-icon">✉️</span>
+                                <span class="btn-text">Gửi Tin Nhắn</span>
+                            </span>
+                            <!-- Spinner hiển thị khi bấm gửi (Hoạt động 2) -->
+                            <span class="btn-inline-spinner" id="btnInlineSpinner" aria-hidden="true"></span>
+                        </button>
+                        
+                        <div class="form-response" id="formResponse" role="status" aria-live="polite"></div>
+                    </div>
+                </form>
+            </section>
+        </main>
+
+        <!-- ========================================================
+             FOOTER TRẢI DÀI
+             ======================================================== -->
+        <footer data-aos="fade-in">
+            <p>&copy; 2026 Nguyễn Văn Tuyền. Designed with CSS Grid & Flexbox.</p>
+            <p class="footer-meta">Học phần 111101 · Thiết Kế Web · Giáo trình giảng dạy Lạc Hồng</p>
+            <p class="footer-modules">Tích hợp: Micro-interactions · Loading Spinner · AOS Scroll Reveal · GPU Refactoring · FAB · Card Flip · Typing Effect · Parallax · Hamburger Menu · Skill Bar Animation</p>
+        </footer>
+    </div>
+
+    <!-- ========================================================
+         SCRIPTS: AOS INIT + HAMBURGER + FORM LOADING LOGIC
+         ======================================================== -->
+    <!-- HOẠT ĐỘNG 3: AOS JS CDN -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // 1. Khởi tạo hiệu ứng AOS (Hoạt động 3)
+        document.addEventListener('DOMContentLoaded', () => {
+            AOS.init({
+                duration: 800,
+                easing: 'cubic-bezier(0.25, 1, 0.5, 1)',
+                once: true,
+                offset: 60
+            });
+        });
+
+        // 2. Ẩn Preloader Spinner khi toàn bộ tài nguyên đã tải xong (Hoạt động 2)
+        window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
+            if (preloader) {
+                preloader.classList.add('preloader-fade-out');
+                setTimeout(() => {
+                    preloader.style.display = 'none';
+                }, 600);
+            }
+        });
+
+        // 3. Xử lý mở/đóng Modern Hamburger Menu (Bài 5)
+        const hamburgerBtn = document.getElementById('hamburgerBtn');
+        const navLinks = document.getElementById('navLinks');
+
+        if (hamburgerBtn && navLinks) {
+            hamburgerBtn.addEventListener('click', () => {
+                const isOpen = hamburgerBtn.classList.toggle('active');
+                navLinks.classList.toggle('active');
+                hamburgerBtn.setAttribute('aria-expanded', isOpen);
+            });
+
+            // Tự động đóng menu khi nhấp vào bất kỳ mục liên kết nào
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    hamburgerBtn.classList.remove('active');
+                    navLinks.classList.remove('active');
+                    hamburgerBtn.setAttribute('aria-expanded', 'false');
+                });
+            });
+        }
+
+        // 4. Xử lý Nút Bấm Cảm Xúc & Spinner Loading khi Submit (Hoạt động 1 & 2)
+        function handleContactSubmit(event) {
+            event.preventDefault();
+            const submitBtn = document.getElementById('submitButton');
+            const responseDiv = document.getElementById('formResponse');
+
+            // Kích hoạt trạng thái loading với spinner xoay
+            submitBtn.classList.add('is-loading');
+            submitBtn.disabled = true;
+            responseDiv.textContent = '';
+            responseDiv.className = 'form-response';
+
+            // Giả lập gửi tin nhắn trong 1.5 giây
+            setTimeout(() => {
+                submitBtn.classList.remove('is-loading');
+                submitBtn.disabled = false;
+                
+                responseDiv.textContent = '🎉 Cảm ơn bạn! Tin nhắn đã được gửi thành công.';
+                responseDiv.classList.add('success');
+                
+                document.getElementById('contactForm').reset();
+
+                // Ẩn thông báo sau 4 giây
+                setTimeout(() => {
+                    responseDiv.textContent = '';
+                    responseDiv.className = 'form-response';
+                }, 4000);
+            }, 1500);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,1239 @@
+/* ==========================================================================
+   GIÁO TRÌNH GIẢNG DẠY · LẠC HỒNG — HỌC PHẦN 111101: THIẾT KẾ WEB
+   DỰ ÁN: PORTFOLIO NGUYỄN VĂN TUYỀN
+   TỔNG HỢP: 4 HOẠT ĐỘNG THỰC HÀNH + 6 BÀI TẬP TỰ RÈN LUYỆN TẠI NHÀ
+   ========================================================================== */
+
+/* ==========================================================================
+   1. CẤU HÌNH BIẾN & THIẾT LẬP TOÀN CỤC (GLOBAL RESET)
+   ========================================================================== */
+   :root {
+    --primary: #2563eb;
+    --primary-dark: #1d4ed8;
+    --primary-light: #60a5fa;
+    --accent: #38bdf8;
+    --bg-page: #f1f5f9;
+    --bg-card: #ffffff;
+    --text-main: #0f172a;
+    --text-muted: #64748b;
+    --border-color: #e2e8f0;
+    
+    /* Timing cubic-bezier chuẩn cho chuyển động tự nhiên */
+    --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background-color: var(--bg-page);
+    color: #334155;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* ==========================================================================
+   HOẠT ĐỘNG 2: "LOADING MASTER" — TẠO SPINNER PRELOADER
+   Sử dụng @keyframes để tạo vòng tròn xoay 360 độ vô hạn.
+   Sử dụng border-top-color khác với các phần còn lại để tạo hiệu ứng xoay.
+   ========================================================================== */
+.preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #0f172a;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
+    transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+.preloader.preloader-fade-out {
+    opacity: 0;
+    visibility: hidden;
+}
+
+/* Vòng tròn Spinner với border-top-color khác biệt */
+.spinner {
+    width: 52px;
+    height: 52px;
+    border: 5px solid rgba(255, 255, 255, 0.15);
+    border-top-color: #38bdf8; /* Màu nổi bật tạo cảm giác xoay liên tục */
+    border-radius: 50%;
+    animation: spinRotate 0.85s linear infinite;
+}
+
+.preloader-text {
+    margin-top: 18px;
+    color: #94a3b8;
+    font-size: 0.95rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+/* @keyframes quay tròn 360 độ */
+@keyframes spinRotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* ==========================================================================
+   BÀI 5: MODERN HAMBURGER MENU
+   Biến đổi biểu tượng 3 gạch ngang thành dấu "X" một cách mượt mà khi mở Menu
+   (Sử dụng CSS Transitions + transform: translate & rotate)
+   ========================================================================== */
+.navbar {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    background: rgba(15, 23, 42, 0.92);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    z-index: 1000;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.nav-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 14px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: #ffffff;
+    font-weight: 800;
+    font-size: 1.25rem;
+    letter-spacing: 0.5px;
+}
+
+.brand-badge {
+    color: #38bdf8;
+    font-size: 1.4rem;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    list-style: none;
+}
+
+.nav-item {
+    text-decoration: none;
+    color: #cbd5e1;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: color 0.25s ease, transform 0.25s ease;
+    display: inline-block;
+}
+
+.nav-item:hover {
+    color: #38bdf8;
+    transform: translateY(-2px);
+}
+
+.nav-item-cta {
+    background-color: var(--primary);
+    color: #ffffff !important;
+    padding: 8px 18px;
+    border-radius: 20px;
+    font-weight: 600;
+}
+
+.nav-item-cta:hover {
+    background-color: var(--primary-dark);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
+}
+
+/* Nút Hamburger 3 gạch */
+.hamburger-btn {
+    display: none; /* Mặc định ẩn trên Desktop, hiện trên Mobile */
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 22px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 1001;
+}
+
+.bar {
+    width: 100%;
+    height: 3px;
+    background-color: #f8fafc;
+    border-radius: 4px;
+    /* CSS Transitions cho chuyển động mượt mà */
+    transition: transform 0.35s var(--ease-smooth),
+                opacity 0.25s var(--ease-smooth),
+                background-color 0.3s ease;
+    transform-origin: center;
+}
+
+/* Trạng thái biến đổi thành dấu "X" */
+.hamburger-btn.active .bar-top {
+    transform: translateY(9.5px) rotate(45deg);
+    background-color: #38bdf8;
+}
+
+.hamburger-btn.active .bar-mid {
+    opacity: 0;
+    transform: scaleX(0);
+}
+
+.hamburger-btn.active .bar-bot {
+    transform: translateY(-9.5px) rotate(-45deg);
+    background-color: #38bdf8;
+}
+
+/* ==========================================================================
+   BÀI 1: FLOATING ACTION BUTTON (FAB) & PULSE ANIMATION
+   Nút tròn "Liên hệ" luôn nằm ở góc màn hình và có hiệu ứng "phập phồng"
+   (pulse animation) để thu hút sự chú ý.
+   ========================================================================== */
+.fab-contact {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 62px;
+    height: 62px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    z-index: 999;
+    box-shadow: 0 6px 16px rgba(37, 99, 235, 0.4);
+    /* Pulse animation phập phồng liên tục */
+    animation: fabPulse 2.2s infinite ease-in-out;
+    transition: transform 0.3s var(--ease-bounce), box-shadow 0.3s ease;
+    will-change: transform, box-shadow;
+}
+
+.fab-icon {
+    font-size: 1.35rem;
+    line-height: 1;
+}
+
+.fab-text {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-top: 2px;
+}
+
+/* Keyframes phập phồng (Pulse) lan tỏa vòng hào quang */
+@keyframes fabPulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.7);
+    }
+    60% {
+        transform: scale(1.06);
+        box-shadow: 0 0 0 16px rgba(37, 99, 235, 0);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(37, 99, 235, 0);
+    }
+}
+
+.fab-contact:hover {
+    animation-play-state: paused;
+    transform: translateY(-4px) scale(1.12);
+    box-shadow: 0 12px 28px rgba(37, 99, 235, 0.55);
+}
+
+/* ==========================================================================
+   2. KHUNG TỔNG THỂ GRID (CSS GRID DÀN TRANG)
+   ========================================================================== */
+.page-layout {
+    display: grid;
+    /* Sidebar 1fr (~25%), Main 3fr (~75%) */
+    grid-template-columns: 1fr 3fr;
+    grid-template-rows: auto auto 1fr auto;
+    gap: 24px;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 24px;
+    min-height: 100vh;
+}
+
+/* ==========================================================================
+   3. HEADER TRẢI DÀI + BÀI 3: TYPING EFFECT (CSS THUẦN)
+   ========================================================================== */
+header {
+    grid-column: 1 / -1;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    color: #ffffff;
+    padding: 44px 24px;
+    border-radius: 16px;
+    text-align: center;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.header-inner {
+    max-width: 860px;
+    margin: 0 auto;
+}
+
+.header-tag {
+    display: inline-block;
+    background: rgba(56, 189, 248, 0.12);
+    color: #38bdf8;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 14px;
+    border: 1px solid rgba(56, 189, 248, 0.25);
+}
+
+header h1 {
+    font-size: 2.35rem;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    color: #f8fafc;
+    margin-bottom: 10px;
+}
+
+/* BÀI 3: TYPING EFFECT — SỬ DỤNG CSS THUẦN (KHÔNG DÙNG JS)
+   - width bắt đầu từ 0
+   - animation typing sử dụng steps()
+   - animation blink nhấp nháy con trỏ
+*/
+.typing-box {
+    display: inline-flex;
+    justify-content: center;
+    margin: 6px 0 14px;
+}
+
+.typing-text {
+    display: inline-block;
+    font-family: 'Fira Code', 'Courier New', Courier, monospace;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #38bdf8;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 3px solid #38bdf8; /* Con trỏ gõ chữ */
+    width: 0;
+    /* 27 ký tự: "Tôi là một Web Developer..." */
+    animation: typingAction 3.2s steps(27, end) 0.6s forwards,
+               blinkCursor 0.75s step-end infinite;
+}
+
+@keyframes typingAction {
+    from {
+        width: 0;
+    }
+    to {
+        width: 27ch; /* Khớp chuẩn xác chiều dài ký tự */
+    }
+}
+
+@keyframes blinkCursor {
+    from, to {
+        border-color: transparent;
+    }
+    50% {
+        border-color: #38bdf8;
+    }
+}
+
+header .subtitle {
+    color: #94a3b8;
+    font-size: 1.05rem;
+    font-weight: 500;
+    margin-bottom: 22px;
+}
+
+.header-actions {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.btn-secondary {
+    display: inline-block;
+    padding: 10px 22px;
+    border-radius: 8px;
+    color: #cbd5e1;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: transform 0.25s var(--ease-smooth), background 0.25s ease, color 0.25s ease;
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    transform: translateY(-2px);
+}
+
+.btn-primary-glow {
+    display: inline-block;
+    padding: 10px 22px;
+    border-radius: 8px;
+    background: var(--primary);
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
+    transition: transform 0.25s var(--ease-bounce), box-shadow 0.25s ease, background 0.25s ease;
+}
+
+.btn-primary-glow:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.6);
+}
+
+/* ==========================================================================
+   BÀI 4: PARALLAX IMAGE BANNER
+   Tạo banner có ảnh nền di chuyển chậm hơn nội dung khi cuộn trang
+   (Sử dụng background-attachment: fixed)
+   ========================================================================== */
+.parallax-banner {
+    grid-column: 1 / -1;
+    position: relative;
+    min-height: 240px;
+    /* Ảnh nền kỹ thuật / công nghệ chất lượng cao */
+    background-image: url('https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=1600&q=80');
+    background-attachment: fixed; /* HIỆU ỨNG PARALLAX CỐ ĐỊNH ẢNH NỀN */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+.parallax-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.85) 0%, rgba(30, 41, 59, 0.88) 100%);
+}
+
+.parallax-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    color: #ffffff;
+    padding: 36px 20px;
+    max-width: 820px;
+}
+
+.parallax-badge {
+    display: inline-block;
+    background: rgba(56, 189, 248, 0.2);
+    color: #38bdf8;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+}
+
+.parallax-content h2 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #f8fafc;
+}
+
+.parallax-content p {
+    color: #cbd5e1;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+/* ==========================================================================
+   BÀI 2: CARD FLIP EFFECT (THẺ NHÂN SỰ LẬT 180 ĐỘ)
+   Thiết kế thẻ nhân sự: Khi hover, thẻ lật 180 độ hiện thông tin liên hệ ở mặt sau.
+   (Sử dụng perspective, transform-style: preserve-3d, backface-visibility: hidden)
+   ========================================================================== */
+aside {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.sidebar-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Khung bọc 3D */
+.flip-card-container {
+    perspective: 1200px; /* Không gian phối cảnh 3D */
+    width: 100%;
+}
+
+.flip-card {
+    background-color: transparent;
+    width: 100%;
+    min-height: 490px;
+    cursor: pointer;
+    outline: none;
+}
+
+.flip-card-inner {
+    position: relative;
+    width: 100%;
+    min-height: 490px;
+    height: 100%;
+    text-align: left;
+    /* Duy trì môi trường 3D cho các mặt con */
+    transform-style: preserve-3d;
+    transition: transform 0.8s var(--ease-smooth);
+}
+
+/* Lật 180 độ khi hover hoặc khi focus bàn phím */
+.flip-card:hover .flip-card-inner,
+.flip-card:focus .flip-card-inner {
+    transform: rotateY(180deg);
+}
+
+.flip-card-front,
+.flip-card-back {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 16px;
+    padding: 24px;
+    /* Ẩn mặt úp phía sau để không lộ khi xoay */
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+    border: 1px solid var(--border-color);
+}
+
+/* Mặt trước thẻ */
+.flip-card-front {
+    background-color: var(--bg-card);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.avatar-box {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 12px;
+}
+
+.avatar-ring {
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #2563eb, #38bdf8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
+}
+
+.avatar-initials {
+    font-size: 1.35rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.status-indicator {
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+    width: 14px;
+    height: 14px;
+    background-color: #10b981;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+}
+
+.flip-card-front h2 {
+    color: var(--text-main);
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.role-badge {
+    display: inline-block;
+    align-self: flex-start;
+    background: #eff6ff;
+    color: var(--primary);
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 12px;
+    margin-top: 4px;
+    margin-bottom: 10px;
+}
+
+.profile-intro {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    line-height: 1.55;
+}
+
+.divider {
+    height: 1px;
+    background-color: var(--border-color);
+    margin: 14px 0;
+}
+
+.flip-card-front h3 {
+    font-size: 1rem;
+    color: var(--text-main);
+    margin-bottom: 8px;
+}
+
+.goal-list {
+    list-style: none;
+}
+
+.goal-list li {
+    font-size: 0.85rem;
+    margin-bottom: 8px;
+    color: #475569;
+    font-weight: 500;
+}
+
+.flip-card-hint {
+    background: #f8fafc;
+    border: 1px dashed #cbd5e1;
+    border-radius: 8px;
+    padding: 8px;
+    text-align: center;
+    font-size: 0.75rem;
+    color: #64748b;
+    font-weight: 600;
+    margin-top: 10px;
+}
+
+/* Mặt sau thẻ nhân sự (Xoay sẵn 180 độ) */
+.flip-card-back {
+    background: linear-gradient(145deg, #0f172a 0%, #1e293b 100%);
+    color: #ffffff;
+    transform: rotateY(180deg); /* MẶT SAU ĐƯỢC LẬT SẴN */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.flip-card-back h3 {
+    font-size: 1.25rem;
+    color: #f8fafc;
+    border-bottom: 2px solid #38bdf8;
+    padding-bottom: 8px;
+    margin-bottom: 4px;
+}
+
+.flip-back-sub {
+    font-size: 0.8rem;
+    color: #94a3b8;
+    margin-bottom: 16px;
+}
+
+.contact-details {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.contact-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.contact-icon {
+    font-size: 1.25rem;
+    background: rgba(255, 255, 255, 0.08);
+    padding: 8px;
+    border-radius: 8px;
+}
+
+.contact-label {
+    display: block;
+    font-size: 0.75rem;
+    color: #94a3b8;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.contact-value {
+    display: block;
+    font-size: 0.85rem;
+    color: #f1f5f9;
+    font-weight: 500;
+}
+
+.btn-flip-cta {
+    display: block;
+    text-align: center;
+    background: linear-gradient(90deg, #2563eb, #38bdf8);
+    color: #ffffff;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    transition: transform 0.25s var(--ease-bounce), box-shadow 0.25s ease;
+}
+
+.btn-flip-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 14px rgba(56, 189, 248, 0.4);
+}
+
+/* Thống kê nhanh */
+.quick-stats-box {
+    background-color: var(--bg-card);
+    padding: 18px;
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+}
+
+.stat-number {
+    display: block;
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: var(--primary);
+}
+
+.stat-title {
+    display: block;
+    font-size: 0.725rem;
+    color: var(--text-muted);
+    font-weight: 600;
+    margin-top: 2px;
+}
+
+/* ==========================================================================
+   4. MAIN CONTENT & CÁC SECTION
+   ========================================================================== */
+main {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.section-box {
+    background-color: var(--bg-card);
+    padding: 28px;
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+}
+
+.section-box h2 {
+    font-size: 1.35rem;
+    color: var(--text-main);
+    margin-bottom: 20px;
+    border-left: 4px solid var(--primary);
+    padding-left: 12px;
+    font-weight: 700;
+}
+
+.block-subtitle {
+    font-size: 0.95rem;
+    color: #475569;
+    font-weight: 600;
+    margin-bottom: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* ==========================================================================
+   BÀI 6: SKILL BAR ANIMATION
+   Khi trang web tải xong, các thanh kỹ năng sẽ chạy từ 0% đến giá trị đích.
+   ========================================================================== */
+.skill-bars-block {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 12px;
+}
+
+.skill-bar-unit {
+    display: flex;
+    flex-direction: column;
+}
+
+.skill-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #334155;
+    margin-bottom: 6px;
+}
+
+.skill-val {
+    color: var(--primary);
+    font-weight: 700;
+}
+
+.skill-track {
+    width: 100%;
+    height: 10px;
+    background-color: #e2e8f0;
+    border-radius: 999px;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Thanh Fill Bar chạy từ 0% đến target */
+.skill-fill {
+    height: 100%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #2563eb, #38bdf8);
+    width: 0%; /* Bắt đầu từ 0% */
+    /* Animation chạy từ 0% đến giá trị đích */
+    animation: fillSkillProg 1.6s var(--ease-out-expo) forwards;
+    animation-delay: 0.3s;
+    will-change: width;
+}
+
+@keyframes fillSkillProg {
+    from {
+        width: 0%;
+    }
+    to {
+        width: var(--skill-target);
+    }
+}
+
+/* Kỹ Năng Tags (Flexbox) */
+.skills-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    list-style: none;
+}
+
+.skill-tag {
+    background-color: #eff6ff;
+    color: var(--primary);
+    border: 1px solid #bfdbfe;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    /* HOẠT ĐỘNG 4: Dùng transform thay vì top/margin để tối ưu GPU */
+    transition: transform 0.25s var(--ease-bounce),
+                background-color 0.25s ease,
+                color 0.25s ease,
+                box-shadow 0.25s ease;
+    will-change: transform;
+}
+
+.skill-tag:hover {
+    background-color: var(--primary);
+    color: #ffffff;
+    transform: translate3d(0, -3px, 0);
+    box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
+}
+
+/* ==========================================================================
+   HOẠT ĐỘNG 4: "REFACTORING PERFORMANCE" & PROJECT GALLERY
+   - Áp dụng transform: translate3d thay vì top/left để AI sinh code đạt hiệu năng
+     cao hơn, chỉ kích hoạt GPU Compositing, hoàn toàn không gây Layout Reflow 
+     hoặc Repaint, đảm bảo 60fps mượt mà trên điện thoại.
+   ========================================================================== */
+.project-gallery {
+    display: grid;
+    /* CSS Grid linh hoạt Responsive auto-fit */
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 18px;
+}
+
+.project-item {
+    background-color: #f8fafc;
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    padding: 22px;
+    min-height: 220px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /* HOẠT ĐỘNG 4: Tối ưu hoá chuyển động bằng transform và will-change */
+    transition: transform 0.3s var(--ease-smooth),
+                box-shadow 0.3s var(--ease-smooth),
+                background-color 0.3s ease,
+                border-color 0.3s ease;
+    will-change: transform, box-shadow;
+    position: relative;
+}
+
+/* Hiệu ứng Hover tối ưu bằng transform: translate3d */
+.project-item:hover {
+    transform: translate3d(0, -6px, 0); /* Thay thế top: -6px */
+    box-shadow: 0 14px 25px -4px rgba(15, 23, 42, 0.12);
+    background-color: #ffffff;
+    border-color: #cbd5e1;
+}
+
+.project-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.badge {
+    font-size: 0.725rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.badge-green { background: #ecfdf5; color: #059669; border: 1px solid #a7f3d0; }
+.badge-blue { background: #eff6ff; color: #2563eb; border: 1px solid #bfdbfe; }
+.badge-purple { background: #faf5ff; color: #9333ea; border: 1px solid #e9d5ff; }
+.badge-orange { background: #fff7ed; color: #ea580c; border: 1px solid #fed7aa; }
+.badge-teal { background: #f0fdfa; color: #0d9488; border: 1px solid #99f6e4; }
+.badge-indigo { background: #eef2ff; color: #4f46e5; border: 1px solid #c7d2fe; }
+
+.project-year {
+    font-size: 0.75rem;
+    color: #94a3b8;
+    font-weight: 600;
+}
+
+.project-item h3 {
+    font-size: 1.15rem;
+    color: var(--text-main);
+    margin-bottom: 8px;
+    font-weight: 700;
+}
+
+.project-item p {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+    flex-grow: 1;
+}
+
+.project-link {
+    margin-top: 14px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--primary);
+    transition: transform 0.2s ease;
+}
+
+.project-item:hover .project-link {
+    transform: translate3d(3px, 0, 0);
+}
+
+/* ==========================================================================
+   HOẠT ĐỘNG 1: "MICRO-INTERACTIONS" — NÚT BẤM CẢM XÚC
+   - Nút "Gửi tin nhắn":
+     + Khi hover: đổi màu, nhấc lên 3px (translate), box-shadow đậm hơn,
+       sử dụng timing hàm cubic-bezier.
+     + Khi click/active: thu nhỏ lại (scale) tạo cảm giác "đã bấm".
+   - Kèm HOẠT ĐỘNG 2: Spinner loading khi submit.
+   ========================================================================== */
+.section-desc {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin-top: -10px;
+    margin-bottom: 22px;
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-group label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-main);
+}
+
+.form-input,
+.form-textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1.5px solid var(--border-color);
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 0.9rem;
+    color: var(--text-main);
+    background-color: #f8fafc;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+    outline: none;
+}
+
+.form-input:focus,
+.form-textarea:focus {
+    border-color: var(--primary);
+    background-color: #ffffff;
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+}
+
+.form-footer {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+    margin-top: 6px;
+}
+
+/* NÚT BẤM CẢM XÚC (MICRO-INTERACTIONS) */
+.btn-emotion {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    color: #ffffff;
+    border: none;
+    padding: 14px 32px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px -1px rgba(37, 99, 235, 0.3);
+    
+    /* Transition với cubic-bezier để chuyển động tự nhiên hơn */
+    transition: transform 0.3s var(--ease-bounce),
+                box-shadow 0.3s var(--ease-bounce),
+                background 0.3s ease;
+    position: relative;
+    will-change: transform, box-shadow;
+    outline: none;
+}
+
+/* 1. Khi Hover: Nút đổi màu, nhấc lên 3px, box-shadow đậm hơn */
+.btn-emotion:hover {
+    background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+    /* HOẠT ĐỘNG 4: Dùng translate3d thay vì top: -3px */
+    transform: translate3d(0, -3px, 0);
+    box-shadow: 0 12px 24px -3px rgba(37, 99, 235, 0.48);
+}
+
+/* 2. Khi Click (Active): Nút thu nhỏ lại tạo cảm giác "đã bấm" */
+.btn-emotion:active {
+    transform: translate3d(0, 0, 0) scale(0.96);
+    box-shadow: 0 2px 6px rgba(37, 99, 235, 0.3);
+}
+
+.btn-content {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* HOẠT ĐỘNG 2: Spinner Loading xoay 360 độ bên trong nút khi bấm */
+.btn-inline-spinner {
+    display: none;
+    width: 20px;
+    height: 20px;
+    border: 2.5px solid rgba(255, 255, 255, 0.3);
+    border-top-color: #ffffff; /* Điểm nhấn xoay */
+    border-radius: 50%;
+    animation: spinRotate 0.75s linear infinite;
+}
+
+/* Trạng thái khi form đang gửi */
+.btn-emotion.is-loading .btn-content {
+    opacity: 0.6;
+}
+
+.btn-emotion.is-loading .btn-inline-spinner {
+    display: inline-block;
+}
+
+.form-response {
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.form-response.success {
+    color: #059669;
+}
+
+/* ==========================================================================
+   5. FOOTER TRẢI DÀI
+   ========================================================================== */
+footer {
+    grid-column: 1 / -1;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    color: #ffffff;
+    padding: 34px 24px;
+    border-radius: 16px;
+    text-align: center;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+footer p {
+    font-size: 0.95rem;
+    color: #e2e8f0;
+    margin-bottom: 6px;
+}
+
+.footer-meta {
+    font-size: 0.85rem;
+    color: #38bdf8 !important;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+.footer-modules {
+    font-size: 0.75rem;
+    color: #94a3b8 !important;
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.5;
+}
+
+/* ==========================================================================
+   6. RESPONSIVE DESIGN (MEDIA QUERIES)
+   ========================================================================== */
+@media (max-width: 900px) {
+    .page-layout {
+        /* Chuyển thành 1 cột duy nhất trên màn hình tablet & mobile */
+        grid-template-columns: 1fr;
+        padding: 16px;
+        gap: 18px;
+    }
+
+    aside {
+        order: 2; /* Đặt dưới Main hoặc thứ tự linh hoạt */
+    }
+
+    main {
+        order: 1;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .parallax-banner {
+        background-attachment: scroll; /* Trên một số trình duyệt mobile cũ, fixed có thể lag */
+    }
+}
+
+@media (max-width: 768px) {
+    /* Hiển thị nút Hamburger trên Mobile */
+    .hamburger-btn {
+        display: flex;
+    }
+
+    .nav-links {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: rgba(15, 23, 42, 0.98);
+        backdrop-filter: blur(12px);
+        flex-direction: column;
+        padding: 24px;
+        gap: 18px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        transform: translateY(-120%);
+        opacity: 0;
+        visibility: hidden;
+        transition: transform 0.4s var(--ease-smooth), opacity 0.3s ease, visibility 0.4s;
+    }
+
+    .nav-links.active {
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .nav-item {
+        font-size: 1.1rem;
+        width: 100%;
+        text-align: center;
+        padding: 8px 0;
+    }
+
+    .nav-item-cta {
+        display: inline-block;
+        width: auto;
+        padding: 10px 24px;
+    }
+
+    header h1 {
+        font-size: 1.85rem;
+    }
+
+    .typing-text {
+        font-size: 1rem;
+    }
+
+    .fab-contact {
+        bottom: 20px;
+        right: 20px;
+        width: 54px;
+        height: 54px;
+    }
+}
