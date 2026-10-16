@@ -1,0 +1,88 @@
+/* --- Biến CSS toàn cục (CSS Variables) --- */
+:root {
+    --primary-color: #4f46e5;
+    --bg-color: #f3f4f6;
+    --card-bg: #ffffff;
+    --text-color: #1f2937;
+    --spacing-unit: 20px;
+    --sidebar-width: 260px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+/* --- Bố cục tổng thể dùng CSS Grid --- */
+.dashboard-layout {
+    display: grid;
+    grid-template-columns: var(--sidebar-width) 1fr;
+    grid-template-rows: 100vh;
+    overflow: hidden;
+}
+
+/* --- Sidebar (Thành viên A phụ trách) --- */
+aside.sidebar {
+    background-color: var(--card-bg);
+    border-right: 1px solid #e5e7eb;
+    padding: var(--spacing-unit);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.sidebar nav ul {
+    list-style: none;
+    margin-top: 30px;
+}
+
+.sidebar nav ul li a {
+    display: block;
+    padding: 12px 15px;
+    color: var(--text-color);
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background 0.3s;
+}
+
+.sidebar nav ul li a:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* --- Main Content (Thành viên B phụ trách) --- */
+main.main-content {
+    padding: var(--spacing-unit);
+    overflow-y: auto;
+    display: grid;
+    grid-template-rows: auto 1fr;
+    gap: var(--spacing-unit);
+}
+
+/* --- Khu vực Thẻ Thống kê (Stats Cards) dùng Grid --- */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-unit);
+}
+
+.card {
+    background-color: var(--card-bg);
+    padding: var(--spacing-unit);
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+/* --- Bảng lịch sử giao dịch --- */
+.transaction-section {
+    background-color: var(--card-bg);
+    padding: var(--spacing-unit);
+    border-radius: 12px;
+}

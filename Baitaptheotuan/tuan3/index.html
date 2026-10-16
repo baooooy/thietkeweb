@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Smart Money - Ứng dụng web quản lý chi tiêu cá nhân giúp sinh viên theo dõi thu chi thông minh.">
+    <title>Smart Money - Quản Lý Chi Tiêu Cá Nhân</title>
+    <!-- Liên kết file CSS Layout -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Khối Dashboard Layout tổng thể (Chia 2 cột: Sidebar và Main Content) -->
+    <div class="dashboard-layout">
+
+        <!-- ASIDE: Sidebar cố định bên trái (Menu điều hướng) -->
+        <aside class="sidebar">
+            <div class="sidebar-top">
+                <h2>💰 Smart Money</h2>
+                <nav>
+                    <ul>
+                        <li><a href="#overview">📊 Tổng quan</a></li>
+                        <li><a href="#transaction-form">➕ Thêm giao dịch</a></li>
+                        <li><a href="#history">📜 Lịch sử giao dịch</a></li>
+                    </ul>
+                </nav>
+            </div>
+            
+            <!-- Footer nhỏ trong Sidebar -->
+            <div class="sidebar-footer">
+                <p>Nhóm Quản Lý Chi Tiêu - LHU</p>
+            </div>
+        </aside>
+
+        <!-- MAIN: Vùng nội dung chính bên phải -->
+        <main class="main-content">
+            
+            <!-- HEADER của nội dung chính -->
+            <header class="main-header">
+                <h1>Bảng điều khiển tài chính</h1>
+                <p>Xin chào, chúc bạn một ngày quản lý tiền bạc hiệu quả!</p>
+            </header>
+
+            <!-- SECTION 1: Thẻ thống kê tổng quan tài chính (Dùng CSS Grid 3 cột) -->
+            <section id="overview" class="stats-grid">
+                <div class="card">
+                    <h3>Tổng Thu Nhập</h3>
+                    <p class="amount income">+ 10,000,000 VNĐ</p>
+                </div>
+                <div class="card">
+                    <h3>Tổng Chi Tiêu</h3>
+                    <p class="amount expense">- 3,500,000 VNĐ</p>
+                </div>
+                <div class="card">
+                    <h3>Số Dư Hiện Tại</h3>
+                    <p class="amount balance">6,500,000 VNĐ</p>
+                </div>
+            </section>
+
+            <!-- SECTION 2: Form thêm giao dịch mới -->
+            <section id="transaction-form" class="card form-section">
+                <h2>Thêm Giao Dịch Mới</h2>
+                <form>
+                    <div class="form-group">
+                        <label for="desc">Mô tả khoản chi/thu:</label>
+                        <input type="text" id="desc" placeholder="Ví dụ: Ăn sáng, Lương tháng...">
+                    </div>
+                    <div class="form-group">
+                        <label for="amount-input">Số tiền (VNĐ):</label>
+                        <input type="number" id="amount-input" placeholder="Nhập số tiền...">
+                    </div>
+                    <button type="submit" class="btn-submit">Thêm giao dịch</button>
+                </form>
+            </section>
+
+            <!-- SECTION 3: Lịch sử giao dịch gần đây -->
+            <section id="history" class="transaction-section card">
+                <h2>Lịch sử giao dịch gần đây</h2>
+                
+                <article class="transaction-item">
+                    <div class="item-info">
+                        <h3>Mua sách học phần Thiết kế Web</h3>
+                        <time datetime="2026-03-30">30/03/2026</time>
+                    </div>
+                    <span class="expense-value">- 150,000 VNĐ</span>
+                </article>
+
+                <article class="transaction-item">
+                    <div class="item-info">
+                        <h3>Nhận tiền lương làm thêm</h3>
+                        <time datetime="2026-03-28">28/03/2026</time>
+                    </div>
+                    <span class="income-value">+ 2,000,000 VNĐ</span>
+                </article>
+            </section>
+
+            <!-- FOOTER: Thông tin cuối trang -->
+            <footer>
+                <p>&copy; 2026 Dự án Thiết kế Web - Đại học Lạc Hồng (LHU).</p>
+            </footer>
+
+        </main>
+    </div>
+
+</body>
+</html>
