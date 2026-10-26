@@ -1,0 +1,95 @@
+:root {
+  --spacing-gap: 20px;
+}
+
+/* Layout dịch vụ dạng Grid */
+.services-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-gap);
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Định dạng thẻ dịch vụ (Khung & hiệu ứng) */
+.service-item {
+  position: relative;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.service-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.service-item h3 {
+  margin-top: 10px;
+  margin-bottom: 8px;
+  color: #1e293b;
+  font-size: 1.25rem;
+}
+
+.service-item p {
+  color: #475569;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Nhãn ký hiệu (Badge) trên đầu mỗi cột */
+.badge {
+  display: inline-block;
+  padding: 4px 12px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-radius: 20px;
+  color: #ffffff;
+}
+
+/* Phối màu riêng biệt + màu nhãn cho từng cột */
+.service-item.card-1 {
+  background-color: #eff6ff; /* Nền xanh dương nhạt */
+}
+.service-item.card-1 .badge {
+  background-color: #2563eb; /* Nhãn xanh dương */
+}
+
+.service-item.card-2 {
+  background-color: #f0fdf4; /* Nền xanh lá nhạt */
+}
+.service-item.card-2 .badge {
+  background-color: #16a34a; /* Nhãn xanh lá */
+}
+
+.service-item.card-3 {
+  background-color: #faf5ff; /* Nền tím nhạt */
+}
+.service-item.card-3 .badge {
+  background-color: #9333ea; /* Nhãn tím */
+}
+
+.service-item.card-4 {
+  background-color: #fff7ed; /* Nền cam nhạt */
+}
+.service-item.card-4 .badge {
+  background-color: #ea580c; /* Nhãn cam */
+}
+
+/* Media Queries Responsive */
+@media screen and (min-width: 768px) {
+  .services-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (min-width: 1025px) {
+  .services-container {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
