@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MangaRealm - Web Đọc Truyện Tranh Online</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- 1. Thư viện hiệu ứng Animate.css CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    
+    <!-- 2. Thư viện hiệu ứng cuộn trang AOS (Animate On Scroll) CSS CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"/>
+
+    <!-- File CSS riêng biệt -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- ==========================================================================
+         MÀN HÌNH CHỜ (PRELOADER): Hoạt động hoàn toàn bằng HTML5 & CSS thuần
+         ========================================================================== -->
+    <div id="preloader" aria-label="Đang tải trang">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- 1. HEADER: Logo, Thanh tìm kiếm & Điều hướng chính -->
+    <header class="site-header">
+        <div class="header-container">
+            <!-- Logo trang web -->
+            <a href="#" class="logo" aria-label="Trang chủ MangaRealm">
+                <span class="logo-icon">⚡</span>
+                <span class="logo-text">Manga<span>Realm</span></span>
+            </a>
+
+            <!-- Ô tìm kiếm (Search Box) -->
+            <div class="search-box">
+                <input 
+                    type="text" 
+                    placeholder="Tìm kiếm truyện, tác giả..." 
+                    aria-label="Tìm kiếm truyện, tác giả"
+                >
+                <button type="button" aria-label="Nút tìm kiếm">
+                    🔍
+                </button>
+            </div>
+
+            <!-- Menu điều hướng (Semantic <nav>) -->
+            <nav class="main-nav" aria-label="Điều hướng chính">
+                <ul class="nav-list">
+                    <li><a href="#" class="nav-link active">Trang Chủ</a></li>
+                    <li><a href="#genres" class="nav-link">Thể Loại ▾</a></li>
+                    <li><a href="#ranking" class="nav-link">Bảng Xếp Hạng</a></li>
+                    <!-- Mục Theo Dõi có dropdown: gộp Lịch Sử + Hỗ Trợ -->
+                    <li class="has-dropdown">
+                        <a href="#bookmark" class="nav-link nav-dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+                            Theo Dõi ▾
+                        </a>
+                        <!-- Menu con dạng danh sách (position: absolute) -->
+                        <ul class="dropdown" role="menu" aria-label="Menu Theo Dõi">
+                            <li role="none">
+                                <a href="#history" class="dropdown-link" role="menuitem">
+                                    <span class="dropdown-icon">📖</span> Lịch Sử
+                                </a>
+                            </li>
+                            <li role="none">
+                                <a href="#support" class="dropdown-link" role="menuitem">
+                                    <span class="dropdown-icon">🛟</span> Hỗ Trợ
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- Nút hành động người dùng -->
+            <div class="user-actions">
+                <button class="btn btn-login" type="button">Đăng Nhập</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- 2. MAIN: Khu vực nội dung chính của trang web -->
+    <main class="site-main">
+
+        <!-- Banner truyện nổi bật (Semantic <section>) -->
+        <section class="featured-banner" aria-label="Truyện nổi bật trong tuần">
+            <div class="banner-wrapper">
+                <div class="banner-content">
+                    <span class="badge badge-hot">🔥 Nổi Bật Tuần Này</span>
+                    <h1 class="banner-title animate__animated animate__fadeInDown">Thợ Săn Hạng S Trở Về Lăng Mộ</h1>
+                    <p class="banner-description">
+                        Sau 10 năm bị phản bội dưới đáy hầm ngục tăm tối nhất, vị thợ săn huyền thoại thức tỉnh với sức mạnh cổ xưa của Thần Chết và bắt đầu hành trình báo thù đỉnh cao...
+                    </p>
+                    <div class="banner-meta">
+                        <span class="meta-item">⭐ 4.9 / 5</span>
+                        <span class="meta-item">👁️ 1.2M Lượt xem</span>
+                        <span class="meta-item">🏷️ Action, Fantasy</span>
+                    </div>
+                    <div class="banner-actions">
+                        <a href="#" class="btn btn-primary animate__animated animate__pulse animate__infinite">Đọc Ngay Chương 1</a>
+                        <a href="#" class="btn btn-secondary">Thêm Vào Tủ</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================================================
+             DANH MỤC THỂ LOẠI TRUYỆN (GENRES SECTION)
+             ========================================================================== -->
+        <section class="genres-section" id="genres" data-aos="fade-up">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">Khám Phá Theo Thể Loại</h2>
+                    <p class="section-subtitle">Tìm kiếm các tác phẩm truyện hấp dẫn theo gu đọc của bạn</p>
+                </div>
+                <a href="#latest-comics" class="view-all-link">Xem tất cả thể loại →</a>
+            </div>
+
+            <!-- Danh sách thẻ thể loại dạng Grid linh hoạt -->
+            <div class="genres-grid">
+                <a href="#latest-comics" class="genre-card" data-aos="fade-up" data-aos-delay="50">
+                    <span class="genre-icon">⚔️</span>
+                    <div class="genre-info">
+                        <span class="genre-name">Tiên Hiệp</span>
+                        <span class="genre-count">(1.8K truyện)</span>
+                    </div>
+                </a>
+
+                <a href="#latest-comics" class="genre-card" data-aos="fade-up" data-aos-delay="100">
+                    <span class="genre-icon">🔮</span>
+                    <div class="genre-info">
+                        <span class="genre-name">Huyền Huyễn</span>
+                        <span class="genre-count">(2.4K truyện)</span>
+                    </div>
+                </a>
+
+                <a href="#latest-comics" class="genre-card" data-aos="fade-up" data-aos-delay="150">
+                    <span class="genre-icon">🏙️</span>
+                    <div class="genre-info">
+                        <span class="genre-name">Đô Thị</span>
+                        <span class="genre-count">(3.1K truyện)</span>
+                    </div>
+                </a>
+
+                <a href="#latest-comics" class="genre-card" data-aos="fade-up" data-aos-delay="200">
+                    <span class="genre-icon">🚀</span>
+                    <div class="genre-info">
+                        <span class="genre-name">Khoa Huyễn</span>
+                        <span class="genre-count">(1.2K truyện)</span>
+                    </div>
+                </a>
+
+                <a href="#latest-comics" class="genre-card" data-aos="fade-up" data-aos-delay="250">
+                    <span class="genre-icon">💖</span>
+                    <div class="genre-info">
+                        <span class="genre-name">Ngôn Tình</span>
+                        <span class="genre-count">(4.5K truyện)</span>
+                    </div>
+                </a>
+
+                <a href="#latest-comics" class="genre-card" data-aos="fade-up" data-aos-delay="300">
+                    <span class="genre-icon">🏯</span>
+                    <div class="genre-info">
+                        <span class="genre-name">Cổ Đại</span>
+                        <span class="genre-count">(1.6K truyện)</span>
+                    </div>
+                </a>
+
+                <a href="#latest-comics" class="genre-card" data-aos="fade-up" data-aos-delay="350">
+                    <span class="genre-icon">🧟</span>
+                    <div class="genre-info">
+                        <span class="genre-name">Mạt Thế</span>
+                        <span class="genre-count">(890 truyện)</span>
+                    </div>
+                </a>
+
+                <a href="#latest-comics" class="genre-card" data-aos="fade-up" data-aos-delay="400">
+                    <span class="genre-icon">🎮</span>
+                    <div class="genre-info">
+                        <span class="genre-name">Hệ Thống</span>
+                        <span class="genre-count">(2.7K truyện)</span>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- Danh sách truyện mới cập nhật dạng Grid (Semantic <section> & <article>) -->
+        <section class="comic-grid-section" id="latest-comics">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">Truyện Mới Cập Nhật</h2>
+                    <p class="section-subtitle">Cập nhật liên tục các chương mới nhất mỗi ngày</p>
+                </div>
+                <a href="#" class="view-all-link">Xem tất cả →</a>
+            </div>
+
+            <!-- Container dạng CSS Grid: Dữ liệu được sinh tự động bằng JavaScript -->
+            <div class="comic-grid" id="comicGrid">
+                <!-- Danh sách sản phẩm truyện tranh được tự động sinh ra bởi hàm renderProductList() trong script.js -->
+            </div>
+        </section>
+
+        <!-- ==========================================================================
+             PHẦN HỖ TRỢ NGƯỜI DÙNG & HỎI ĐÁP THƯỜNG GẶP (FAQ & SUPPORT)
+             ========================================================================== -->
+        <section class="support-section" id="support" data-aos="fade-up">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">Trung Tâm Hỗ Trợ & Hỏi Đáp</h2>
+                    <p class="section-subtitle">Giải đáp thắc mắc thường gặp và tiếp nhận phản hồi từ độc giả</p>
+                </div>
+            </div>
+
+            <!-- Bố cục 2 cột cân đối: Khối FAQ và Khối Form liên hệ -->
+            <div class="support-grid">
+
+                <!-- Khối 1: Câu hỏi thường gặp (FAQ) -->
+                <div class="support-col faq-col" data-aos="fade-up" data-aos-delay="100">
+                    <h3 class="support-col-title">
+                        <span class="title-icon">❓</span> Câu Hỏi Thường Gặp (FAQ)
+                    </h3>
+                    <div class="faq-list">
+                        <details class="faq-item" open>
+                            <summary class="faq-question">Cách báo lỗi chương truyện bị hỏng, mất trang?</summary>
+                            <div class="faq-answer">
+                                <p>Trong mỗi chương truyện khi đang đọc, bạn chỉ cần bấm vào biểu tượng <strong>"Báo lỗi" (Lá cờ 🚩)</strong> ở thanh công cụ hoặc gửi biểu mẫu bên cạnh kèm tên truyện và số chương. Đội ngũ kỹ thuật sẽ khắc phục trong vòng 15-30 phút.</p>
+                            </div>
+                        </details>
+
+                        <details class="faq-item">
+                            <summary class="faq-question">Cách đổi giao diện Sáng / Tối (Dark Mode)?</summary>
+                            <div class="faq-answer">
+                                <p>Website mặc định hiển thị chế độ <strong>Dark Mode</strong> tối ưu bảo vệ mắt khi đọc đêm. Bạn có thể nhấn vào biểu tượng 🌙/☀️ tại góc phải màn hình hoặc vào phần Cài đặt đọc để tùy chỉnh độ sáng theo nhu cầu.</p>
+                            </div>
+                        </details>
+
+                        <details class="faq-item">
+                            <summary class="faq-question">Cách lưu truyện yêu thích và nhận thông báo chương mới?</summary>
+                            <div class="faq-answer">
+                                <p>Bạn chỉ cần bấm nút <strong>"Thêm Vào Tủ"</strong> hoặc biểu tượng <strong>"Theo Dõi" (Bookmark 🔖)</strong> trên trang chi tiết truyện. Khi có chương mới nhất, hệ thống sẽ tự động cập nhật vào danh sách theo dõi của bạn.</p>
+                            </div>
+                        </details>
+
+                        <details class="faq-item">
+                            <summary class="faq-question">Tôi có thể tải truyện về đọc ngoại tuyến (Offline) không?</summary>
+                            <div class="faq-answer">
+                                <p>Tính năng tải chương để đọc offline hiện đã được tích hợp trên phiên bản ứng dụng di động Progressive Web App (PWA). Bạn có thể bấm "Cài đặt ứng dụng" ngay trên trình duyệt.</p>
+                            </div>
+                        </details>
+                    </div>
+                </div>
+
+                <!-- Khối 2: Form Gửi Yêu Cầu Hỗ Trợ -->
+                <div class="support-col form-col" data-aos="fade-up" data-aos-delay="200">
+                    <h3 class="support-col-title">
+                        <span class="title-icon">✉️</span> Gửi Yêu Cầu Hỗ Trợ
+                    </h3>
+                    <form class="support-form" action="#" method="post" onsubmit="event.preventDefault(); alert('Cảm ơn bạn! Yêu cầu hỗ trợ đã được gửi thành công đến MangaRealm.'); this.reset();">
+                        <div class="form-group">
+                            <label for="support-name" class="form-label">Họ và tên <span class="required">*</span></label>
+                            <input 
+                                type="text" 
+                                id="support-name" 
+                                name="name" 
+                                class="form-control" 
+                                placeholder="Ví dụ: Nguyễn Văn A" 
+                                required
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="support-email" class="form-label">Địa chỉ Email <span class="required">*</span></label>
+                            <input 
+                                type="email" 
+                                id="support-email" 
+                                name="email" 
+                                class="form-control" 
+                                placeholder="example@email.com" 
+                                required
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="support-type" class="form-label">Loại sự cố cần hỗ trợ <span class="required">*</span></label>
+                            <select id="support-type" name="type" class="form-control" required>
+                                <option value="chapter-error">Lỗi chương / Ảnh truyện bị lỗi hoặc mất trang</option>
+                                <option value="payment-error">Lỗi nạp thẻ / Thanh toán gói VIP</option>
+                                <option value="feature-request">Góp ý cải tiến giao diện & tính năng</option>
+                                <option value="copyright">Báo cáo vi phạm bản quyền (DMCA)</option>
+                                <option value="other">Vấn đề khác</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="support-content" class="form-label">Nội dung chi tiết <span class="required">*</span></label>
+                            <textarea 
+                                id="support-content" 
+                                name="content" 
+                                class="form-control" 
+                                rows="4" 
+                                placeholder="Mô tả cụ thể tên truyện, chương hoặc vấn đề bạn gặp phải..." 
+                                required
+                            ></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-submit-support">
+                            <span>Gửi Yêu Cầu Hỗ Trợ</span> 🚀
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- 3. FOOTER: Thông tin bản quyền, liên kết & chính sách -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-col">
+                <a href="#" class="logo">
+                    <span class="logo-icon">⚡</span>
+                    <span class="logo-text">Manga<span>Realm</span></span>
+                </a>
+                <p class="footer-about">
+                    Nền tảng đọc truyện tranh kỹ thuật số chất lượng cao hàng đầu, đem lại trải nghiệm đọc mượt mà và đa dạng thể loại cho người đọc.
+                </p>
+            </div>
+
+            <div class="footer-col">
+                <h4 class="footer-heading">Khám Phá</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Truyện Mới Cập Nhật</a></li>
+                    <li><a href="#">Bảng Xếp Hạng Tuần</a></li>
+                    <li><a href="#">Truyện Hoàn Thành</a></li>
+                    <li><a href="#">Truyện Tranh Màu</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4 class="footer-heading">Thể Loại</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Action / Hành Động</a></li>
+                    <li><a href="#">Isekai / Chuyển Sinh</a></li>
+                    <li><a href="#">Romance / Lãng Mạn</a></li>
+                    <li><a href="#">Comedy / Hài Hước</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4 class="footer-heading">Hỗ Trợ & Pháp Lý</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Điều Khoản Sử Dụng</a></li>
+                    <li><a href="#">Chính Sách Bản Quyền (DMCA)</a></li>
+                    <li><a href="#">Chính Sách Bảo Mật</a></li>
+                    <li><a href="#">Liên Hệ Hợp Tác</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 MangaRealm. Toàn bộ nội dung truyện được tổng hợp từ internet và cộng đồng người đóng góp.</p>
+        </div>
+    </footer>
+
+    <!-- Nút Quay về đầu trang (Back-To-Top Button) -->
+    <button id="backToTop" class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" aria-label="Quay về đầu trang">⬆</button>
+
+    <!-- THÔNG BÁO CHÀO MỪNG THEO THỜI GIAN THỰC -->
+    <div id="welcome-toast" class="welcome-toast" role="alert" aria-live="polite">
+        <div class="toast-icon" id="greeting-icon">✨</div>
+        <div class="toast-content">
+            <h4 class="toast-title" id="greeting-title">Chào mừng!</h4>
+            <p class="toast-desc" id="greeting-desc">Chúc bạn có những giây phút đọc truyện thật vui vẻ tại MangaRealm!</p>
+        </div>
+        <button type="button" class="toast-close" id="toastCloseBtn" aria-label="Đóng thông báo">✕</button>
+    </div>
+
+    <!-- 4. Thư viện AOS JS CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+
+    <!-- 5. File JavaScript riêng biệt -->
+    <script src="script.js"></script>
+
+</body>
+</html>
