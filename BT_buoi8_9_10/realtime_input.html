@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo Sự Kiện Input - Cập Nhật Thời Gian Thực</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .card {
+            background-color: #ffffff;
+            border-radius: 16px;
+            padding: 32px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            color: #2d3748;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .input-group {
+            margin-bottom: 24px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            color: #4a5568;
+            margin-bottom: 8px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 12px 16px;
+            font-size: 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        input[type="text"]:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.25);
+        }
+
+        .display-area {
+            background-color: #f7fafc;
+            border: 2px dashed #cbd5e0;
+            border-radius: 8px;
+            padding: 16px;
+            min-height: 80px;
+            word-break: break-word;
+        }
+
+        .display-area p {
+            font-size: 0.85rem;
+            color: #a0aec0;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+
+        h2#output-text {
+            font-size: 1.3rem;
+            color: #2b6cb0;
+            font-weight: 700;
+        }
+
+        .placeholder-text {
+            color: #a0aec0;
+            font-style: italic;
+            font-weight: normal !important;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h1>Gõ Chữ Thời Gian Thực (Real-time)</h1>
+
+        <!-- 1. Ô nhập liệu (Input text) -->
+        <div class="input-group">
+            <label for="text-input">Nhập văn bản của bạn:</label>
+            <input 
+                type="text" 
+                id="text-input" 
+                placeholder="Hãy thử gõ điều gì đó vào đây..." 
+                autocomplete="off"
+            >
+        </div>
+
+        <!-- 2. Thẻ hiển thị bên dưới (h2) -->
+        <div class="display-area">
+            <p>Kết quả hiển thị ngay lập tức:</p>
+            <h2 id="output-text"><span class="placeholder-text">(Nội dung bạn gõ sẽ xuất hiện tại đây)</span></h2>
+        </div>
+    </div>
+
+    <!-- 3. Mã JavaScript xử lý sự kiện 'input' -->
+    <script>
+        // Bước 1: Lấy các phần tử DOM cần tương tác
+        const textInput = document.getElementById('text-input');
+        const outputText = document.getElementById('output-text');
+
+        // Bước 2: Lắng nghe sự kiện 'input' trên ô nhập liệu
+        textInput.addEventListener('input', function(event) {
+            // Lấy giá trị người dùng vừa nhập
+            const currentValue = event.target.value;
+
+            // Bước 3: Cập nhật giá trị vào thẻ h2 ngay lập tức
+            if (currentValue.trim() !== '') {
+                outputText.textContent = currentValue;
+            } else {
+                // Nếu xóa hết chữ, hiển thị lại dòng gợi ý mặc định
+                outputText.innerHTML = '<span class="placeholder-text">(Nội dung bạn gõ sẽ xuất hiện tại đây)</span>';
+            }
+        });
+    </script>
+
+</body>
+</html>
+
